@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Label name="FocusLabel" text="Focus: 100" />
+    <ui:Label name="InputRequestLabel" text="Press Space" />
+    <ui:VisualElement name="TimingBarContainer" style="position: relative; width: 100%; height: 30px; background-color: lightgray;">
+        <ui:VisualElement name="TargetRangeIndicator" style="background-color: green; height: 100%; position: absolute;" />
+        <ui:ProgressBar name="TimingBar" low-value="0" high-value="100" value="0" style="width: 100%; height: 100%; position: absolute;" />
+    </ui:VisualElement>
+</ui:UXML>
