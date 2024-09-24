@@ -836,7 +836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: 100
   maxFocus: 100
-  focusLossRate: 3
+  focusLossRate: 5
   focusGainOnSuccess: 10
   focusLossOnFail: 20
   inputRequestKeys: 20000000680000006b000000760000006d000000
