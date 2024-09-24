@@ -12,12 +12,16 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Player Movement")]
     private Vector2 playerInput = Vector2.zero;
     private Vector3 movement;
-    public float groundDrag;
     [SerializeField] private float speed;
     [SerializeField] private Transform playerRotator;
 
+    [Header("Player Teleport")]
+    private readonly float teleportDistanceMultiplier = 2;
+    private readonly float teleportCooldown = 2;
+    private float timeSinceLastTeleport = 0;
     [Header("Ground Check")]
     [SerializeField] private LayerMask groundMask;
+    public float groundDrag;
     bool isGrounded;
     public float playerHeight;
 
@@ -53,6 +57,27 @@ public class PlayerBehaviour : MonoBehaviour
         {
             player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
             player.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        }
+    }
+
+    public void OnTeleport(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //if (!isGrounded) return;
+            if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
+            timeSinceLastTeleport = Time.time;
+            player.velocity = new Vector3(0, 0, 0);
+            
+            if (playerInput == Vector2.zero)
+            {
+                player.position = playerRotator.position + new Vector3(Mathf.Sin(playerRotator.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(playerRotator.eulerAngles.y * Mathf.Deg2Rad)) * teleportDistanceMultiplier;
+            }
+            else
+            {
+                player.position = playerRotator.position + new Vector3(playerInput.x, 0, playerInput.y) * teleportDistanceMultiplier;
+            }
+            
         }
     }
 
