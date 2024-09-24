@@ -14,7 +14,6 @@ public class PlayerFocusScript : MonoBehaviour
     public KeyCode[] inputRequestKeys = { KeyCode.Space, KeyCode.H, KeyCode.K, KeyCode.V, KeyCode.M };
     public float inputRequestTime = 2f;
     public UIDocument uiDocument;
-
     private bool isSneaking = false;
     private bool inputRequestActive = false;
     private float inputRequestTimer = 0f;
