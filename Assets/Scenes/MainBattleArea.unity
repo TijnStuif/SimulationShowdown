@@ -674,6 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRotator: {fileID: 261394581}
+  player: {fileID: 245608702}
 --- !u!1 &303396849
 GameObject:
   m_ObjectHideFlags: 0

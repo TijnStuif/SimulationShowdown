@@ -29,15 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.6f, groundMask);
-        if (isGrounded)
-        {
-            player.drag = groundDrag;
-        }
-        else
-        {
-            player.drag = 0;
-        }
+        CheckForDrag();
         movement = new Vector3(playerInput.x, 0, playerInput.y);
         player.AddForce(speed * Time.fixedDeltaTime * movement.normalized, ForceMode.Impulse); 
         SpeedControl();
@@ -64,6 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    //this function makes sure that the player's speed is capped at a certain value
     private void SpeedControl()
     {
         Vector3 horizontalVelocity = new(player.velocity.x, 0, player.velocity.z);
@@ -74,7 +67,8 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    public void RotationBasedInputs()
+    //this function changes the player's input direction based on the rotation of the camera & player
+    private void RotationBasedInputs()
     {
         if (playerInput == Vector2.zero)
         {
@@ -82,5 +76,19 @@ public class PlayerBehaviour : MonoBehaviour
         }
         Vector3 rotatedInput = Quaternion.Euler(0, playerRotator.eulerAngles.y, 0) * new Vector3(playerInput.x, 0, playerInput.y);
         playerInput = new Vector2(rotatedInput.x, rotatedInput.z);
+    }
+
+    //this function checks for ground distance for the player and then applies drag if it does touch the ground
+    private void CheckForDrag()
+    {
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.6f, groundMask);
+        if (isGrounded)
+        {
+            player.drag = groundDrag;
+        }
+        else
+        {
+            player.drag = 0;
+        }
     }
 }

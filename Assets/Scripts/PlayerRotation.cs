@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 public class PlayerRotation : MonoBehaviour
 {
     [SerializeField] private Transform playerRotator;
-    private PlayerBehaviour player;
+    [SerializeField] private PlayerBehaviour player;
     private Vector2 rotationInput;
     private float horizontalRotation;
-    //private float verticalRotation;
     private float rotationSpeed = 5;
 
     public void OnLook(InputAction.CallbackContext context)
@@ -16,9 +15,7 @@ public class PlayerRotation : MonoBehaviour
         if (context.performed)
         {
         rotationInput = context.ReadValue<Vector2>();
-        horizontalRotation = (rotationInput.x) * rotationSpeed;
-        //verticalRotation = (rotationInput.y) * -rotationSpeed;
-        //player.RotationBasedInputs();
+        horizontalRotation = rotationInput.x * rotationSpeed;
         }
         
     }
