@@ -60,9 +60,9 @@ public class PlayerBehaviour : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 horizontalVelocity = new(player.velocity.x, 0, player.velocity.z);
-        if (horizontalVelocity.magnitude > (speed / 3))
+        if (horizontalVelocity.magnitude > (speed / 4))
         {
-            Vector3 cappedVelocity = horizontalVelocity.normalized * (speed / 3);
+            Vector3 cappedVelocity = horizontalVelocity.normalized * (speed / 4);
             player.velocity = new Vector3(cappedVelocity.x, player.velocity.y, cappedVelocity.z);
         }
     }

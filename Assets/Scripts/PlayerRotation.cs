@@ -16,7 +16,11 @@ public class PlayerRotation : MonoBehaviour
         {
         rotationInput = context.ReadValue<Vector2>();
         horizontalRotation = rotationInput.x * rotationSpeed;
-        } 
+        } else if (context.canceled)
+        {
+            rotationInput = Vector2.zero;
+            horizontalRotation = 0;
+        }
     }
 
     void Update()
