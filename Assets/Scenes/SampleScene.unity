@@ -815,7 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51a6305ed4cd074d84827fba12349f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 20
+  walkSpeed: 5
   sneakSpeed: 2
   turnSpeed: 10
   cameraTransform: {fileID: 330585546}
@@ -836,10 +836,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: 100
   maxFocus: 100
-  focusLossRate: 3
+  focusLossRate: 10
   focusGainOnSuccess: 10
   focusLossOnFail: 20
-  inputRequestKeys: 2000000067000000680000006b00000076000000
+  minimumtime: 3
+  maximumtime: 10
+  inputRequestKeys: 20000000680000006b000000760000006d000000
   inputRequestTime: 2
   uiDocument: {fileID: 1283076113}
 --- !u!1660057539 &9223372036854775807

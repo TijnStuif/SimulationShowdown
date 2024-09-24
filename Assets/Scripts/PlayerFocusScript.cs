@@ -11,10 +11,11 @@ public class PlayerFocusScript : MonoBehaviour
     public float focusLossRate = 3f;
     public int focusGainOnSuccess = 10;
     public int focusLossOnFail = 20;
+    public int minimumtime = 5;
+    public int maximumtime = 15;
     public KeyCode[] inputRequestKeys = { KeyCode.Space, KeyCode.H, KeyCode.K, KeyCode.V, KeyCode.M };
     public float inputRequestTime = 2f;
     public UIDocument uiDocument;
-
     private bool isSneaking = false;
     private bool inputRequestActive = false;
     private float inputRequestTimer = 0f;
@@ -28,6 +29,7 @@ public class PlayerFocusScript : MonoBehaviour
 
     private float targetStart;
     private float targetEnd;
+    private float nextInputRequestTime;
 
     void Start()
     {
@@ -88,6 +90,8 @@ public class PlayerFocusScript : MonoBehaviour
         inputRequestLabel.style.display = DisplayStyle.None;
         timingBar.style.display = DisplayStyle.None;
         targetRangeIndicator.style.display = DisplayStyle.None;
+
+        SetNextInputRequestTime();
     }
 
     void Update()
@@ -99,17 +103,17 @@ public class PlayerFocusScript : MonoBehaviour
                 float focusLoss = focusLossRate * playerMovementScript.currentSpeed * Time.deltaTime;
                 focus -= Mathf.RoundToInt(focusLoss);
                 focus = Mathf.Clamp(focus, 0, maxFocus);
-                Debug.Log($"Focus decreased by {focusLoss}, new focus: {focus}");
+                //Debug.Log($"Focus decreased by {focusLoss}, new focus: {focus}");
                 UpdateFocusUI();
             }
 
             if (isSneaking)
             {
-                if (!inputRequestActive)
+                if (!inputRequestActive && Time.time >= nextInputRequestTime)
                 {
                     StartInputRequest();
                 }
-                else
+                else if (inputRequestActive)
                 {
                     CheckInputRequest();
                 }
@@ -178,6 +182,7 @@ public class PlayerFocusScript : MonoBehaviour
             timingBar.style.display = DisplayStyle.None;
             targetRangeIndicator.style.display = DisplayStyle.None;
             UpdateFocusUI();
+            SetNextInputRequestTime();
         }
         else if (inputRequestTimer >= inputRequestTime)
         {
@@ -189,6 +194,7 @@ public class PlayerFocusScript : MonoBehaviour
             timingBar.style.display = DisplayStyle.None;
             targetRangeIndicator.style.display = DisplayStyle.None;
             UpdateFocusUI();
+            SetNextInputRequestTime();
         }
     }
 
@@ -208,5 +214,12 @@ public class PlayerFocusScript : MonoBehaviour
     private void UpdateFocusUI()
     {
         focusLabel.text = $"Focus: {focus}";
+    }
+
+    private void SetNextInputRequestTime()
+    {
+        
+        nextInputRequestTime = Time.time + Random.Range(minimumtime, maximumtime); 
+        Debug.Log($"Next input request time: {nextInputRequestTime - Time.time}");
     }
 }
