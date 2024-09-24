@@ -16,8 +16,7 @@ public class PlayerRotation : MonoBehaviour
         {
         rotationInput = context.ReadValue<Vector2>();
         horizontalRotation = rotationInput.x * rotationSpeed;
-        }
-        
+        } 
     }
 
     void Update()
