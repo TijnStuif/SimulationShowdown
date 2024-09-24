@@ -836,9 +836,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: 100
   maxFocus: 100
-  focusLossRate: 5
+  focusLossRate: 10
   focusGainOnSuccess: 10
   focusLossOnFail: 20
+  minimumtime: 3
+  maximumtime: 10
   inputRequestKeys: 20000000680000006b000000760000006d000000
   inputRequestTime: 2
   uiDocument: {fileID: 1283076113}
