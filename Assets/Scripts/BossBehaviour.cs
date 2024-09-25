@@ -6,11 +6,56 @@ public class BossBehaviour : MonoBehaviour
 {
     private GameObject[] platformPrefabs;
     [SerializeField] private GameObject player;
+    private float timeBetweenAttacks = 3f;
+    private float timeSinceLastAttack = 0f;
+    private GameObject targetedPlatform;
+    public Material warningMaterial;
 
     private void Start()
     {
         platformPrefabs = GameObject.FindGameObjectsWithTag("Floor");
-        Debug.Log(platformPrefabs.Length);
+        SelectPlatform();
+    }
+
+    private void Update()
+    {
+        if (Time.time >= timeSinceLastAttack + timeBetweenAttacks)
+        {
+            timeSinceLastAttack = Time.time;
+            PlatformAttack();
+            SelectPlatform();
+        }
+        else if (Time.time >= timeSinceLastAttack + timeBetweenAttacks - 1)
+        {
+            PlatformWarning();
+        }
+    }
+
+    private void PlatformAttack()
+    {
+        if (platformPrefabs.Length <= 10)
+        {
+            return;
+        }
+        targetedPlatform.SetActive(false);
+    }
+
+    private void PlatformWarning()
+    {
+        if (platformPrefabs.Length <= 10)
+        {
+            return;
+        }
+        targetedPlatform.GetComponent<MeshRenderer>().material = warningMaterial;
+    }
+
+    private void SelectPlatform()
+    {
+        if (platformPrefabs.Length <= 10)
+        {
+            return;
+        }
+        targetedPlatform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
     }
 }
 

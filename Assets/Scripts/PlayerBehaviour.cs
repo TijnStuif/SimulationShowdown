@@ -64,7 +64,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (context.performed)
         {
-            //if (!isGrounded) return;
             if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
             timeSinceLastTeleport = Time.time;
             player.velocity = new Vector3(0, 0, 0);

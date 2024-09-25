@@ -2229,6 +2229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 245608700}
+  warningMaterial: {fileID: 2100000, guid: 36b7c947d444b9947b5e81739b8e2d7f, type: 2}
 --- !u!1001 &1520111011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2319,7 +2320,7 @@ GameObject:
   - component: {fileID: 1574456850}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
