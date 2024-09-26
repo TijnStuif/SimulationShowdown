@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
-    private GameObject[] platformPrefabs;
+    private List<GameObject> platforms;
+    private List<GameObject> platformsDisabled = new List<GameObject>();
     [SerializeField] private GameObject player;
-    private float timeBetweenAttacks = 3f;
+    private readonly float timeBetweenAttacks = 3f;
     private float timeSinceLastAttack = 0f;
     private GameObject targetedPlatform;
     public Material warningMaterial;
 
     private void Start()
     {
-        platformPrefabs = GameObject.FindGameObjectsWithTag("Floor");
+        platforms = new List<GameObject>(GameObject.FindGameObjectsWithTag("Floor"));
+        platformsDisabled = new List<GameObject>();
         SelectPlatform();
     }
 
@@ -23,7 +25,6 @@ public class BossBehaviour : MonoBehaviour
         {
             timeSinceLastAttack = Time.time;
             PlatformAttack();
-            SelectPlatform();
         }
         else if (Time.time >= timeSinceLastAttack + timeBetweenAttacks - 1)
         {
@@ -33,16 +34,18 @@ public class BossBehaviour : MonoBehaviour
 
     private void PlatformAttack()
     {
-        if (platformPrefabs.Length <= 10)
+        if (platforms.Count <= 10)
         {
             return;
         }
+        MovePlatformToDisabled();
         targetedPlatform.SetActive(false);
+        SelectPlatform();
     }
 
     private void PlatformWarning()
     {
-        if (platformPrefabs.Length <= 10)
+        if (platforms.Count <= 10)
         {
             return;
         }
@@ -51,11 +54,17 @@ public class BossBehaviour : MonoBehaviour
 
     private void SelectPlatform()
     {
-        if (platformPrefabs.Length <= 10)
+        if (platforms.Count <= 10)
         {
             return;
         }
-        targetedPlatform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+        targetedPlatform = platforms[Random.Range(0, platforms.Count)];
+    }
+
+    private void MovePlatformToDisabled()
+    {
+        platforms.Remove(targetedPlatform);
+        platformsDisabled.Add(targetedPlatform);
     }
 }
 
