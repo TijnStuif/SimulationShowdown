@@ -1795,7 +1795,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 2, z: 0.2}
+  m_Center: {x: 0, y: 2.41, z: 0.2}
 --- !u!114 &2252451866296167530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11241,7 +11241,6 @@ GameObject:
   - component: {fileID: 8106378151282050730}
   - component: {fileID: 4236961920424921780}
   - component: {fileID: 2064296816763018476}
-  - component: {fileID: 6125348687482417491}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -11314,27 +11313,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6125348687482417491
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8956963510760883410}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8981438173084381906
 GameObject:
   m_ObjectHideFlags: 0
