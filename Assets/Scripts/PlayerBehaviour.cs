@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector3 movement;
     [SerializeField] private float speed;
     [SerializeField] private Transform playerRotator;
+    private int inputDirection = 1;
 
     [Header("Player Teleport")]
     private readonly float teleportDistanceMultiplier = 2;
@@ -24,6 +26,9 @@ public class PlayerBehaviour : MonoBehaviour
     public float groundDrag;
     bool isGrounded;
     public float playerHeight;
+
+    [Header("Other Collision")]
+    public GameObject inputReverserWall;
 
     private void Start()
     {
@@ -99,7 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
             return;
         }
         Vector3 rotatedInput = Quaternion.Euler(0, playerRotator.eulerAngles.y, 0) * new Vector3(playerInput.x, 0, playerInput.y);
-        playerInput = new Vector2(rotatedInput.x, rotatedInput.z);
+        playerInput = new Vector2(rotatedInput.x, rotatedInput.z) * inputDirection;
     }
 
     //this function checks for ground distance for the player and then applies drag if it does touch the ground
@@ -113,6 +118,20 @@ public class PlayerBehaviour : MonoBehaviour
         else
         {
             player.drag = 0;
+        }
+    }
+
+    public void ReverseInputs()
+    {
+        inputDirection *= -1;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("InputReverser"))
+        {
+            ReverseInputs();
+            other.gameObject.SetActive(false);
         }
     }
 }

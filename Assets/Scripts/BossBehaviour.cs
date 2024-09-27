@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossBehaviour : MonoBehaviour
 {
     private GameObject[] platformPrefabs;
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerBehaviour player;
     private float timeBetweenAttacks = 3f;
     private float timeSinceLastAttack = 0f;
     private GameObject targetedPlatform;
@@ -56,6 +56,11 @@ public class BossBehaviour : MonoBehaviour
             return;
         }
         targetedPlatform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+    }
+
+    private void ReverseInputsAttack()
+    {
+        player.ReverseInputs();
     }
 }
 
