@@ -8,7 +8,7 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] private PlayerBehaviour player;
     private Vector2 rotationInput;
     private float horizontalRotation;
-    private float rotationSpeed = 20;
+    private float rotationSpeed = 15;
 
     public void OnLook(InputAction.CallbackContext context)
     {

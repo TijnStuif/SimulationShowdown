@@ -2749,7 +2749,7 @@ GameObject:
   - component: {fileID: 1452250529}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2854,8 +2854,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24eddf864d400cd44a3e3918845a1392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 245608702}
+  bossHealth: 5
   warningMaterial: {fileID: 2100000, guid: 36b7c947d444b9947b5e81739b8e2d7f, type: 2}
+  normalMaterial: {fileID: 2100000, guid: 9726dca7d3a8d1d41b4d9ac5e12b1bde, type: 2}
+  hitMaterial: {fileID: 2100000, guid: a4d645a38d56cde46b79d215d3d76b01, type: 2}
+  player: {fileID: 245608702}
 --- !u!4 &1507575956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2977237873409315083, guid: 8be9543d19c26ce458a55833ec42402c,

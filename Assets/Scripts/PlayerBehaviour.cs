@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Rigidbody player;
+    private float playerHealth = 3;
 
     [Header("Player Movement")]
     private Vector2 playerInput = Vector2.zero;
@@ -14,7 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     private int playerCameraReverser = -2;
 
     [Header("Player Teleport")]
-    private readonly float teleportDistanceMultiplier = 3;
+    private readonly float teleportDistanceMultiplier = 2.5f;
     private readonly float teleportCooldown = 2;
     private float timeSinceLastTeleport = 0;
     [Header("Ground Check")]
@@ -29,11 +30,17 @@ public class PlayerBehaviour : MonoBehaviour
     
     [Header("Boss")]
     public BossBehaviour boss;
+    private float bounceBackStrength = 5;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    void Update()
+    {
+        CheckDeath();
     }
 
     void FixedUpdate()
@@ -147,6 +154,31 @@ public class PlayerBehaviour : MonoBehaviour
             playerRotator.transform.position = new Vector3(playerRotator.position.x, playerRotator.position.y - playerCameraReverser, playerRotator.position.z);
             ReverseCameraRotation();
             cameraReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            if (timeSinceLastTeleport + 0.5f > Time.time)
+            {
+                boss.bossHealth--;
+            } else {
+                playerHealth--;
+            }
+            player.velocity = new Vector3(player.velocity.x * -speed, player.velocity.y + bounceBackStrength, -speed);
+            
+            Debug.Log("Player Health: " + playerHealth);
+            Debug.Log("Boss Health: " + boss.bossHealth);
+        }
+    }
+
+    private void CheckDeath()
+    {
+        if (playerHealth <= 0)
+        {
+            Debug.Log("Player defeated!");
         }
     }
 }

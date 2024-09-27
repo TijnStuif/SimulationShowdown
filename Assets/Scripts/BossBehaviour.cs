@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
+    public float bossHealth = 5;
+    [Header("Platforms")]
     private List<GameObject> platforms;
     private List<GameObject> platformsDisabled = new List<GameObject>();
+    private GameObject targetedPlatform;
+    public Material warningMaterial;
     [SerializeField] private PlayerBehaviour player;
     private readonly float timeBetweenAttacks = 3f;
     private float timeSinceLastAttack = 0f;
-    private GameObject targetedPlatform;
-    public Material warningMaterial;
+    
 
     private void Start()
     {
@@ -21,6 +24,7 @@ public class BossBehaviour : MonoBehaviour
 
     private void Update()
     {
+        CheckDeath();
         if (Time.time >= timeSinceLastAttack + timeBetweenAttacks)
         {
             timeSinceLastAttack = Time.time;
@@ -70,6 +74,14 @@ public class BossBehaviour : MonoBehaviour
     public Vector3 GetBossPosition()
     {
         return transform.position;
+    }
+
+    private void CheckDeath()
+    {
+        if (bossHealth <= 0)
+        {
+            Debug.Log("Boss defeated!");
+        }
     }
 }
 
