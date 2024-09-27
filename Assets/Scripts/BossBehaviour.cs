@@ -66,5 +66,10 @@ public class BossBehaviour : MonoBehaviour
         platforms.Remove(targetedPlatform);
         platformsDisabled.Add(targetedPlatform);
     }
+
+    public Vector3 GetBossPosition()
+    {
+        return transform.position;
+    }
 }
 

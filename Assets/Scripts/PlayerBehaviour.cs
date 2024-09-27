@@ -29,6 +29,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Other Collision")]
     public GameObject inputReverserWall;
+    
+    [Header("Boss")]
+    public BossBehaviour boss;
 
     private void Start()
     {
@@ -131,7 +134,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("InputReverser"))
         {
             ReverseInputs();
-            other.gameObject.SetActive(false);
+            //other.gameObject.SetActive(false);
+            inputReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
         }
     }
 }

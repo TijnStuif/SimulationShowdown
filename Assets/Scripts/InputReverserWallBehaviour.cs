@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class InputReverserWallBehaviour : MonoBehaviour
 {
+    public GameObject inputReverserWall;
 
-    // Update is called once per frame
     void FixedUpdate()
     {
+        if (!inputReverserWall.activeSelf) return;
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1f * Time.fixedDeltaTime);
     }
 }
