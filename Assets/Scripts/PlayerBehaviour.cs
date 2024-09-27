@@ -72,11 +72,12 @@ public class PlayerBehaviour : MonoBehaviour
             if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
             timeSinceLastTeleport = Time.time;
             player.velocity = new Vector3(0, 0, 0);
-            
+            //if no input is pressed, teleport in the direction the player is facing
             if (playerInput == Vector2.zero)
             {
                 player.position += new Vector3(Mathf.Sin(playerRotator.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(playerRotator.eulerAngles.y * Mathf.Deg2Rad)) * teleportDistanceMultiplier;
             }
+            //if input is pressed, teleport to the direction of the inputs
             else
             {
                 player.position += new Vector3(playerInput.x, 0, playerInput.y) * teleportDistanceMultiplier;
@@ -133,11 +134,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //reverse inputs when an input reverser is touched, then place the wall back behind the boss
         if (other.gameObject.CompareTag("InputReverser"))
         {
             ReverseInputs();
             inputReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
         }
+        //reverse camera rotation when a camera reverser is touched, then place the wall back behind the boss
         if (other.gameObject.CompareTag("CameraReverser"))
         {
             playerRotator.eulerAngles = new Vector3(playerRotator.eulerAngles.x, playerRotator.eulerAngles.y, playerRotator.eulerAngles.z + 180);
