@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,9 +11,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform playerRotator;
     private int inputDirection = 1;
+    private int playerCameraReverser = -2;
 
     [Header("Player Teleport")]
-    private readonly float teleportDistanceMultiplier = 2;
+    private readonly float teleportDistanceMultiplier = 3;
     private readonly float teleportCooldown = 2;
     private float timeSinceLastTeleport = 0;
     [Header("Ground Check")]
@@ -29,6 +25,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Other Collision")]
     public GameObject inputReverserWall;
+    public GameObject cameraReverserWall;
     
     [Header("Boss")]
     public BossBehaviour boss;
@@ -78,11 +75,11 @@ public class PlayerBehaviour : MonoBehaviour
             
             if (playerInput == Vector2.zero)
             {
-                player.position = playerRotator.position + new Vector3(Mathf.Sin(playerRotator.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(playerRotator.eulerAngles.y * Mathf.Deg2Rad)) * teleportDistanceMultiplier;
+                player.position += new Vector3(Mathf.Sin(playerRotator.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(playerRotator.eulerAngles.y * Mathf.Deg2Rad)) * teleportDistanceMultiplier;
             }
             else
             {
-                player.position = playerRotator.position + new Vector3(playerInput.x, 0, playerInput.y) * teleportDistanceMultiplier;
+                player.position += new Vector3(playerInput.x, 0, playerInput.y) * teleportDistanceMultiplier;
             }
             
         }
@@ -129,13 +126,24 @@ public class PlayerBehaviour : MonoBehaviour
         inputDirection *= -1;
     }
 
+    public void ReverseCameraRotation()
+    {
+        playerCameraReverser *= -1;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("InputReverser"))
         {
             ReverseInputs();
-            //other.gameObject.SetActive(false);
             inputReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
+        }
+        if (other.gameObject.CompareTag("CameraReverser"))
+        {
+            playerRotator.eulerAngles = new Vector3(playerRotator.eulerAngles.x, playerRotator.eulerAngles.y, playerRotator.eulerAngles.z + 180);
+            playerRotator.transform.position = new Vector3(playerRotator.position.x, playerRotator.position.y - playerCameraReverser, playerRotator.position.z);
+            ReverseCameraRotation();
+            cameraReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
         }
     }
 }
