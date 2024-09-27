@@ -66,10 +66,5 @@ public class BossBehaviour : MonoBehaviour
         platforms.Remove(targetedPlatform);
         platformsDisabled.Add(targetedPlatform);
     }
-
-    private void ReverseInputsAttack()
-    {
-        player.ReverseInputs();
-    }
 }
 
