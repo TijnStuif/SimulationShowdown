@@ -14,9 +14,11 @@ public class PlayerInput : MonoBehaviour
     public float speed = 0;   
     public GameObject shadowGround;
     public GameObject shadowAttack;
+    public GameObject FlyingCube;
     public GameObject player;
     private Vector3 shadowPositionAdjuster = new Vector3(-1f, -0.15f, -1f);
-    private Vector3 shadowAttackPositionAdjuster = new Vector3(-1f, 2f, 0.85f);
+    private Vector3 shadowAttackPositionAdjuster = new Vector3(-1f, 3f, 0.85f);
+    private Vector3 CubePositionAdjuster = new Vector3(-1f, 4f, 0.85f);
    
 
     // Start is called before the first frame update
@@ -67,6 +69,7 @@ public class PlayerInput : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
+            Instantiate(FlyingCube, player.transform.position + player.transform.localScale + CubePositionAdjuster, FlyingCube.transform.rotation);
             Instantiate(shadowAttack, player.transform.position + player.transform.localScale + shadowAttackPositionAdjuster, shadowAttack.transform.rotation);
         }
     }
