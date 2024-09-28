@@ -57,7 +57,7 @@ public class BossWanderScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(position, direction, out hit, 10f))
         {
-            return hit.point - direction * 1f; // Stop 1 unit before the wall
+            return hit.point - direction * 1f; 
         }
         return position;
     }

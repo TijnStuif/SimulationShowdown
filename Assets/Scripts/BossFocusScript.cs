@@ -11,7 +11,7 @@ public class BossFocusScript : MonoBehaviour
     public float walkSpeed = 30f;
     public float sneakSpeed = 2f;
     public float sneakDistanceThreshold = 10f;
-    public float focusLossRate = 3f; // Focus loss rate per second when walking
+    public float focusLossRate = 3f; 
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class BossFocusScript : MonoBehaviour
         float distance = CalculatePathDistance(player.position);
 
         // Log the calculated path distance
-        Debug.Log("Path distance to player: " + distance);
+        //Debug.Log("Path distance to player: " + distance);
 
         if (distance > sneakDistanceThreshold)
         {
