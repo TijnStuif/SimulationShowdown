@@ -1747,6 +1747,7 @@ GameObject:
   - component: {fileID: 5000600026436371473}
   - component: {fileID: 2243410879699092165}
   - component: {fileID: 2252451866296167530}
+  - component: {fileID: 7264782403663577183}
   m_Layer: 0
   m_Name: PrototypeCat
   m_TagString: Untagged
@@ -1789,13 +1790,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 5
-  m_Radius: 2
+  m_Height: 4.3
+  m_Radius: 1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 2.41, z: 0.2}
+  m_Center: {x: 0, y: 2.25, z: 0.2}
 --- !u!114 &2252451866296167530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,8 +1809,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b1a42a63bdff56d8baff01bc0e5a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTarget: {fileID: 0}
   controller: {fileID: 2243410879699092165}
   speed: 6
+--- !u!114 &7264782403663577183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526505858497783959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 74284532bc0f94af681575a0eb53df9b,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1603565445047989851
 GameObject:
   m_ObjectHideFlags: 0
@@ -10005,7 +10038,7 @@ Transform:
   m_GameObject: {fileID: 7844663990788845458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
