@@ -35,6 +35,8 @@ namespace PrototypeCat
 
         private void Move(float deltaTime)
         {
+            // if you're not actually moving / if there's no movement input, don't do anything
+            if (m_direction2d.magnitude < MOVEMENT_THRESHOLD) return;
             // get angle using 2 argument arctangent function
             //    you input y and z, and it outputs an angle in radians
             // angle is converted from radians to degrees
@@ -56,12 +58,10 @@ namespace PrototypeCat
             m_direction2d = inputValue.Get<Vector2>();
         }
         
-        // physics like movement are done in FixedUpdate
+        // physics, like movement or gravity are done in FixedUpdate
         private void FixedUpdate()
         { 
-            // if you're actually moving / if movement input has occurred
-            if (m_direction2d.magnitude >= MOVEMENT_THRESHOLD) 
-                Move(Time.fixedDeltaTime);
+            Move(Time.fixedDeltaTime);
             ApplyGravity(Time.fixedDeltaTime);
         }
     }
