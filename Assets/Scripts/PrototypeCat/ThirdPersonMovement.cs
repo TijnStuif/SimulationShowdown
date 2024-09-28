@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,9 @@ namespace PrototypeCat
         [SerializeField] private Transform cameraTarget;
         [SerializeField] private CharacterController controller;
         [SerializeField] private float speed = 20f;
+        [SerializeField] private float jumpMotionScalar = 10f;
         private Vector2 m_direction2d = Vector2.zero;
+        private Vector3 m_jump3d;
         private float m_gravity = INITIAL_GRAVITY;
         private Vector3 m_moveDirection3d;
         private float m_targetAngle;
@@ -24,12 +27,20 @@ namespace PrototypeCat
         private float TurnAngle => 
             Mathf.SmoothDampAngle(transform.eulerAngles.y, m_targetAngle, ref m_turnVelocity, TURN_SMOOTH_TIME);
 
+        private void Awake()
+        {
+            m_jump3d = new(0f, jumpMotionScalar, 0f);
+        }
+
         private void ApplyGravity(float deltaTime)
         {
             if (controller.isGrounded)
                 m_gravity = INITIAL_GRAVITY;
             else
-                m_gravity += INITIAL_GRAVITY;
+                // action occurs every 0.02/fixed time step seconds if the player is grounded
+                // gravity is 9.81m/s/s
+                // so we should add 9.81 every second by adding the delta time
+                m_gravity += INITIAL_GRAVITY * deltaTime;
             controller.Move(Vector3.down * (m_gravity * deltaTime));
         }
 
@@ -39,6 +50,7 @@ namespace PrototypeCat
             if (m_direction2d.magnitude < MOVEMENT_THRESHOLD) return;
             // get angle using 2 argument arctangent function
             //    you input y and z, and it outputs an angle in radians
+            //    y and x are swapped since Unity's "unit circle" degrees turn clockwise instead of counterclockwise
             // angle is converted from radians to degrees
             // camera y (euler) rotation value is added to the angle so the target angle is based on the camera view
             m_targetAngle =
@@ -53,6 +65,15 @@ namespace PrototypeCat
             
         }
 
+        private void OnJump()
+        {
+            if (!controller.isGrounded)
+            {
+                return;
+            }
+            controller.Move(m_jump3d);
+        }
+
         private void OnMove(InputValue inputValue)
         {
             m_direction2d = inputValue.Get<Vector2>();
@@ -63,6 +84,15 @@ namespace PrototypeCat
         { 
             Move(Time.fixedDeltaTime);
             ApplyGravity(Time.fixedDeltaTime);
+        }
+
+        private void Update()
+        {
+            // check for gravity again
+            // to account for between frame intervals outside FixedUpdate
+            // this ensures gravity to not accelerate when grounded at all times
+            if (controller.isGrounded)
+                m_gravity = INITIAL_GRAVITY;
         }
     }
 }

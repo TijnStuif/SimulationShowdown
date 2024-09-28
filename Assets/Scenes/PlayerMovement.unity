@@ -1382,6 +1382,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2243410879699092165, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+        type: 3}
+      propertyPath: m_MinMoveDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2252451866296167530, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
       propertyPath: speed
