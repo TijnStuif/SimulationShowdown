@@ -1747,7 +1747,6 @@ GameObject:
   - component: {fileID: 5000600026436371473}
   - component: {fileID: 2243410879699092165}
   - component: {fileID: 2252451866296167530}
-  - component: {fileID: 1006066344147963393}
   - component: {fileID: 7264782403663577183}
   m_Layer: 0
   m_Name: PrototypeCat
@@ -1814,18 +1813,6 @@ MonoBehaviour:
   controller: {fileID: 2243410879699092165}
   speed: 20
   jumpMotionScalar: 10
---- !u!114 &1006066344147963393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526505858497783959}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edd09c4b63ec16714ab2e1435bdbd10b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7264782403663577183
 MonoBehaviour:
   m_ObjectHideFlags: 0
