@@ -1812,7 +1812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 0}
   controller: {fileID: 2243410879699092165}
-  speed: 6
+  speed: 20
   jumpMotionScalar: 10
 --- !u!114 &1006066344147963393
 MonoBehaviour:
