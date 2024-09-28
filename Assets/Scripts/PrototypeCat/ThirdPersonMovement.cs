@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,6 +26,8 @@ namespace PrototypeCat
         private float TurnAngle => 
             Mathf.SmoothDampAngle(transform.eulerAngles.y, m_targetAngle, ref m_turnVelocity, TURN_SMOOTH_TIME);
 
+        public void ResetGravitationalForce() => m_gravity = INITIAL_GRAVITY;
+        
         private void Awake()
         {
             m_jump3d = new(0f, jumpMotionScalar, 0f);
@@ -35,7 +36,7 @@ namespace PrototypeCat
         private void ApplyGravity(float deltaTime)
         {
             if (controller.isGrounded)
-                m_gravity = INITIAL_GRAVITY;
+                ResetGravitationalForce();
             else
                 // action occurs every 0.02/fixed time step seconds if the player is grounded
                 // gravity is 9.81m/s/s
@@ -67,10 +68,7 @@ namespace PrototypeCat
 
         private void OnJump()
         {
-            if (!controller.isGrounded)
-            {
-                return;
-            }
+            if (!controller.isGrounded) return;
             controller.Move(m_jump3d);
         }
 
@@ -92,7 +90,7 @@ namespace PrototypeCat
             // to account for between frame intervals outside FixedUpdate
             // this ensures gravity to not accelerate when grounded at all times
             if (controller.isGrounded)
-                m_gravity = INITIAL_GRAVITY;
+                ResetGravitationalForce();
         }
     }
 }
