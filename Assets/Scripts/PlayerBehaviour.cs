@@ -175,10 +175,6 @@ public class PlayerBehaviour : MonoBehaviour
             ReverseCameraRotation();
             cameraReverserWall.transform.position = boss.GetBossPosition() + new Vector3(0, 0, 3);
         }
-        else
-        {
-            playerHealthBar.transform.position = startHealthBarPosition;
-        }
     }
 
     private void OnCollisionEnter(Collision other)
