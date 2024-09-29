@@ -13,6 +13,8 @@ namespace UI
         [SerializeField] private UIDocument uiDocument;
 
         private Toggle m_bgm;
+        private VisualElement m_bodies;
+        private VisualElement m_inventory;
         private bool m_menuActive;
         private Toggle m_fullscreen;
         private VisualElement m_menus;
@@ -25,20 +27,24 @@ namespace UI
         // Start is called before the first frame update
         void Awake()
         {
+            // parents that own a lot
             m_root = uiDocument.rootVisualElement;
-            
             m_menus = m_root.Q<VisualElement>("Menus");
+            m_bodies = m_menus.Q<VisualElement>("Bodies");
+            
+            // menu buttons
             m_toContinueGame = m_menus.Q<Button>("ToContinueGame");
             m_toInventory = m_menus.Q<Button>("ToInventory");
             m_toSettings = m_menus.Q<Button>("ToSettings");
 
-            m_settings = m_menus.Q<VisualElement>("Settings");
-            m_bgm = m_menus.Q<Toggle>("BGM");
+            
+            // settings
+            m_settings = m_bodies.Q<VisualElement>("Settings");
+            m_bgm = m_settings.Q<Toggle>("BGM");
             m_fullscreen = m_settings.Q<Toggle>("Fullscreen");
-            m_fullscreen.value = Screen.fullScreen;
-
-            m_settings.style.display = DisplayStyle.None;
-            m_menus.style.display = DisplayStyle.None;
+            
+            // inventory
+            m_inventory = m_bodies.Q<VisualElement>("Inventory");
         }
         
         private void OnDisable()
@@ -66,19 +72,20 @@ namespace UI
         private void MenusClose()
         {
             StateManager.ChangePauseState(false);
-            m_menus.style.display = DisplayStyle.None;
+            m_menus.AddToClassList("hidden-element");
             m_menuActive = false;
         }
         private void MenusOpen()
         { 
             StateManager.ChangePauseState(true);
-            m_menus.style.display = DisplayStyle.Flex;
+            m_menus.RemoveFromClassList("hidden-element");
             m_menuActive = true;
         }
+
         private void MenusToggle()
         {
             StateManager.TogglePauseState();
-            m_menus.style.display = m_menus.style.display == DisplayStyle.None ? DisplayStyle.Flex : DisplayStyle.None;
+            m_menus.ToggleInClassList("hidden-element");
             m_menuActive = !m_menuActive;
         }
 
