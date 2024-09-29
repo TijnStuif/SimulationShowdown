@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossBehaviour : MonoBehaviour
 {
     public float bossHealth = 5;
+    public float bossHealthMax = 5;
+    public Image bossHealthBarImage;
     [Header("Platforms")]
     private List<GameObject> platforms;
     private List<GameObject> platformsDisabled = new List<GameObject>();

@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerRotation : MonoBehaviour
 {
     [SerializeField] private Transform playerRotator;
-    [SerializeField] private PlayerBehaviour player;
+    [SerializeField] private Transform player;
+    [SerializeField] private BossBehaviour boss;
     private Vector2 rotationInput;
     private float horizontalRotation;
     private float rotationSpeed = 15;
