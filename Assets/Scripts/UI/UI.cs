@@ -50,6 +50,7 @@ namespace UI
         private void OnDisable()
         {
             PrototypeCat.PauseGame.GamePaused -= MenusToggle;
+            
             m_toContinueGame.UnregisterCallback<ClickEvent>(OnContinueButtonClicked);
             m_toSettings.UnregisterCallback<ClickEvent>(OnSettingsButtonClicked);
             m_toInventory.UnregisterCallback<ClickEvent>(OnInventoryButtonClicked);
@@ -61,6 +62,7 @@ namespace UI
         private void OnEnable()
         {
             PrototypeCat.PauseGame.GamePaused += MenusToggle;
+            
             m_toContinueGame.RegisterCallback<ClickEvent>(OnContinueButtonClicked);
             m_toSettings.RegisterCallback<ClickEvent>(OnSettingsButtonClicked);
             m_toInventory.RegisterCallback<ClickEvent>(OnInventoryButtonClicked);
@@ -72,45 +74,36 @@ namespace UI
         private void MenusClose()
         {
             StateManager.ChangePauseState(false);
-            m_menus.AddToClassList("hidden-element");
+            m_menus.AddToClassList("no-display");
             m_menuActive = false;
         }
         private void MenusOpen()
         { 
             StateManager.ChangePauseState(true);
-            m_menus.RemoveFromClassList("hidden-element");
+            m_menus.RemoveFromClassList("no-display");
             m_menuActive = true;
         }
 
         private void MenusToggle()
         {
             StateManager.TogglePauseState();
-            m_menus.ToggleInClassList("hidden-element");
+            m_menus.ToggleInClassList("no-display");
             m_menuActive = !m_menuActive;
         }
 
-        private void OnBGMToggled(ClickEvent e)
+        private static void OnBGMToggled(ClickEvent e)
         {
-            
+           Debug.Log("BGM has been toggled"); 
         }
         
         private void OnContinueButtonClicked(ClickEvent e) => MenusClose();
         
-        private void OnFullscreenToggled(ClickEvent e)
-        {
-            Debug.Log(Screen.fullScreen);
-            Screen.fullScreen = !Screen.fullScreen;
-            Debug.Log(Screen.fullScreen);
-        }
+        private static void OnFullscreenToggled(ClickEvent e) => Screen.fullScreen = !Screen.fullScreen;
 
-        private void OnInventoryButtonClicked(ClickEvent e) => Debug.Log("inventory button clicked");
+        private void OnInventoryButtonClicked(ClickEvent e) => m_inventory.ToggleInClassList("no-display");
 
-        private void OnSettingsButtonClicked(ClickEvent e) => ToggleSettings();
-        
-        private void ToggleSettings()
-        { 
-            m_settings.style.display = m_settings.style.display == DisplayStyle.None ? DisplayStyle.Flex : DisplayStyle.None;
-        }
+
+        private void OnSettingsButtonClicked(ClickEvent e) => m_settings.ToggleInClassList("no-display");
 
         private void Update()
         {
