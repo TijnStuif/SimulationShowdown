@@ -7,8 +7,12 @@ namespace UI
 {
     public class UI : MonoBehaviour
     {
+
+        public bool BgmToggled => m_bgm.value;
+        
         [SerializeField] private UIDocument uiDocument;
 
+        private Toggle m_bgm;
         private bool m_menuActive;
         private Toggle m_fullscreen;
         private VisualElement m_menus;
@@ -29,6 +33,7 @@ namespace UI
             m_toSettings = m_menus.Q<Button>("ToSettings");
 
             m_settings = m_menus.Q<VisualElement>("Settings");
+            m_bgm = m_menus.Q<Toggle>("BGM");
             m_fullscreen = m_settings.Q<Toggle>("Fullscreen");
             m_fullscreen.value = Screen.fullScreen;
 
@@ -42,7 +47,9 @@ namespace UI
             m_toContinueGame.UnregisterCallback<ClickEvent>(OnContinueButtonClicked);
             m_toSettings.UnregisterCallback<ClickEvent>(OnSettingsButtonClicked);
             m_toInventory.UnregisterCallback<ClickEvent>(OnInventoryButtonClicked);
+            
             m_fullscreen.UnregisterCallback<ClickEvent>(OnFullscreenToggled);
+            m_bgm.UnregisterCallback<ClickEvent>(OnBGMToggled);
         }
 
         private void OnEnable()
@@ -51,7 +58,9 @@ namespace UI
             m_toContinueGame.RegisterCallback<ClickEvent>(OnContinueButtonClicked);
             m_toSettings.RegisterCallback<ClickEvent>(OnSettingsButtonClicked);
             m_toInventory.RegisterCallback<ClickEvent>(OnInventoryButtonClicked);
+            
             m_fullscreen.RegisterCallback<ClickEvent>(OnFullscreenToggled);
+            m_bgm.RegisterCallback<ClickEvent>(OnBGMToggled);
         }
 
         private void MenusClose()
@@ -71,6 +80,11 @@ namespace UI
             StateManager.TogglePauseState();
             m_menus.style.display = m_menus.style.display == DisplayStyle.None ? DisplayStyle.Flex : DisplayStyle.None;
             m_menuActive = !m_menuActive;
+        }
+
+        private void OnBGMToggled(ClickEvent e)
+        {
+            
         }
         
         private void OnContinueButtonClicked(ClickEvent e) => MenusClose();
