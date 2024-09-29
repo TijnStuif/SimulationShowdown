@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/menu-button.uss?fileID=7433441132597879392&amp;guid=fce04bde47e01d0e4849f9ce7ff524cc&amp;type=3#menu-button" />
+    <ui:VisualElement name="Menus" style="width: 60%; height: 100%; background-color: rgb(100, 110, 120); align-items: auto; justify-content: flex-start; align-self: center; display: flex; visibility: visible;">
+        <ui:VisualElement name="TopButtons" style="flex-grow: 1; flex-direction: row; flex-wrap: nowrap; width: 100%; height: 100%; display: flex;">
+            <ui:Button text="Inventory" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" class="menu-button" />
+            <ui:Button text="Continue Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ContinueGame" class="menu-button" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Settings" class="menu-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

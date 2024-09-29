@@ -1,0 +1,51 @@
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace UI
+{
+    public class UI : MonoBehaviour
+    {
+        [SerializeField] private UIDocument uiDocument;
+
+        private Button m_continueGame;
+        private Button m_inventory;
+        private VisualElement m_menus;
+        private Button m_settings;
+
+        // Start is called before the first frame update
+        void Awake()
+        {
+            PrototypeCat.PauseGame.GamePaused += ToggleMenus;
+            m_menus = uiDocument.rootVisualElement;
+            m_menus.style.display = DisplayStyle.None;
+            m_continueGame = m_menus.Q<Button>("ContinueGame");
+            m_inventory = m_menus.Q<Button>("Inventory");
+            m_settings = m_menus.Q<Button>("Settings");
+            m_continueGame.RegisterCallback<ClickEvent>(OnContinueButtonClicked);
+        }
+
+        private void ToggleMenus()
+        {
+            StateManager.TogglePauseState();
+            m_menus.style.display = m_menus.style.display == DisplayStyle.None ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        private void OpenMenus()
+        { 
+            StateManager.ChangePauseState(true);
+            m_menus.style.display = DisplayStyle.Flex;
+        }
+        
+        private void CloseMenus()
+        {
+            StateManager.ChangePauseState(false);
+            m_menus.style.display = DisplayStyle.None;
+        }
+
+        private void OnContinueButtonClicked(ClickEvent e)
+        { 
+            CloseMenus(); 
+        }
+    }
+}

@@ -1,0 +1,9 @@
+.menu-button {
+    height: 5%;
+    width: 33.33%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    font-size: 24px;
+}
