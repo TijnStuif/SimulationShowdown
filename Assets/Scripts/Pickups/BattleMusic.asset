@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c26c1845103f653dac2fd05e7802bbb, type: 3}
+  m_Name: BattleMusic
+  m_EditorClassIdentifier: 
+  id: 19c34bc2-bc3e-4bdb-8b0d-9d624ecff2af
+  itemName: Loves battle music
+  description: Nothing gets this target going more than some good battle Music in
+    the BackGround of a fight.
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  tileSize: 0
+  type: 0
