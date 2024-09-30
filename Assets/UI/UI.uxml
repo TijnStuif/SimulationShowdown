@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/menu-button.uss?fileID=7433441132597879392&amp;guid=fce04bde47e01d0e4849f9ce7ff524cc&amp;type=3#menu-button" />
     <Style src="project://database/Assets/UI/hidden-element.uss?fileID=7433441132597879392&amp;guid=8dd2b2e54f5cde8fda70f090b0fe2560&amp;type=3#hidden-element" />
-    <ui:VisualElement name="Root" style="width: 100%; height: 100%; align-items: auto; justify-content: flex-start; align-self: center; display: flex-start; visibility: visible;">
-        <ui:VisualElement name="Menus" class="no-display" style="width: 60%; height: 100%; background-color: rgb(100, 110, 120); align-items: auto; justify-content: flex-start; align-self: center; display: none;">
+    <Style src="project://database/Assets/UI/tile.uss?fileID=7433441132597879392&amp;guid=f2dd7e8c4f2fe084db3af6e295ac7e79&amp;type=3#tile" />
+    <Style src="project://database/Assets/UI/visual-item.uss?fileID=7433441132597879392&amp;guid=9898dde7ef7aff0358e48d057d51591f&amp;type=3#visual-item" />
+    <ui:VisualElement name="Root" style="width: 100%; height: 100%; align-items: auto; justify-content: flex-start; align-self: center;">
+        <ui:VisualElement name="Menus" class="no-display" style="width: 60%; height: 100%; background-color: rgb(100, 110, 120); align-items: auto; justify-content: flex-start; align-self: center;">
             <ui:VisualElement name="TopButtons" style="flex-grow: 1; flex-direction: row; flex-wrap: nowrap; width: 100%; height: 5%; font-size: 24px; max-height: 5%; max-width: 100%; min-width: 100%; min-height: 5%;">
                 <ui:Button text="Inventory" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ToInventory" class="menu-button" />
                 <ui:Button text="Continue Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ToContinueGame" class="menu-button" />
@@ -13,7 +15,7 @@
                     <ui:Toggle label="Fullscreen" name="Fullscreen" style="align-self: center; align-items: center; margin-top: 10%; margin-bottom: 5%;" />
                     <ui:Toggle label="BGM" name="BGM" style="align-self: center; align-items: center; margin-top: 5%; margin-bottom: 5%; justify-content: space-around;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="Inventory" class="no-display" style="width: 100%; height: 100%; margin-top: 5%; margin-right: 5%; margin-bottom: 5%; margin-left: 5%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgb(188, 188, 188); -unity-background-scale-mode: stretch-to-fill; font-size: 32px; -unity-text-align: upper-left; position: relative; top: 0; left: 5%; right: 0; bottom: 0; align-items: auto; display: none;">
+                <ui:VisualElement name="Inventory" class="no-display" style="width: 100%; height: 100%; margin-top: 5%; margin-right: 5%; margin-bottom: 5%; margin-left: 5%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgb(188, 188, 188); -unity-background-scale-mode: stretch-to-fill; font-size: 32px; -unity-text-align: upper-left; position: relative; top: 0; left: 5%; right: 0; bottom: 0; align-items: auto;">
                     <ui:ScrollView name="ScrollView" style="width: 100%; height: 53%;">
                         <ui:VisualElement name="TileArray" style="flex-grow: 1; width: 100%; height: 50%; justify-content: space-between; align-items: center; max-height: 50%; max-width: 100%; min-width: 100%; min-height: 50%; background-color: rgb(188, 188, 188); -unity-text-outline-width: 0; -unity-text-outline-color: rgba(100, 110, 120, 0); align-self: center; flex-wrap: wrap; flex-direction: row;">
                             <ui:VisualElement name="Tile" class="tile" />
@@ -73,7 +75,7 @@
                             <ui:VisualElement name="Tile" class="tile" />
                         </ui:VisualElement>
                     </ui:ScrollView>
-                    <ui:VisualElement name="Info" style="flex-grow: 1; width: 100%; height: 100%;">
+                    <ui:VisualElement name="Info" style="flex-grow: 1; width: 100%; height: 100%; visibility: visible; display: none;">
                         <ui:Label tabindex="-1" text="Item Name&#10;&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ItemName" style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(100, 110, 120); border-right-color: rgb(100, 110, 120); border-top-color: rgb(100, 110, 120); border-bottom-color: rgb(100, 110, 120); height: 20%;" />
                         <ui:Label tabindex="-1" text="Description" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Description" style="width: 100%; height: 70%; font-size: 16px; border-left-color: rgb(100, 110, 120); border-right-color: rgb(100, 110, 120); border-top-color: rgb(100, 110, 120); border-bottom-color: rgb(100, 110, 120); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
                     </ui:VisualElement>

@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c26c1845103f653dac2fd05e7802bbb, type: 3}
-  m_Name: BattleMusic
+  m_Name: PeanutAllergy
   m_EditorClassIdentifier: 
-  Id: 7789bf88-35ef-4339-bb3b-17674993729f
-  Name: Loves battle music
-  Description: Nothing gets this target more going than some exciting music at the
-    background while they're in a fight.
-  Icon: {fileID: 0}
+  id: 24b66e0d-278f-4599-8f6a-6bee8192d33c
+  itemName: Peanut Allergy
+  description: This target has always been horribly allergic to peanuts
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  tileSize: 0
+  type: 0

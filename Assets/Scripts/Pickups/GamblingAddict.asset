@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c26c1845103f653dac2fd05e7802bbb, type: 3}
-  m_Name: PeanutAllergy
+  m_Name: GamblingAddict
   m_EditorClassIdentifier: 
-  Id: de8abab9-4a4a-475a-958c-4f1791a1b732
-  Name: Peanut Allergy
-  Description: This target has always been horribly allergic to peanuts.
-  Icon: {fileID: 0}
+  id: 2b126384-4b69-4c8b-a23d-a42834080710
+  itemName: Gambling Addict
+  description: This target loves to play with chance
+  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  tileSize: 0
+  type: 0
