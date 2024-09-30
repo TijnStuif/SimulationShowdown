@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -56,23 +55,22 @@ namespace BadguyCat
             PlayerAttack();
         }
 
-        private Task SetWalkPoint()
+        private bool SetWalkPoint()
         {
             // keep trying to set a walk point until it is on the ground
-            do
-            {
-                // get two random offsets 
-                float randomX = Random.Range(-walkPointRange, walkPointRange);
-                float randomZ = Random.Range(-walkPointRange, walkPointRange);
-                // use for new walk point
-                m_walkPoint = new Vector3(transform.position.x + randomX, transform.position.y,
-                    transform.position.z + randomZ);
-            } while (Physics.Raycast(m_walkPoint, -transform.up, 2f, GroundLayer));
 
-            // if walk point invalid, return false, this would repeat the function due to the while loop
+
+            // get two random offsets 
+            float randomX = Random.Range(-walkPointRange, walkPointRange);
+            float randomZ = Random.Range(-walkPointRange, walkPointRange);
+            // use for new walk point
+            m_walkPoint = new Vector3(transform.position.x + randomX, transform.position.y,
+                transform.position.z + randomZ);
+            // if walk point invalid, return false, this would repeat the method at the next frame
             // I think it would be cool if it could map out what is not the ground if it's called too many times, but
             // no time for that
-            return Task.CompletedTask;
+            return (Physics.Raycast(m_walkPoint, -transform.up, 2f, GroundLayer)) ;
+
         }
 
         private void ResetWalkPoint()
@@ -80,14 +78,17 @@ namespace BadguyCat
             m_walkPoint = transform.position;
         }
 
-        private async void PlayerUndetected()
+        private void PlayerUndetected()
         {
-            if (walkPointBeingSet) return;
-            if (m_walkPoint == transform.position)
+            if (m_walkPoint == transform.position || walkPointBeingSet)
             {
                 walkPointBeingSet = true;
                 // multi threading the WalkPoint setting so the game won't freeze in case of too many attempts
-                await SetWalkPoint();
+                if (!SetWalkPoint())
+                {
+                    m_walkPoint = transform.position;
+                    return;
+                }
                 m_agent.SetDestination(m_walkPoint);
                 walkPointBeingSet = false;
                 // returning so that two methods won't be able to try the same thing at the same time
