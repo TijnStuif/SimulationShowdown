@@ -1111,12 +1111,12 @@ PrefabInstance:
     - target: {fileID: 5307374969220503401, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
       propertyPath: sightRadius
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5307374969220503401, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
       propertyPath: attackRadius
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5307374969220503401, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
@@ -1126,7 +1126,7 @@ PrefabInstance:
     - target: {fileID: 5307374969220503401, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
       propertyPath: walkPointRange
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5307374969220503401, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
@@ -1842,7 +1842,67 @@ PrefabInstance:
     - {fileID: 2252451866296167530, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 7264782403663577183, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 6936499998737418687, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
+    - {fileID: 2243410879699092165, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1526505858497783959, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2308224411840680829}
+    - targetCorrespondingSourceObject: {fileID: 1526505858497783959, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1771431725714740378}
   m_SourcePrefab: {fileID: 100100000, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
+--- !u!1 &3524319808167354150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1526505858497783959, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722385073568495537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &2308224411840680829
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524319808167354150}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1771431725714740378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524319808167354150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674604344b5adbfe0ba8579f19f56c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  walkPointRange: 50
+  walkPointBeingSet: 0
+  attackInterval: 5000
+  sightRadius: 20
+  attackRadius: 10

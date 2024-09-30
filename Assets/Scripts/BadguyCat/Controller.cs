@@ -1,3 +1,4 @@
+using System.Timers;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -6,6 +7,8 @@ namespace BadguyCat
 {
     public class Controller : MonoBehaviour
     {
+        private Timer m_timer;
+        
         private NavMeshAgent m_agent;
         private Transform m_player;
 
@@ -27,11 +30,13 @@ namespace BadguyCat
         private int PlayerLayer => whatIsPlayer;
         private int GroundLayer => whatIsGround;
 
-        private void Awake()
+        private void Start()
         {
             m_agent = GetComponent<NavMeshAgent>();
             m_player = GameObject.Find("PrototypeCat").transform;
             m_walkPoint = transform.position;
+            m_timer = new Timer(attackInterval);
+            m_timer.Elapsed += ResetAttack;
         }
 
         private void FixedUpdate()
@@ -106,24 +111,24 @@ namespace BadguyCat
 
         private void PlayerAttack()
         {
+            // I thought maybe I could rewrite this for fun, but it calls an extern, so it's probably done in C++
+            transform.LookAt(m_player);
+            
             if (m_attacked) return;
             
-            m_agent.SetDestination(transform.position);
+            // m_agent.SetDestination(transform.position);
             
             // attack code here
             Debug.Log("attacking!!!111");
             m_attacked = true;
             //
             
-            // I thought maybe I could rewrite this for fun, but it calls an extern, so it's probably done in C++
-            transform.LookAt(m_player);
             
             // this looks like literally the coolest thing ever,
             // but it uses reflection so it's very expensive
-            Invoke(nameof(ResetAttack), attackInterval);
         }
 
-        private void ResetAttack()
+        private void ResetAttack(object sender, ElapsedEventArgs args)
         {
             Debug.Log("stopping attack");
             m_attacked = false;
