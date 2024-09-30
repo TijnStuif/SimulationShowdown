@@ -10,8 +10,7 @@ namespace UI
     {
         // I wanted to avoid making singletons, but a static class can't inherit so singleton it is
         public static Inventory Instance;
-        // this is a temporary "solution" that should not be in dev and especially not main
-        public List<Item> m_items = new List<Item>();
+        
     
         // all labels in the guide were static
         private Label m_description;
@@ -22,6 +21,8 @@ namespace UI
     
         // all labels in the guide were static
         private Label m_itemName;
+        
+        private readonly List<Item> m_items = new List<Item>();
     
         private VisualElement m_root;
 
@@ -29,6 +30,7 @@ namespace UI
     
         private VisualElement m_tileArray;
 
+        
         public void Add(Information info)
         {
             // create new item based on info
@@ -39,8 +41,7 @@ namespace UI
             // add to List<Item>
             Add(item);
         }
-
-        private void Add(Item item) => m_items.Add(item);
+        public void Add(Item item) => m_items.Add(item);
     
         public void Remove(Item item)
         {
@@ -82,14 +83,13 @@ namespace UI
 
         }
     
-        private void Start() => LoadInventory();
-    
         private void LateUpdate()
         {
             // super scuffed
             m_frameToggle = !m_frameToggle;
         }
-
+        
+        private void Start() => LoadInventory();
         
         private async void LoadInventory()
         {
