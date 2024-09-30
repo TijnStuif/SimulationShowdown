@@ -113,6 +113,7 @@ namespace BadguyCat
         {
             // I thought maybe I could rewrite this for fun, but it calls an extern, so it's probably done in C++
             transform.LookAt(m_player);
+            m_agent.SetDestination(transform.position);
             
             if (m_attacked) return;
             
