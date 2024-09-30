@@ -83,7 +83,6 @@ namespace BadguyCat
             if (m_walkPoint == transform.position || walkPointBeingSet)
             {
                 walkPointBeingSet = true;
-                // multi threading the WalkPoint setting so the game won't freeze in case of too many attempts
                 if (!SetWalkPoint())
                 {
                     m_walkPoint = transform.position;
@@ -91,9 +90,6 @@ namespace BadguyCat
                 }
                 m_agent.SetDestination(m_walkPoint);
                 walkPointBeingSet = false;
-                // returning so that two methods won't be able to try the same thing at the same time
-                // the async functionality did its job, let's kill the async thread and let the regular synchronous calls
-                // do their simple synchronous things
                 return;
             }
 
