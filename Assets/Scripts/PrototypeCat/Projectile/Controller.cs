@@ -6,16 +6,26 @@ namespace PrototypeCat.Projectile
     {
         // SET THESE BEFORE ENABLING
         public int damage;
-        [SerializeField] private float speed;
-        private Vector3 m_direction;
+        private const float SPEED = 100f;
+        public Quaternion rotation;
+        public Rigidbody rb;
+
+        // call when enabled
+        private void Start()
+        {
+           Move(); 
+        }
 
         // Update is called once per frame
-        private void FixedUpdate()
+        // private void FixedUpdate()
+        // {
+        //         transform.position += Vector3.forward * (Time.fixedDeltaTime * speed);
+        // }
+
+        private void Move()
         {
-            if (isActiveAndEnabled)
-            {
-                transform.position += m_direction * Time.fixedDeltaTime;
-            }
+            Debug.Log("moving!");
+           rb.AddForce(transform.rotation * Vector3.forward * SPEED, ForceMode.Impulse); 
         }
     }
 }

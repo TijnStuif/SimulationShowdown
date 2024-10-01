@@ -1848,6 +1848,7 @@ PrefabInstance:
     - {fileID: 7264782403663577183, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 6936499998737418687, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 2243410879699092165, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
+    - {fileID: 3989864764693145238, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1906,8 +1907,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  walkPointRange: 50
-  walkPointBeingSet: 0
+  navDestinationRange: 0
+  navDestinationBeingSet: 0
   attackInterval: 5000
   sightRadius: 20
   attackRadius: 10

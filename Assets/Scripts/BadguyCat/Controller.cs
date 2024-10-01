@@ -19,8 +19,6 @@ namespace BadguyCat
         private NavMeshAgent m_agent;
         private Transform m_player;
 
-        [SerializeField] private GameObject projectilePrefab;
-
         [SerializeField] private LayerMask whatIsGround;
         [SerializeField] private LayerMask whatIsPlayer;
 
@@ -35,6 +33,9 @@ namespace BadguyCat
         [SerializeField] private float attackRadius;
         private bool m_inSightRange;
         private bool m_inAttackRange;
+
+        private Vector3 ProjectilePoint =>
+            new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
         
 
         private int PlayerLayer => whatIsPlayer;
@@ -45,8 +46,11 @@ namespace BadguyCat
             m_agent = GetComponent<NavMeshAgent>();
             m_player = GameObject.Find("PrototypeCat").transform;
             m_navDestination = transform.position;
+            
+            // why call a method with C# reflection when Timer callback
             m_timer = new Timer(attackInterval);
             m_timer.Elapsed += ResetAttack;
+            m_timer.Start();
         }
 
         private void FixedUpdate()
@@ -160,20 +164,16 @@ namespace BadguyCat
             
             if (m_attacked) return;
             
-            // m_agent.SetDestination(transform.position);
-            
             // attack code here
+            ProjectileManager.Instance.SpawnEnemyProjectile(ProjectilePoint, transform.rotation, 10);
+            // 
             m_attacked = true;
-            
-            // this looks like literally the coolest thing ever,
-            // but it uses reflection so it's very expensive
         }
 
         private void ResetAttack(object sender, ElapsedEventArgs args)
         {
-            Debug.Log("stopping attack");
+            Debug.Log("Resetting attack");
             m_attacked = false;
-            // reset attack code here
         }
     }
 }
