@@ -6,7 +6,7 @@ namespace PrototypeCat.Projectile
     {
         // SET THESE BEFORE ENABLING
         public int damage;
-        private const float SPEED = 25f;
+        private const float SPEED = 75f;
         public Quaternion rotation;
         public Rigidbody rb;
         private float m_timeStepsActive;

@@ -1808,6 +1808,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8956963510760883410, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8981438173084381906, guid: ea6f74da8615e7ff7be9302cf6a8443d,
         type: 3}
       propertyPath: m_Layer
@@ -1909,6 +1914,6 @@ MonoBehaviour:
     m_Bits: 128
   navDestinationRange: 0
   navDestinationBeingSet: 0
-  attackInterval: 5000
-  sightRadius: 20
-  attackRadius: 10
+  attackInterval: 3000
+  sightRadius: 30
+  attackRadius: 20
