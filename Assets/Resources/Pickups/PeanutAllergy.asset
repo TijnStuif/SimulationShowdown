@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c26c1845103f653dac2fd05e7802bbb, type: 3}
   m_Name: PeanutAllergy
   m_EditorClassIdentifier: 
-  id: 24b66e0d-278f-4599-8f6a-6bee8192d33c
+  id: 8c877a2f-9cdb-4167-a036-7b7d60ae3252
   itemName: Peanut Allergy
-  description: This target has always been horribly allergic to peanuts
+  description: This target has always been horribly allergic to peanuts.
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   tileSize: 0
   type: 0

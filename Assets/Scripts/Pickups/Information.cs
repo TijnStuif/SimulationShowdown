@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Pickups
 {
     // wait this is pretty cool actually
-    [CreateAssetMenu(fileName ="NewItem", menuName ="Pickups/Item")]
+    [CreateAssetMenu(fileName ="NewPickupInformation", menuName ="Pickups/Information")]
     public class Information : ScriptableObject
     {
         public string id = Guid.NewGuid().ToString();

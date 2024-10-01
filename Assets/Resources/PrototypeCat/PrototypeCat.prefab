@@ -1749,6 +1749,7 @@ GameObject:
   - component: {fileID: 2252451866296167530}
   - component: {fileID: 7264782403663577183}
   - component: {fileID: 6936499998737418687}
+  - component: {fileID: 3989864764693145238}
   m_Layer: 7
   m_Name: PrototypeCat
   m_TagString: Player
@@ -1855,6 +1856,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac7ab94e5cad9730a9c74a81e9f32f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3989864764693145238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526505858497783959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a164f2953e9237c9fad3cd8b33a607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1603565445047989851

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - PlayerHitbox
+  - EnemyHitbox
+  - Enemy
+  - Pickup
   layers:
   - Default
   - TransparentFX
