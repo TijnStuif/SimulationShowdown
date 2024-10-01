@@ -1854,6 +1854,8 @@ PrefabInstance:
     - {fileID: 6936499998737418687, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 2243410879699092165, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     - {fileID: 3989864764693145238, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
+    - {fileID: 967661000880529589, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
+    - {fileID: 1759140929155423762, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1865,6 +1867,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1771431725714740378}
+    - targetCorrespondingSourceObject: {fileID: 1526505858497783959, guid: ea6f74da8615e7ff7be9302cf6a8443d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5535664305304990146}
   m_SourcePrefab: {fileID: 100100000, guid: ea6f74da8615e7ff7be9302cf6a8443d, type: 3}
 --- !u!1 &3524319808167354150 stripped
 GameObject:
@@ -1917,3 +1923,34 @@ MonoBehaviour:
   attackInterval: 3000
   sightRadius: 30
   attackRadius: 30
+--- !u!114 &5535664305304990146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524319808167354150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 3703049423dc7529ebcb2e39d256aa11,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
