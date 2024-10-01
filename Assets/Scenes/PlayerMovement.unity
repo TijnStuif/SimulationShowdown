@@ -409,9 +409,9 @@ PrefabInstance:
       propertyPath: attackInterval
       value: 5000
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1340104639151984935, guid: aa160571d0b3ed338bf1dd8fbf43f807, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 8566549455646929446, guid: aa160571d0b3ed338bf1dd8fbf43f807, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3524319808167354150, guid: aa160571d0b3ed338bf1dd8fbf43f807,

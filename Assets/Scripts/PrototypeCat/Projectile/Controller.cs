@@ -9,13 +9,18 @@ namespace PrototypeCat.Projectile
         private const float SPEED = 100f;
         public Quaternion rotation;
         public Rigidbody rb;
+        private float m_timeStepsActive;
+
+        private void OnDestroy()
+        {
+           Debug.Log("Mama mia"); 
+        }
 
         // call when enabled
         private void Start()
         {
            Move(); 
         }
-
         // Update is called once per frame
         // private void FixedUpdate()
         // {
@@ -24,8 +29,17 @@ namespace PrototypeCat.Projectile
 
         private void Move()
         {
-            Debug.Log("moving!");
            rb.AddForce(transform.rotation * Vector3.forward * SPEED, ForceMode.Impulse); 
+        }
+
+        private void FixedUpdate()
+        {
+            if (m_timeStepsActive >= 5f)
+            {
+                Destroy(gameObject);
+            }
+
+            m_timeStepsActive+= Time.fixedDeltaTime;
         }
     }
 }

@@ -172,7 +172,6 @@ namespace BadguyCat
 
         private void ResetAttack(object sender, ElapsedEventArgs args)
         {
-            Debug.Log("Resetting attack");
             m_attacked = false;
         }
     }
