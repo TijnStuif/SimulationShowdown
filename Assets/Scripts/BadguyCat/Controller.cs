@@ -76,7 +76,7 @@ namespace BadguyCat
                 return;
             // drop pickup
             var obj = ItemManager.Instance.GetRandomItemDrop();
-            obj.transform.position = transform.position;
+            obj.transform.position = new(transform.position.x, transform.position.y + 1f, transform.position.z);
             obj.SetActive(true);
         }
 
@@ -97,6 +97,7 @@ namespace BadguyCat
             if (m_hp < 1)
             {
                 m_dead = true;
+                // this should call OnDisable() which is when this object drops items 
                 Destroy(this);
                 Destroy(gameObject);    
             }
