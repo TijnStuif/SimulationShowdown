@@ -1912,8 +1912,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  navDestinationRange: 0
+  navDestinationRange: 20
   navDestinationBeingSet: 0
   attackInterval: 3000
   sightRadius: 30
-  attackRadius: 20
+  attackRadius: 30
