@@ -2,22 +2,31 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using Timer = System.Timers.Timer;
 
 namespace BadguyCat
 {
     public class Controller : MonoBehaviour
     {
+        public int Hp => m_hp;
+
+        private bool m_dead;
+        
+        private int m_hp = 5;
+        
         private Timer m_timer;
         
         private NavMeshAgent m_agent;
         private Transform m_player;
 
+        [SerializeField] private GameObject projectilePrefab;
+
         [SerializeField] private LayerMask whatIsGround;
         [SerializeField] private LayerMask whatIsPlayer;
 
-        private Vector3 m_walkPoint;
-        [SerializeField] private float walkPointRange;
-        [SerializeField] private bool walkPointBeingSet;
+        private Vector3 m_navDestination;
+        [SerializeField] private float navDestinationRange;
+        [SerializeField] private bool navDestinationBeingSet;
 
         [SerializeField] private float attackInterval;
         private bool m_attacked;
@@ -26,6 +35,7 @@ namespace BadguyCat
         [SerializeField] private float attackRadius;
         private bool m_inSightRange;
         private bool m_inAttackRange;
+        
 
         private int PlayerLayer => whatIsPlayer;
         private int GroundLayer => whatIsGround;
@@ -34,7 +44,7 @@ namespace BadguyCat
         {
             m_agent = GetComponent<NavMeshAgent>();
             m_player = GameObject.Find("PrototypeCat").transform;
-            m_walkPoint = transform.position;
+            m_navDestination = transform.position;
             m_timer = new Timer(attackInterval);
             m_timer.Elapsed += ResetAttack;
         }
@@ -59,51 +69,83 @@ namespace BadguyCat
 
             PlayerAttack();
         }
-
-        private bool SetWalkPoint()
+        
+        private void OnDisable()
         {
-            // keep trying to set a walk point until it is on the ground
+            if (!m_dead)
+                return;
+            // drop pickup
+            var obj = ItemManager.Instance.GetRandomItemDrop();
+            obj.transform.position = transform.position;
+            obj.SetActive(true);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("PlayerHitbox"))
+            {
+                // I think this ideally gets handled by events, but this probably works too
+                var controller = other.gameObject.GetComponent<PrototypeCat.Projectile.Controller>();
+                Hit(controller.damage);
+            }
+            
+        }
+
+        public void Hit(int damage)
+        {
+            m_hp -= damage;
+            if (m_hp < 1)
+            {
+                m_dead = true;
+                Destroy(this);
+                Destroy(gameObject);    
+            }
+        }
+
+        private bool SetNavDestination()
+        {
+            // keep trying to set a nav destination until it is on the ground
 
 
             // get two random offsets 
-            float randomX = Random.Range(-walkPointRange, walkPointRange);
-            float randomZ = Random.Range(-walkPointRange, walkPointRange);
-            // use for new walk point
-            m_walkPoint = new Vector3(transform.position.x + randomX, transform.position.y,
+            float randomX = Random.Range(-navDestinationRange, navDestinationRange);
+            float randomZ = Random.Range(-navDestinationRange, navDestinationRange);
+            // use for new nav destination
+            m_navDestination = new Vector3(transform.position.x + randomX, transform.position.y,
                 transform.position.z + randomZ);
-            // if walk point invalid, return false, this would repeat the method at the next frame
+            // if nav destination is invalid, return false, this would repeat the method at the next frame
             // I think it would be cool if it could map out what is not the ground if it's called too many times, but
             // no time for that
-            return (Physics.Raycast(m_walkPoint, -transform.up, 2f, GroundLayer)) ;
+            return (Physics.Raycast(m_navDestination, -transform.up, 2f, GroundLayer)) ;
 
         }
 
-        private void ResetWalkPoint()
+        private void ResetNavDestination()
         {
-            m_walkPoint = transform.position;
+            m_navDestination = transform.position;
         }
 
         private void PlayerUndetected()
         {
-            if (m_walkPoint == transform.position || walkPointBeingSet)
+            if (m_navDestination == transform.position || navDestinationBeingSet)
             {
-                walkPointBeingSet = true;
-                if (!SetWalkPoint())
+                navDestinationBeingSet = true;
+                if (!SetNavDestination())
                 {
-                    m_walkPoint = transform.position;
+                    m_navDestination = transform.position;
                     return;
                 }
-                m_agent.SetDestination(m_walkPoint);
-                walkPointBeingSet = false;
+                m_agent.SetDestination(m_navDestination);
+                navDestinationBeingSet = false;
                 return;
             }
 
-            var distance = transform.position - m_walkPoint;
+            var distance = transform.position - m_navDestination;
             if (distance.magnitude < 1f)
             {
-                // stand still and find another walk point
-                ResetWalkPoint();
-                m_agent.SetDestination(m_walkPoint);
+                // stand still and find another nav destination
+                ResetNavDestination();
+                m_agent.SetDestination(m_navDestination);
             }
         }
 
@@ -120,10 +162,7 @@ namespace BadguyCat
             // m_agent.SetDestination(transform.position);
             
             // attack code here
-            Debug.Log("attacking!!!111");
             m_attacked = true;
-            //
-            
             
             // this looks like literally the coolest thing ever,
             // but it uses reflection so it's very expensive
@@ -134,7 +173,6 @@ namespace BadguyCat
             Debug.Log("stopping attack");
             m_attacked = false;
             // reset attack code here
-
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Pickups.ItemDrop
 
         private void Start()
         {
-            Information = Instantiate(ItemManager.Instance.GetRandomPickupInformation());
+            // Information = Instantiate(ItemManager.Instance.GetRandomPickupInformation());
         }
     }
 }
