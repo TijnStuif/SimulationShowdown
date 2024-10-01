@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pickups;
@@ -10,7 +11,6 @@ namespace UI
     {
         // I wanted to avoid making singletons, but a static class can't inherit so singleton it is
         public static Inventory Instance;
-        
     
         // all labels in the guide were static
         private Label m_description;
@@ -41,8 +41,11 @@ namespace UI
             // add to List<Item>
             Add(item);
         }
-        public void Add(Item item) => m_items.Add(item);
-    
+        public void Add(Item item)
+        {
+            Debug.Log("Adding item");
+            m_items.Add(item);
+        }
         public void Remove(Item item)
         {
             m_items.Remove(item);
@@ -88,7 +91,17 @@ namespace UI
             // super scuffed
             m_frameToggle = !m_frameToggle;
         }
-        
+
+        private void OnEnable()
+        {
+            PrototypeCat.Collision.ItemPickedUp += OnItemPickedUp;
+        }
+
+        private void OnDisable()
+        {
+            PrototypeCat.Collision.ItemPickedUp -= OnItemPickedUp;
+        }
+
         private void Start() => LoadInventory();
         
         private async void LoadInventory()
@@ -101,12 +114,23 @@ namespace UI
 
             for (int i = 0; i < m_items.Count; i++)
             {
+                if (m_items[i].visual != null)
+                    break;
                 var visual = new Visual(m_items[i].information); 
                 InitItem(m_items[i], visual);
                 // to tile, add visual element
                 m_tileArray.ElementAt(i).Add(visual);
             }
         }
+        
+        private void OnItemPickedUp(object sender, Information e)
+        {
+            Debug.Log($"item {e.itemName} retrieved");
+            Add(e);
+            Debug.Log("Reloading inventory");
+            LoadInventory();
+        }
+
 
         private async void ReadyUp()
         {
