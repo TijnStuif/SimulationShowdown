@@ -18,29 +18,24 @@ public class ProjectileManager : MonoBehaviour
         LoadResources();
     }
 
-    // public void SpawnPlayerProjectile(Transform parent, int damage, float speed = 10f)
-    // {
-    //     if (playerProjectilePrefab is null)
-    //         LoadResources();
-    //     var obj = Instantiate(playerProjectilePrefab);
-    //     var ctrl = obj.GetComponent<PrototypeCat.Projectile.Controller>();
-    //     ctrl.damage = damage;
-    //     ctrl.rotation = parent.rotation;
-    //     obj.transform.position = new(parent.position.x, transform.position.y, transform.position.z);
-    // }
+    public void SpawnPlayerProjectile(Vector3 position, Quaternion rotation, int damage)
+    {
+        if (m_playerProjectilePrefab is null)
+            LoadResources();
+        var obj = Instantiate(m_playerProjectilePrefab, position, rotation);
+        // expensive, object pooling should be used instead
+        var ctrl = obj.GetComponent<PrototypeCat.Projectile.Controller>();
+        ctrl.damage = damage;
+    }
 
     public void SpawnEnemyProjectile(Vector3 position, Quaternion rotation, int damage)
     {
-        Debug.Log("Spawning projectile");
         if (m_enemyProjectilePrefab is null)
             LoadResources();
         var obj = Instantiate(m_enemyProjectilePrefab, position, rotation);
         // expensive, object pooling should be used instead
         var ctrl = obj.GetComponent<BadguyCat.Projectile.Controller>();
         ctrl.damage = damage;
-        // update euler angle y
-        // ctrl.rotation = Quaternion.Euler(ctrl.transform.eulerAngles.x, eulerY, ctrl.transform.eulerAngles.z);
-        // ctrl.transform.position = new(position.x, position.y, position.z);
     }
 
     private void LoadResources()

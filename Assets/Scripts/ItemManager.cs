@@ -18,7 +18,7 @@ public class ItemManager : MonoBehaviour
             "Pickups/GamblingAddict"
         };
 
-    private List<Pickups.Information> m_pickupInformation = new List<Pickups.Information>();
+    private readonly List<Pickups.Information> m_pickupInformation = new List<Pickups.Information>();
 
     private GameObject m_itemPrefab;
     

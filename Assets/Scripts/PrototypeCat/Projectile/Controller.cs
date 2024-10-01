@@ -7,7 +7,7 @@ namespace PrototypeCat.Projectile
         // SET THESE BEFORE ENABLING
         public int damage;
         private const float SPEED = 75f;
-        public Quaternion rotation;
+        
         public Rigidbody rb;
         private float m_timeStepsActive;
 
@@ -21,11 +21,6 @@ namespace PrototypeCat.Projectile
         {
            Move(); 
         }
-        // Update is called once per frame
-        // private void FixedUpdate()
-        // {
-        //         transform.position += Vector3.forward * (Time.fixedDeltaTime * speed);
-        // }
 
         private void Move()
         {
@@ -34,6 +29,7 @@ namespace PrototypeCat.Projectile
 
         private void FixedUpdate()
         {
+            // scuffed despawn timer
             if (m_timeStepsActive >= 5f)
             {
                 Destroy(gameObject);
