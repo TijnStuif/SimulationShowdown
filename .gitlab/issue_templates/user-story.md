@@ -12,12 +12,9 @@
  
 ## Definition of Done:
 - [ ] Functionaliteit werkt volgens beschrijving van de acceptatiecriteria.
-- [ ] Game design documentatie (beslissingen m.b.v. game design theorieën) is up-to-date.
-- [ ] Technische documentatie (ERD, UML, project reference guide) is up-to-date.
-- [ ] Documentatie bevat datum en auteur.
-- [ ] Code review is uitgevoerd.
+- [ ] Feature is gedocumenteerd (open voor eigen interpretatie)
+- [ ] Merge request is door iedereen bekeken en begrepen.
 - [ ] Relevante code staat op GitLab.
-- [ ] Feature is ingepland voor de eerstvolgende gebruikerstest.
 
 
 ## Relevante bronnen voor uitwerking user story:
