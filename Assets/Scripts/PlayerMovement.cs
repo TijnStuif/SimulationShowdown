@@ -1,16 +1,26 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Vector2 movementInput = Vector2.zero;
-    public bool isGrounded;
-    private Vector3 movement;
-    private float groundDrag = 0.2f;
     [SerializeField] private Rigidbody player;
     [SerializeField] private float speed;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Transform playerRotator;
+    [NonSerialized] public Vector2 movementInput = Vector2.zero;
+    [NonSerialized] public bool isGrounded;
+    private Vector3 movement;
+    private int inputDirection = 1;
+    private float groundDrag = 0.2f;
+    
     private float speedControlMultiplier = 0.4f;
+
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
     void FixedUpdate()
     {
@@ -25,11 +35,23 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed)
         {
             movementInput = context.ReadValue<Vector2>();
+            RotationBasedInputs();
         }
         else if (context.canceled)
         {
             movementInput = Vector2.zero;
         }
+    }
+    
+    //this function rotates the player's inputs based on the rotation of the player's inherent rotation
+    private void RotationBasedInputs()
+    {
+        if (movementInput == Vector2.zero)
+        {
+            return;
+        }
+        Vector3 rotatedInput = Quaternion.Euler(0, playerRotator.eulerAngles.y, 0) * new Vector3(movementInput.x, 0, movementInput.y);
+        movementInput = new Vector2(rotatedInput.x, rotatedInput.z) * inputDirection;
     }
 
     //this function makes sure that the player's speed is capped at a certain value
@@ -48,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckForDrag()
     {
         isGrounded = Physics.Raycast(player.transform.position, Vector3.down, 1.1f, groundMask);
-        
+
         if (isGrounded)
         {
             player.drag = groundDrag;
