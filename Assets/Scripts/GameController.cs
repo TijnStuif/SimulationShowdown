@@ -6,7 +6,8 @@ public class GameController : MonoBehaviour
 {
     private List<IAttack> attacks;
     private float timer;
-    public float attackInterval = 30f; 
+    public float minAttackInterval = 5f; // Minimum interval in seconds
+    public float maxAttackInterval = 15f; // Maximum interval in seconds
 
     void Start()
     {
@@ -19,7 +20,7 @@ public class GameController : MonoBehaviour
             Debug.Log(attack.GetType().Name);
         }
 
-        timer = attackInterval; 
+        SetRandomInterval(); // Initialize the timer with a random interval
     }
 
     void Update()
@@ -29,7 +30,7 @@ public class GameController : MonoBehaviour
         if (timer <= 0f)
         {
             ExecuteRandomAttack();
-            timer = attackInterval; 
+            SetRandomInterval(); // Set a new random interval
         }
     }
 
@@ -44,5 +45,11 @@ public class GameController : MonoBehaviour
         int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
         Debug.Log($"Executed attack: {attacks[randomIndex].GetType().Name}");
+    }
+
+    private void SetRandomInterval()
+    {
+        timer = Mathf.Round(Random.Range(minAttackInterval, maxAttackInterval));
+        Debug.Log($"Next attack in {timer} seconds");
     }
 }
