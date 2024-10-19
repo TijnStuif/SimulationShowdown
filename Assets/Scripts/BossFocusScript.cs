@@ -27,9 +27,6 @@ public class BossFocusScript : MonoBehaviour
     {
         float distance = CalculatePathDistance(player.position);
 
-        // Log the calculated path distance
-        //Debug.Log("Path distance to player: " + distance);
-
         if (distance > sneakDistanceThreshold)
         {
             Sneak();
@@ -73,6 +70,5 @@ public class BossFocusScript : MonoBehaviour
         float focusLoss = focusLossRate * Time.deltaTime;
         FocusBar -= Mathf.RoundToInt(focusLoss);
         FocusBar = Mathf.Clamp(FocusBar, 0, 100);
-        Debug.Log($"Boss focus decreased by {focusLoss}, new focus: {FocusBar}");
     }
 }

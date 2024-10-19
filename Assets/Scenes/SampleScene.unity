@@ -3105,7 +3105,7 @@ Transform:
   m_GameObject: {fileID: 717813415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7273121, y: -56.243492, z: -82.88275}
+  m_LocalPosition: {x: -1.7273121, y: -56.243492, z: -51}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6193,7 +6193,7 @@ Transform:
   m_GameObject: {fileID: 1382841930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 1, y: 0.5, z: 2.2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6655,6 +6655,7 @@ GameObject:
   - component: {fileID: 1477759897}
   - component: {fileID: 1477759896}
   - component: {fileID: 1477759898}
+  - component: {fileID: 1477759899}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -6825,7 +6826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c7d6b65f9f6274db511ea11d1fc2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FocusBar: 100
+  FocusBar: 49
   agent: {fileID: 0}
   player: {fileID: 1382841935}
   walkSpeed: 30
@@ -6847,6 +6848,22 @@ MonoBehaviour:
   trapPrefab: {fileID: 7689926821028926015, guid: 79fed4fe51fd4d547ad15fe68ef31013,
     type: 3}
   cooldownTime: 3
+--- !u!114 &1477759899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477759886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fc4f5f645ca9c4188b06f01c6ef088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1382841935}
+  boss: {fileID: 1477759892}
+  behindThreshold: 0.5
+  defeatKey: 101
 --- !u!4 &1481224521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7574852767254117726, guid: d1f4a228841b64c4ea1e6ecc40b2a339,
@@ -9961,7 +9978,7 @@ Transform:
   m_GameObject: {fileID: 1968562406}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.2, y: -48.04349, z: 164.9}
+  m_LocalPosition: {x: 4.2, y: -48.04349, z: 196}
   m_LocalScale: {x: 500, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

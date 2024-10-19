@@ -12,6 +12,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     public Vector2 moveInput;
     private Vector2 lookInput;
+
     public bool isSneaking;
     public float currentSpeed;
 
@@ -25,23 +26,19 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        currentSpeed = isSneaking ? sneakSpeed : walkSpeed;
+        
         HandleLook();
     }
 
     private void FixedUpdate()
     {
+        currentSpeed = isSneaking ? sneakSpeed : walkSpeed;
         HandleMovement();
     }
 
     public void OnMove(InputValue context)
     {
         moveInput = context.Get<Vector2>();
-
-        if (moveInput == Vector2.zero)
-        {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
-        }
     }
 
     public void OnLook(InputValue context)
@@ -67,8 +64,11 @@ public class PlayerMovementScript : MonoBehaviour
             right.Normalize();
 
             Vector3 direction = (forward * moveInput.y + right * moveInput.x).normalized;
-
             rb.velocity = direction * currentSpeed + new Vector3(0, rb.velocity.y, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
     }
 
