@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class PlayerInventoryScript : MonoBehaviour
 {
-    public Transform inventoryParent; // Parent object to hold inventory items
+    public Transform inventoryParent; 
     private List<TrapScript> inventory = new List<TrapScript>();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
