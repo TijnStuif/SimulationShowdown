@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameControllerScript : MonoBehaviour
 {
     private List<IAttack> attacks;
     private float timer;
-    public float minAttackInterval = 5f; // Minimum interval in seconds
-    public float maxAttackInterval = 15f; // Maximum interval in seconds
+    public float minAttackInterval = 5f; 
+    public float maxAttackInterval = 15f; 
 
     void Start()
     {
@@ -17,10 +17,11 @@ public class GameController : MonoBehaviour
         // Debug log all attacks
         foreach (var attack in attacks)
         {
+            Debug.Log($"{attack.GetType().Name} - Type: {attack.Type}");
             Debug.Log(attack.GetType().Name);
         }
 
-        SetRandomInterval(); // Initialize the timer with a random interval
+        SetRandomInterval(); 
     }
 
     void Update()
@@ -30,7 +31,7 @@ public class GameController : MonoBehaviour
         if (timer <= 0f)
         {
             ExecuteRandomAttack();
-            SetRandomInterval(); // Set a new random interval
+            SetRandomInterval(); 
         }
     }
 
