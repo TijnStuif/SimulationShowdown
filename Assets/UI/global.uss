@@ -1,6 +1,7 @@
 :root {
-    --game-cyan--: rgb(45, 226, 230);
+    --game-cyan--: rgb(0, 255, 255);
     --game-magenta--: rgb(255, 0, 255);
+    --game-yellow--: rgb(255, 255, 0);
 }
 
 .hidden {
@@ -13,9 +14,11 @@
 .game-magenta-border {
     border-color: var(--game-magenta--);
 }
+.game-yellow-border {
+    border-color: var(--game-yellow--);
+}
 
 .game-element {
     background-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
 }
-
