@@ -14,18 +14,14 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            TakeDamage(10);
-        }
-    }
-
-    // Update is called once per frame
     public void TakeDamage(int damage)
-    {
+    {   
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        TakeDamage(10);
     }
 }

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: ce1dca492868d65449daf919b87cf0d9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - CloseRangeAttackIndicator: {fileID: 6570797514262869472, guid: ff19d1a87b5dd824d88aed96262250f3,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
