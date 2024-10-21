@@ -7,6 +7,7 @@ public class Boss : MonoBehaviour
     public int maxHealth = 100;
     public HealthBar healthBar;
     private int currentHealth;
+    
     // Start is called before the first frame update
     void Start()
     {
