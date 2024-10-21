@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour, IAttack
 {
-    public AttackType Type => AttackType.Environment;
+    public AttackType Type => AttackType.Direct;
     
     // the Execute method is called when the attack is executed
     public void Execute()

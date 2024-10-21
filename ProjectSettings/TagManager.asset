@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerTag
+  - player
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - SimulationBorder
   - Water
   - UI
   - 
