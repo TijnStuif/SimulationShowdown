@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
-    
+
     public void TakeDamage(int damage)
-    {
+    {   
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
