@@ -10263,6 +10263,7 @@ GameObject:
   - component: {fileID: 1758018637}
   - component: {fileID: 1758018636}
   - component: {fileID: 1758018635}
+  - component: {fileID: 1758018638}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -10296,6 +10297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAttackInterval: 5
   maxAttackInterval: 15
+  pauseMenuFab: {fileID: 5211759160308796991, guid: b02f3f598ff2e32bda4d52690750e638,
+    type: 3}
 --- !u!4 &1758018637
 Transform:
   m_ObjectHideFlags: 0
@@ -10311,6 +10314,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758018638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758018634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e3f2fae6aa7d24d5d994952ecda87877,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1765928606
 GameObject:
   m_ObjectHideFlags: 0
