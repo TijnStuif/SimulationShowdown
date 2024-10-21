@@ -1,0 +1,11 @@
+.menu-button {
+    height: 7%;
+    width: 50%;
+    align-self: center;
+    font-size: 300%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+}
+.menu-button:hover:enabled {
+    scale: 1.5;
+}
