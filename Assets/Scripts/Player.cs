@@ -14,14 +14,8 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    void Update()
-    {
-        
-    }
-
-    // Update is called once per frame
     public void TakeDamage(int damage)
-    {
+    {   
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
