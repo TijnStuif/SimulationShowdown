@@ -4,13 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerTag
-  - CloseRangeAttack
+  - player
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - SimulationBorder
   - Water
   - UI
   - 

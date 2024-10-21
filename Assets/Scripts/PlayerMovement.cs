@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
     private int inputDirection = 1;
     private float groundDrag = 0.2f;
-    
     private float speedControlMultiplier = 0.4f;
 
     void Awake()

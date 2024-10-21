@@ -17,7 +17,7 @@ public class Boss : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDamage(10);
         }
