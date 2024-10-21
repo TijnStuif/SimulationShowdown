@@ -8356,6 +8356,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   playerRotator: {fileID: 970736161}
+  areControlsInverted: 0
 --- !u!114 &1510270408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10282,6 +10283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02336f8fb30ca244bfc8ed29d7ab008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenuFab: {fileID: 0}
   minAttackInterval: 1
   maxAttackInterval: 10
 --- !u!4 &1758018637
@@ -10308,11 +10310,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758018634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc97e08057658e42aed2b1b4f3ee25f, type: 3}
+  m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCamera: {fileID: 0}
-  Camera: {fileID: 1604870021}
 --- !u!1 &1765928606
 GameObject:
   m_ObjectHideFlags: 0

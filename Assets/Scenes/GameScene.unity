@@ -8572,6 +8572,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   playerRotator: {fileID: 970736161}
+  areControlsInverted: 0
 --- !u!114 &1510270408
 MonoBehaviour:
   m_ObjectHideFlags: 0

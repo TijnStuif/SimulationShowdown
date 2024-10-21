@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private int inputDirection = 1;
     private float groundDrag = 0.2f;
     private float speedControlMultiplier = 0.4f;
+    public bool areControlsInverted = false;
 
     void Awake()
     {
@@ -49,8 +50,10 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+
+        // Invert the input direction if controls are inverted
         Vector3 rotatedInput = Quaternion.Euler(0, playerRotator.eulerAngles.y, 0) * new Vector3(movementInput.x, 0, movementInput.y);
-        movementInput = new Vector2(rotatedInput.x, rotatedInput.z) * inputDirection;
+        movementInput = new Vector2(rotatedInput.x, rotatedInput.z) * (areControlsInverted ? -1 : 1);
     }
 
     //this function makes sure that the player's speed is capped at a certain value
