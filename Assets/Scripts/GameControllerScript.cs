@@ -9,16 +9,16 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> environmentAttacks;
     private List<IAttack> directAttacks;
     private float timer;
-    private bool gamePaused;
     private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuFab;
     public float minAttackInterval = 5f; 
     public float maxAttackInterval = 15f;
-    [SerializeField] private GameObject pauseMenuFab;
+    public static bool GamePaused;
 
     void Start()
     {
         pauseMenu = Instantiate(pauseMenuFab);
-        pauseMenu.SetActive(false);
+        pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
         // Gets all the objects in the scene that have the IAttack interface
         attacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         
@@ -61,15 +61,22 @@ public class GameControllerScript : MonoBehaviour
 
     private void OnPause()
     {
-        if (gamePaused)
+        if (GamePaused)
         {
-            pauseMenu.SetActive(false);
-            gamePaused = false;
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
+            GamePaused = false;
             return;
         }
 
+        pauseMenu.GetComponent<UIDocument>().rootVisualElement.RemoveFromClassList("hidden");
+        // Time.timeScale = 0;
         pauseMenu.SetActive(true);
-        gamePaused = true;
+        GamePaused = true;
+        // Cursor.visible = true;
+        // Cursor.lockState = CursorLockMode.None;
     }
     
 

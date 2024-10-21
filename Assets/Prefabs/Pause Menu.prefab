@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5544901601865069280}
   - component: {fileID: 2501607041962079686}
+  - component: {fileID: 1469085340783245873}
   m_Layer: 5
   m_Name: Pause Menu
   m_TagString: Untagged
@@ -49,3 +50,15 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 7934452e2f00ffca2b045a5a89c04d44,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &1469085340783245873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211759160308796991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a5f16b44c61231588e2b5aacaf6b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
