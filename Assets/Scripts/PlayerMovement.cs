@@ -25,9 +25,9 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         movement = new Vector3(movementInput.x, 0, movementInput.y);
-        player.AddForce(speed * Time.fixedDeltaTime * movement.normalized, ForceMode.Impulse); 
         SpeedControl();
         CheckForDrag();
+        player.AddForce(speed * Time.fixedDeltaTime * movement.normalized, ForceMode.Impulse); 
     }
 
     public void OnMove(InputAction.CallbackContext context)
