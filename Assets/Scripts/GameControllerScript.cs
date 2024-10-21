@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -63,8 +64,8 @@ public class GameControllerScript : MonoBehaviour
     {
         if (GamePaused)
         {
-            // Cursor.visible = false;
-            // Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
             pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
             GamePaused = false;
@@ -72,11 +73,11 @@ public class GameControllerScript : MonoBehaviour
         }
 
         pauseMenu.GetComponent<UIDocument>().rootVisualElement.RemoveFromClassList("hidden");
-        // Time.timeScale = 0;
+        Time.timeScale = 0;
         pauseMenu.SetActive(true);
         GamePaused = true;
-        // Cursor.visible = true;
-        // Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     
 

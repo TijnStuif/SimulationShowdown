@@ -31,8 +31,8 @@ namespace PauseMenu
         {
             Debug.Log("hey!\nlisten!");
             // disable pause menu
-            // Cursor.visible = false;
-            // Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             GameControllerScript.GamePaused = false;
             Time.timeScale = 1;
             m_root.AddToClassList("hidden");
