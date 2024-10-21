@@ -1,7 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -9,11 +10,16 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> environmentAttacks;
     private List<IAttack> directAttacks;
     private float timer;
-    public float minAttackInterval = 3f; 
-    public float maxAttackInterval = 5f; 
+    private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuFab;
+    public float minAttackInterval = 5f; 
+    public float maxAttackInterval = 15f;
+    public static bool GamePaused;
 
     void Start()
     {
+        pauseMenu = Instantiate(pauseMenuFab);
+        pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
         // Gets all the objects in the scene that have the IAttack interface
         attacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         
@@ -26,7 +32,6 @@ public class GameControllerScript : MonoBehaviour
         // list of attacks per type
         environmentAttacks = attacks.Where(attack => attack.Type == AttackType.Environment).ToList();
         directAttacks = attacks.Where(attack => attack.Type == AttackType.Direct).ToList();
-
 
         SetRandomInterval(); 
     }
@@ -54,6 +59,27 @@ public class GameControllerScript : MonoBehaviour
         attacks[randomIndex].Execute();
         Debug.Log($"Executed attack: {attacks[randomIndex].GetType().Name}");
     }
+
+    private void OnPause()
+    {
+        if (GamePaused)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
+            GamePaused = false;
+            return;
+        }
+
+        pauseMenu.GetComponent<UIDocument>().rootVisualElement.RemoveFromClassList("hidden");
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        GamePaused = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    
 
     private void SetRandomInterval()
     {

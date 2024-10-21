@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178167536371621229}
   - component: {fileID: 7976663359147510054}
+  - component: {fileID: 8821075986248482503}
   m_Layer: 5
   m_Name: Start Menu
   m_TagString: Untagged
@@ -49,3 +50,15 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 149b1e2b6b7290a2cabb22b19ca13ea6,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &8821075986248482503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741630210078666679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05dfb6a1adffb09ff94347518d19e551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
