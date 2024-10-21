@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 public class PlayerTeleport : MonoBehaviour
 {
     [SerializeField] private Rigidbody player;
-    [SerializeField] private Transform playerRotator;
     [SerializeField] private PlayerMovement playerMovement;
-    private readonly float teleportDistanceMultiplier = 2.5f;
-    private readonly float teleportCooldown = 2;
+    [SerializeField] private Transform boss;
+    [SerializeField] private Camera playerCamera; 
+    private readonly float teleportCooldown = 2f;
     private float timeSinceLastTeleport = 0;
+    private readonly float aimThreshold = 30f; 
+    private readonly float maxTeleportDistance = 10f; 
 
     public void OnTeleport(InputAction.CallbackContext context)
     {
@@ -16,18 +18,34 @@ public class PlayerTeleport : MonoBehaviour
         {
             if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
             timeSinceLastTeleport = Time.time;
-            player.velocity = new Vector3(0, 0, 0);
-            
-            //if no input is pressed, teleport in the direction the player is facing
-            if (playerMovement.movementInput == Vector2.zero)
+            player.velocity = Vector3.zero;
+
+            Vector3 movementInput = new Vector3(playerMovement.movementInput.x, 0, playerMovement.movementInput.y).normalized;
+
+            if (movementInput.z > 0)
             {
-                player.position += new Vector3(Mathf.Sin(playerRotator.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(playerRotator.eulerAngles.y * Mathf.Deg2Rad)) * teleportDistanceMultiplier;
+                Vector3 directionToBoss = (boss.position - player.position).normalized;
+
+                float angleToBoss = Vector3.Angle(playerCamera.transform.forward, directionToBoss);
+
+                if (angleToBoss <= aimThreshold)
+                {
+                    float distanceToBoss = Vector3.Distance(player.position, boss.position);
+
+                    player.position += directionToBoss * distanceToBoss;
+                    return;
+                }
             }
-            //if input is pressed, teleport to the direction of the inputs
+
+            RaycastHit hit;
+            if (Physics.Raycast(player.position, movementInput, out hit, maxTeleportDistance))
+            {
+                player.position = hit.point - movementInput * 0.5f; 
+            }
             else
             {
-                player.position += new Vector3(playerMovement.movementInput.x, 0, playerMovement.movementInput.y) * teleportDistanceMultiplier;
-            }    
+                player.position += movementInput * maxTeleportDistance;
+            }
         }
     }
 }

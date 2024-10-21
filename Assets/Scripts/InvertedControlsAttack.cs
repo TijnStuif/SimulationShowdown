@@ -10,7 +10,6 @@ public class InvertedControlsAttack : MonoBehaviour, IAttack
 
     void Start()
     {
-        // Find the PlayerMovement component on the player GameObject
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
@@ -18,9 +17,7 @@ public class InvertedControlsAttack : MonoBehaviour, IAttack
     {
         if (playerMovement != null)
         {
-            // Toggle the inverted controls flag
             playerMovement.areControlsInverted = !playerMovement.areControlsInverted;
-            Debug.Log($"Inverted controls: {playerMovement.areControlsInverted}");
         }
         else
         {

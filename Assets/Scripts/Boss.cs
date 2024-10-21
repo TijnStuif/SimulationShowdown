@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -8,7 +9,6 @@ public class Boss : MonoBehaviour
     public HealthBar healthBar;
     private int currentHealth;
     
-    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
@@ -23,10 +23,17 @@ public class Boss : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PlayerTag")
+        {
+            TakeDamage(50);
+        }
     }
 }
