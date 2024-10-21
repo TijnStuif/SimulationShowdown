@@ -16,10 +16,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            TakeDamage(10);
-        }
+        
     }
 
     // Update is called once per frame
@@ -27,5 +24,10 @@ public class Player : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        TakeDamage(10);
     }
 }
