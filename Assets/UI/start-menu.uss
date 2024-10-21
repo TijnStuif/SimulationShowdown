@@ -1,0 +1,21 @@
+/* for menu button specific attributes like the size */
+/* for visuals, please look at global.game-element */
+.menu-button {
+    height: 7%;
+    width: 50%;
+    align-self: center;
+    top: 60%;
+    font-size: 300%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.menu-button:hover:enabled {
+    scale: 1.25;
+    /* yup, global scope works */
+    border-color: var(--game-magenta--);
+}
+.menu-button:checked {
+    scale: 1.25;
+    border-color: var(--game-magenta--);
+}
+

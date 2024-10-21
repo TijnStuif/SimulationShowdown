@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/start-menu.uss?fileID=7433441132597879392&amp;guid=8bb899f1dca29f9a796bb1ba6c6b7856&amp;type=3#start-menu" />
+    <Style src="project://database/Assets/UI/global.uss?fileID=7433441132597879392&amp;guid=da8a0606667ca8dd990d22d4627269b4&amp;type=3#global" />
+    <ui:VisualElement name="start-menu" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
+        <ui:Label tabindex="-1" text="Title Name Pending" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" class="game-element" style="width: 50%; height: 10%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 90%; top: 20%; align-items: auto; align-self: center;" />
+        <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start" class="menu-button game-element game-cyan-border" />
+        <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="menu-button game-button game-element game-cyan-border" />
+    </ui:VisualElement>
+</ui:UXML>
