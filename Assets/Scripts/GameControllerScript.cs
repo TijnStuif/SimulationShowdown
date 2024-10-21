@@ -9,8 +9,8 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> environmentAttacks;
     private List<IAttack> directAttacks;
     private float timer;
-    public float minAttackInterval = 5f; 
-    public float maxAttackInterval = 15f; 
+    public float minAttackInterval = 3f; 
+    public float maxAttackInterval = 5f; 
 
     void Start()
     {
