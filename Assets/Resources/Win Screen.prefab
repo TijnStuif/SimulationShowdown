@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1885737595540383636}
   - component: {fileID: 8975865395753062281}
+  - component: {fileID: 8808140859118093684}
   m_Layer: 0
   m_Name: Win Screen
   m_TagString: Untagged
@@ -49,3 +50,15 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: aa109721657a67761b5c27f5f1fd1493,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &8808140859118093684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4311019253932802618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec82b63c6514f860afb0032bdacb8e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
