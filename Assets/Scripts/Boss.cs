@@ -8,6 +8,8 @@ public class Boss : MonoBehaviour
     public int maxHealth = 100;
     public HealthBar healthBar;
     private int currentHealth;
+    private bool damageLock;
+    // private float damageCooldownSeconds = 2f;
     
     void Start()
     {
@@ -22,9 +24,15 @@ public class Boss : MonoBehaviour
             TakeDamage(10);
         }
     }
+    
+    public void UnlockDamage() => damageLock = false;
+    public void LockDamage() => damageLock = true;
 
     public void TakeDamage(int damage)
     {
+        if (damageLock) return;
+        // LockDamage();
+        // Invoke(nameof(UnlockDamage), damageCooldownSeconds);
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
