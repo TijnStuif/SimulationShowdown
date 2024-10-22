@@ -10,7 +10,14 @@ public class PlayerTeleport : MonoBehaviour
     private readonly float teleportCooldown = 2f;
     private float timeSinceLastTeleport = 0;
     private readonly float aimThreshold = 30f; 
-    private readonly float maxTeleportDistance = 10f; 
+    private readonly float maxTeleportDistance = 10f;
+
+    // hotfix solution
+    private void Awake()
+    {
+        boss = GameObject.Find("Boss").transform;
+        playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
+    }
 
     public void OnTeleport(InputAction.CallbackContext context)
     {
