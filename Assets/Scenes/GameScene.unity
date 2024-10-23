@@ -7510,7 +7510,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -8615,8 +8615,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1510270406}
-  playerRotator: {fileID: 970736161}
   playerMovement: {fileID: 1510270407}
+  boss: {fileID: 1370669336}
+  playerCamera: {fileID: 1604870021}
 --- !u!114 &1510270411
 MonoBehaviour:
   m_ObjectHideFlags: 0

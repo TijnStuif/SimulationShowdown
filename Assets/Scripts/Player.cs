@@ -77,5 +77,9 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TakeDamage(10);
+        }
     }
 }
