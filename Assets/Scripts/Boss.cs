@@ -8,7 +8,6 @@ public class Boss : MonoBehaviour
     public HealthBar healthBar;
     private int currentHealth;
     
-    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
@@ -17,13 +16,12 @@ public class Boss : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDamage(10);
         }
     }
 
-    // Update is called once per frame
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
