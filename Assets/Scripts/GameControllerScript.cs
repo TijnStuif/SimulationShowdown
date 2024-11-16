@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Boss;
+using Boss.Attack;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -30,8 +32,8 @@ public class GameControllerScript : MonoBehaviour
         }
 
         // list of attacks per type
-        environmentAttacks = attacks.Where(attack => attack.Type == AttackType.Environment).ToList();
-        directAttacks = attacks.Where(attack => attack.Type == AttackType.Direct).ToList();
+        environmentAttacks = attacks.Where(attack => attack.Type == Type.Environment).ToList();
+        directAttacks = attacks.Where(attack => attack.Type == Type.Direct).ToList();
 
         SetRandomInterval(); 
     }
