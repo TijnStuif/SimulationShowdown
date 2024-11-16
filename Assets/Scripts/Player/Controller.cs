@@ -20,7 +20,7 @@ namespace Player
             // resources can be loaded like this when your resources is in the Assets/Resources folder
             try
             {
-                gameOverFab = Resources.Load<GameObject>("Prefabs/Game Over Screen");
+                gameOverFab = Resources.Load<GameObject>("Prefabs/UI/Game Over Screen");
                 gameOverDocument = Instantiate(gameOverFab).GetComponent<UIDocument>();
                 gameOverDocument.rootVisualElement.AddToClassList("hidden");
             }

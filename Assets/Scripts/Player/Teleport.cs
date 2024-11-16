@@ -1,3 +1,5 @@
+using System.Linq;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,17 +9,21 @@ namespace Player
     {
         [SerializeField] private Rigidbody player;
         [SerializeField] private Movement playerMovement;
-        [SerializeField] private Transform boss;
-        [SerializeField] private Camera playerCamera; 
+        
+        private Transform boss;
+        private Camera playerCamera; 
+        
         private readonly float teleportCooldown = 2f;
         private float timeSinceLastTeleport = 0;
         private readonly float aimThreshold = 30f; 
         private readonly float maxTeleportDistance = 10f;
 
-        // hotfix solution
         private void Awake()
         {
-            boss = GameObject.Find("Boss").transform;
+            // My solution to avoid GameObject.Find
+            // is finding a unique component of the object I need
+            // example: Boss.Controller class is only used for the Boss GameObject
+            boss = FindObjectOfType<Boss.Controller>().transform;
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
         }
 

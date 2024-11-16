@@ -5,11 +5,11 @@ namespace Player
 {
     public class Rotation : MonoBehaviour
     {
-        [SerializeField] private Transform playerRotator;
         [SerializeField] private Transform player;
         private Vector2 rotationInput;
         private float horizontalRotation;
         private readonly float rotationSpeed = 15;
+
 
         public void OnLook(InputAction.CallbackContext context)
         {
@@ -27,7 +27,7 @@ namespace Player
 
         void Update()
         {
-            playerRotator.Rotate(0, horizontalRotation * Time.deltaTime, 0);
+            transform.Rotate(0, horizontalRotation * Time.deltaTime, 0);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Boss
         {
             try
             {
-                winDocument = Instantiate(Resources.Load<GameObject>("Prefabs/Win Screen")).GetComponent<UIDocument>();
+                winDocument = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Win Screen")).GetComponent<UIDocument>();
                 winDocument.rootVisualElement.AddToClassList("hidden");
             }
             catch (ArgumentException)

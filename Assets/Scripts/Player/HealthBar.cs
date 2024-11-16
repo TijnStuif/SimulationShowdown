@@ -5,9 +5,15 @@ namespace Player
 {
     public class HealthBar : MonoBehaviour
     {
-        public Slider slider;
-        public Image fill;
-        
+        private Slider slider;
+        private Image fill;
+
+        private void Awake()
+        {
+            slider = GetComponentInChildren<Slider>();
+            fill = GetComponentInChildren<Image>();
+        }
+
         public void SetMaxHealth(int health)
         {
             slider.maxValue = health;
