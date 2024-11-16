@@ -1,0 +1,19 @@
+.unity-progress-bar__container
+{
+    min-height: 75px;
+    max-height: 75px;
+
+}
+
+.unity-progress-bar__progress
+{
+    background-color: rgb(10, 197, 4);
+    margin: 0px;
+}
+
+.unity-progress-bar__background
+{
+    background-color: rgb(255, 0, 0);
+    border-color: rgb(0, 0, 0);
+    border-width: 5px;
+}
