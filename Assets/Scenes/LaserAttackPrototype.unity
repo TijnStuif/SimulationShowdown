@@ -10489,6 +10489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02336f8fb30ca244bfc8ed29d7ab008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenuFab: {fileID: 0}
   minAttackInterval: 3
   maxAttackInterval: 5
 --- !u!4 &1758018637
