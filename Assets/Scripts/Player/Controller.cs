@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -11,15 +12,22 @@ namespace Player
         private int currentHealth;
         private GameObject gameOverFab;
         private UIDocument gameOverDocument;
-        private bool lost = false;
+        private bool lost;
 
         private void Awake()
         {
             // loading resource like this so I don't need to modify the scene
             // resources can be loaded like this when your resources is in the Assets/Resources folder
-            gameOverFab = Resources.Load<GameObject>("Game Over Screen");
-            gameOverDocument = Instantiate(gameOverFab).GetComponent<UIDocument>();
-            gameOverDocument.rootVisualElement.AddToClassList("hidden");
+            try
+            {
+                gameOverFab = Resources.Load<GameObject>("Prefabs/Game Over Screen");
+                gameOverDocument = Instantiate(gameOverFab).GetComponent<UIDocument>();
+                gameOverDocument.rootVisualElement.AddToClassList("hidden");
+            }
+            catch (ArgumentException)
+            {
+               Debug.LogError("ERROR: prefab path is invalid, have you considered creating a resource manager?"); 
+            }
         }
 
         void Start()

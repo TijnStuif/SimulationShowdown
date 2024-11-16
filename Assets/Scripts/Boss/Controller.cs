@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -15,8 +16,15 @@ namespace Boss
         // private float damageCooldownSeconds = 2f;
         void Awake()
         {
-            winDocument = Instantiate(Resources.Load<GameObject>("Win Screen")).GetComponent<UIDocument>();
-            winDocument.rootVisualElement.AddToClassList("hidden");
+            try
+            {
+                winDocument = Instantiate(Resources.Load<GameObject>("Prefabs/Win Screen")).GetComponent<UIDocument>();
+                winDocument.rootVisualElement.AddToClassList("hidden");
+            }
+            catch (ArgumentException)
+            {
+                Debug.LogError("ERROR: prefab path is invalid, have you considered creating a resource manager?");
+            }
         }
 
         void Start()

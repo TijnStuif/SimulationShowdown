@@ -7,6 +7,7 @@ namespace Player
     {
         public Slider slider;
         public Image fill;
+        
         public void SetMaxHealth(int health)
         {
             slider.maxValue = health;
