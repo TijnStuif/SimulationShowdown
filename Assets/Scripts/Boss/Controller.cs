@@ -13,18 +13,13 @@ namespace Boss
         private bool damageLock;
         private bool playerWon;
         private UIDocument winDocument;
-        // private float damageCooldownSeconds = 2f;
+        [SerializeField] private GameObject winDocumentPrefab;
+        
         void Awake()
         {
-            try
-            {
-                winDocument = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Win Screen")).GetComponent<UIDocument>();
-                winDocument.rootVisualElement.AddToClassList("hidden");
-            }
-            catch (ArgumentException)
-            {
-                Debug.LogError("ERROR: prefab path is invalid, have you considered creating a resource manager?");
-            }
+            var winDocumentObj = Instantiate(winDocumentPrefab);
+            winDocument = winDocumentObj.GetComponent<UIDocument>();
+            winDocument.rootVisualElement.AddToClassList("hidden");
         }
 
         void Start()

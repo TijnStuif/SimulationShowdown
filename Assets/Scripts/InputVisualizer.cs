@@ -3,11 +3,18 @@ using UnityEngine.UIElements;
 
 public class InputVisualizer : MonoBehaviour
 {
-    public UIDocument uiDocument;
+    [SerializeField] private GameObject uiDocumentPrefab;
+    private UIDocument uiDocument;
     private VisualElement WKeyContainer;
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
+
+    private void Awake()
+    {
+        var uiDocumentObj = Instantiate(uiDocumentPrefab);
+        uiDocument = uiDocumentObj.GetComponent<UIDocument>();
+    }
 
     void Start()
     {

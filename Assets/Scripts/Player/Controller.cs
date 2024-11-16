@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
@@ -10,7 +10,7 @@ namespace Player
         public int maxHealth = 100;
         public HealthBar healthBar;
         private int currentHealth;
-        private GameObject gameOverFab;
+        [SerializeField] private GameObject gameOverPrefab;
         private UIDocument gameOverDocument;
         private bool lost;
 
@@ -18,16 +18,8 @@ namespace Player
         {
             // loading resource like this so I don't need to modify the scene
             // resources can be loaded like this when your resources is in the Assets/Resources folder
-            try
-            {
-                gameOverFab = Resources.Load<GameObject>("Prefabs/UI/Game Over Screen");
-                gameOverDocument = Instantiate(gameOverFab).GetComponent<UIDocument>();
+                gameOverDocument = Instantiate(gameOverPrefab).GetComponent<UIDocument>();
                 gameOverDocument.rootVisualElement.AddToClassList("hidden");
-            }
-            catch (ArgumentException)
-            {
-               Debug.LogError("ERROR: prefab path is invalid, have you considered creating a resource manager?"); 
-            }
         }
 
         void Start()

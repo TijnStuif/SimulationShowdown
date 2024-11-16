@@ -5,11 +5,16 @@ namespace Boss.Attack
     public class Laser : MonoBehaviour, IAttack
     {
         public Type Type => Type.Direct;
-        [SerializeField] private Transform laserIndicator;
-        [SerializeField] private GameObject laserAttack;
-        [SerializeField] private GameObject player;
-        [SerializeField] private Player.Controller playerScript;
-        [SerializeField] private Transform boss;
+        private GameObject laserIndicator;
+        private GameObject laserAttack;
+        private GameObject player;
+        private Player.Controller playerScript;
+        private GameObject boss;
+        //
+        
+        [SerializeField] private GameObject indicatorPrefab;
+        [SerializeField] private GameObject attackPrefab;
+        
         private Vector3 indicatorStartPos = new(20, 0, 0);
         private Vector3 laserStartPos = new(25, 0, 0);
         private float laserLength;
@@ -18,6 +23,13 @@ namespace Boss.Attack
 
         private void Awake()
         {
+            laserIndicator = Instantiate(indicatorPrefab);
+            laserAttack = Instantiate(attackPrefab);
+            playerScript = FindObjectOfType<Player.Controller>();
+            player = playerScript.gameObject;
+            boss = FindObjectOfType<Boss.Controller>().gameObject;
+            ResetLaser();
+            
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
         }
     
@@ -31,7 +43,7 @@ namespace Boss.Attack
 
         private void SetIndicatorToPlayer()
         {
-            laserIndicator.transform.position = boss.transform.position + laserLength * Vector3.Normalize(player.transform.position - boss.position);
+            laserIndicator.transform.position = boss.transform.position + laserLength * Vector3.Normalize(player.transform.position - boss.transform.position);
             laserIndicator.transform.LookAt(player.transform);
         }
 
@@ -43,6 +55,7 @@ namespace Boss.Attack
 
         private void ResetLaser()
         {
+            laserIndicator.transform.position = indicatorStartPos;
             laserAttack.transform.position = laserStartPos;
         }
 
@@ -50,6 +63,7 @@ namespace Boss.Attack
         {
             if (other.gameObject.CompareTag("player"))
             {
+                // This should be handled with events ! ! !
                 playerScript.TakeDamage(damage);
             }
         }

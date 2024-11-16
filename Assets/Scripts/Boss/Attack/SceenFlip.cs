@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Boss.Attack
@@ -6,29 +7,35 @@ namespace Boss.Attack
     {
         public Type Type => Type.Environment;
 
-        public Transform PlayerCamera;
+        private Transform playerCamera;
 
         private bool isFlipped = false;
 
+        private void Awake()
+        {
+            // find PlayerFollower (this object is under Player)
+            playerCamera = FindObjectOfType<Player.Rotation>().gameObject.transform;
+        }
+
         public void Execute()
         {
-            if (PlayerCamera != null)
+            if (playerCamera != null)
             {
                 // flip the camera
                 if (isFlipped)
                 {
-                    PlayerCamera.localRotation = Quaternion.Euler(0, 0, 0);
-                    PlayerCamera.position = new Vector3(PlayerCamera.position.x, PlayerCamera.position.y - 2, PlayerCamera.position.z);
+                    playerCamera.localRotation = Quaternion.Euler(0, 0, 0);
+                    playerCamera.position = new Vector3(playerCamera.position.x, playerCamera.position.y - 2, playerCamera.position.z);
                 }
                 else
                 {
-                    PlayerCamera.localRotation =  Quaternion.Euler(0, 0, 180);
-                    PlayerCamera.position = new Vector3(PlayerCamera.position.x, PlayerCamera.position.y + 2, PlayerCamera.position.z);
+                    playerCamera.localRotation =  Quaternion.Euler(0, 0, 180);
+                    playerCamera.position = new Vector3(playerCamera.position.x, playerCamera.position.y + 2, playerCamera.position.z);
                 }
 
                 isFlipped = !isFlipped;
 
-                Debug.Log($"Screen flipped. Camera rotation: {PlayerCamera.localRotation.eulerAngles}");
+                Debug.Log($"Screen flipped. Camera rotation: {playerCamera.localRotation.eulerAngles}");
             }
             else
             {
