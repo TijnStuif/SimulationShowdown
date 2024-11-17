@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 namespace Player
 {
@@ -12,14 +11,14 @@ namespace Player
         private int currentHealth;
         [SerializeField] private GameObject gameOverPrefab;
         private UIDocument gameOverDocument;
-        private bool lost;
+        
+        public StateController StateController { private get; set; }
+        private bool Lost { get; set; }
 
         private void Awake()
         {
-            // loading resource like this so I don't need to modify the scene
-            // resources can be loaded like this when your resources is in the Assets/Resources folder
-                gameOverDocument = Instantiate(gameOverPrefab).GetComponent<UIDocument>();
-                gameOverDocument.rootVisualElement.AddToClassList("hidden");
+            gameOverDocument = Instantiate(gameOverPrefab).GetComponent<UIDocument>();
+            gameOverDocument.rootVisualElement.AddToClassList("hidden");
         }
 
         void Start()
@@ -59,6 +58,11 @@ namespace Player
             if (bossController != null) bossController.UnlockDamage(); 
         }
 
+        public void OnPause(InputAction.CallbackContext c)
+        {
+            StateController.TogglePause();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             TakeDamage(10);
@@ -66,12 +70,10 @@ namespace Player
 
         private void Update()
         {
-            if (currentHealth <= 0 && lost == false)
+            if (currentHealth <= 0 && Lost == false)
             {
-                lost = true;
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Lost = true;
+                StateController.FreezeState();
                 gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
             }
             if (Input.GetKeyDown(KeyCode.J))
