@@ -11,7 +11,7 @@ public class PlayerHealthbar : MonoBehaviour
     public Transform player;
     VisualElement healthbar;
     public Camera cam;
-    
+    public UIDocument healthbarDocument;
    
     private void Awake()
     {
@@ -19,21 +19,21 @@ public class PlayerHealthbar : MonoBehaviour
         UIDocument m_uiDocument = GetComponent<UIDocument>();
         Debug.Log(m_uiDocument);
 
-        // root = GetComponent<UIDocument>().rootVisualElement;
-        // Debug.Log(GetComponent<UIDocument>().rootVisualElement);
+        root = GetComponent<UIDocument>().rootVisualElement;
+        Debug.Log(GetComponent<UIDocument>().rootVisualElement);
 
 
-        // VisualTreeAsset healthbarAsset = Resources.Load<VisualTreeAsset>("HUD Visual Tree");
-        // healthbar = healthbarAsset.Instantiate();
+        VisualTreeAsset healthbarAsset = Resources.Load<VisualTreeAsset>("HUD Visual Tree");
+        healthbar = healthbarAsset.Instantiate();
 
-        // root.Add(healthbar);
+        root.Add(healthbar);
     }
 
     private void Update()
     {
         Vector3 screen = cam.WorldToScreenPoint(player.position);
-        //healthbar.style.left = screen.x - (healthbar.layout.width / 2);
-        //healthbar.style.top = Screen.height - screen.y - 100;
+        healthbar.style.left = screen.x - (healthbar.layout.width / 2);
+        healthbar.style.top = Screen.height - screen.y - 100;
     }
 
 
