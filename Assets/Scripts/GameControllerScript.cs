@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Boss;
+using Boss.Attack;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
@@ -11,14 +14,14 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> directAttacks;
     private float timer;
     private GameObject pauseMenu;
-    [SerializeField] private GameObject pauseMenuFab;
+    [SerializeField] private GameObject pauseMenuPrefab;
     public float minAttackInterval = 5f; 
     public float maxAttackInterval = 15f;
     public static bool GamePaused;
 
     void Start()
     {
-        pauseMenu = Instantiate(pauseMenuFab);
+        pauseMenu = Instantiate(pauseMenuPrefab);
         pauseMenu.GetComponent<UIDocument>().rootVisualElement.AddToClassList("hidden");
         // Gets all the objects in the scene that have the IAttack interface
         attacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
@@ -30,8 +33,8 @@ public class GameControllerScript : MonoBehaviour
         }
 
         // list of attacks per type
-        environmentAttacks = attacks.Where(attack => attack.Type == AttackType.Environment).ToList();
-        directAttacks = attacks.Where(attack => attack.Type == AttackType.Direct).ToList();
+        environmentAttacks = attacks.Where(attack => attack.Type == Type.Environment).ToList();
+        directAttacks = attacks.Where(attack => attack.Type == Type.Direct).ToList();
 
         SetRandomInterval(); 
     }
