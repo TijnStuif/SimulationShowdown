@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class PlayerHealthbar : MonoBehaviour
 {
-    VisualElement root;
+    VisualElement m_uiDocument;
     public Transform player;
     VisualElement healthbar;
     public Camera cam;
@@ -15,18 +15,14 @@ public class PlayerHealthbar : MonoBehaviour
    
     private void Awake()
     {
-
-        UIDocument m_uiDocument = GetComponent<UIDocument>();
-        Debug.Log(m_uiDocument);
-
-        root = GetComponent<UIDocument>().rootVisualElement;
+        m_uiDocument = GetComponent<UIDocument>().rootVisualElement;
         Debug.Log(GetComponent<UIDocument>().rootVisualElement);
 
 
-        VisualTreeAsset healthbarAsset = Resources.Load<VisualTreeAsset>("HUD Visual Tree");
-        healthbar = healthbarAsset.Instantiate();
+        VisualTreeAsset healthbarAsset = Resources.Load<VisualTreeAsset>("HUD");
+         healthbar = m_uiDocument.Q<VisualElement>("healthbar");
 
-        root.Add(healthbar);
+        m_uiDocument.Add(healthbar);
     }
 
     private void Update()
