@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
     public int maxHealth = 100;
     public HealthBar healthBar;
-    private int currentHealth;
+    public int currentHealth;
     private GameObject gameOverFab;
     private UIDocument gameOverDocument;
     private bool lost = false;
