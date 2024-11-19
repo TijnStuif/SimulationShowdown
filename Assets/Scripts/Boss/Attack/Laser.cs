@@ -1,8 +1,10 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class Laser : MonoBehaviour, IAttack
+    public class Laser : DamageAttack, IAttack
     {
         public Type Type => Type.Direct;
         private GameObject laserIndicator;
@@ -19,7 +21,7 @@ namespace Boss.Attack
         private Vector3 laserStartPos = new(25, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
-        private int damage = 10;
+        
 
         private void Awake()
         {
@@ -31,6 +33,7 @@ namespace Boss.Attack
             ResetLaser();
             
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
+            Damage = 20;
         }
     
         // the Execute method is called when the attack is executed
@@ -57,15 +60,6 @@ namespace Boss.Attack
         {
             laserIndicator.transform.position = indicatorStartPos;
             laserAttack.transform.position = laserStartPos;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("player"))
-            {
-                // This should be handled with events ! ! !
-                playerScript.TakeDamage(damage);
-            }
         }
     }
 }

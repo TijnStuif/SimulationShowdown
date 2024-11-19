@@ -1,3 +1,5 @@
+using System;
+using Boss.Attack;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -26,6 +28,7 @@ namespace Player
         {
             currentHealth = maxHealth;
             healthBar.SetMaxHealth(maxHealth);
+            DamageAttack.PlayerDamaged += TakeDamage;
         }
 
         public void TakeDamage(int damage)
@@ -59,11 +62,6 @@ namespace Player
             if (bossController != null) bossController.UnlockDamage(); 
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            TakeDamage(10);
-        }
-
         private void Update()
         {
             if (currentHealth <= 0 && lost == false)
@@ -73,10 +71,6 @@ namespace Player
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
-            }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                TakeDamage(10);
             }
         }
     }

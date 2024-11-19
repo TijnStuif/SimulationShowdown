@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class CloseRange : MonoBehaviour, IAttack
+    public class CloseRange : DamageAttack, IAttack
     { 
         public Type Type => Type.Direct;
         
@@ -23,6 +23,7 @@ namespace Boss.Attack
             CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
             // move them far away
             Reset();
+            Damage = 40;
         }
 
         public void Execute()

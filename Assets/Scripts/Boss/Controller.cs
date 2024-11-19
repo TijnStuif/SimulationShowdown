@@ -38,10 +38,6 @@ namespace Boss
                 Cursor.lockState = CursorLockMode.None;
                 winDocument.rootVisualElement.RemoveFromClassList("hidden");
             }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                TakeDamage(10);
-            }
         }
     
         public void UnlockDamage() => damageLock = false;
