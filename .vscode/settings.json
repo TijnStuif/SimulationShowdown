@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Boss Fight groepsproject.sln"
+    "dotnet.defaultSolution": "SimulationShowdown.sln"
 }

@@ -29,7 +29,6 @@ namespace PauseMenu
 
         private void OnResumeClicked(ClickEvent evt)
         {
-            Debug.Log("hey!\nlisten!");
             // disable pause menu
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
