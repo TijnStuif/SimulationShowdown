@@ -31,10 +31,23 @@ namespace Player
             DamageAttack.PlayerDamaged += TakeDamage;
         }
 
+        private void Update()
+        {
+            if (currentHealth <= 0 && lost == false)
+            {
+                lost = true;
+                Time.timeScale = 0;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
+            }
+        }
+
         public void TakeDamage(int damage)
         {   
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+            Debug.Log("Took damage");
         }
         // hotfix
         // I think aside from how the boss is identified, this isn't a bad solution
@@ -60,18 +73,6 @@ namespace Player
             var bossController = other.gameObject.GetComponent<Boss.Controller>();
             // if bossController exists, it can now be damaged again
             if (bossController != null) bossController.UnlockDamage(); 
-        }
-
-        private void Update()
-        {
-            if (currentHealth <= 0 && lost == false)
-            {
-                lost = true;
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
-            }
-        }
+        }        
     }
 }

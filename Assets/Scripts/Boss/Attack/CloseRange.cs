@@ -30,7 +30,7 @@ namespace Boss.Attack
         {
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackIndicatorPosition;
             Invoke(nameof(InitiateCloseRangeAttack), 2f);
-            Invoke(nameof(Reset), 5f);
+            Invoke(nameof(Reset), 3f);
         }
         
         public void InitiateCloseRangeAttack()
@@ -42,6 +42,15 @@ namespace Boss.Attack
         {
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackOriginalPosition;
             CloseRangeAttackObject.transform.position = CloseRangeAttackOriginalPosition;
+        }
+
+        protected override void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("HELP ME");
+            if (other.gameObject.CompareTag("PlayerTag"))
+            {
+                InvokePlayerDamaged(Damage);
+            }
         }
     }
 }

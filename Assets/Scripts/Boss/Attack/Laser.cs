@@ -13,15 +13,15 @@ namespace Boss.Attack
         private Player.Controller playerScript;
         private GameObject boss;
         //
-        
+
         [SerializeField] private GameObject indicatorPrefab;
         [SerializeField] private GameObject attackPrefab;
-        
+
         private Vector3 indicatorStartPos = new(20, 0, 0);
         private Vector3 laserStartPos = new(25, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
-        
+
 
         private void Awake()
         {
@@ -31,11 +31,11 @@ namespace Boss.Attack
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             ResetLaser();
-            
+
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
             Damage = 20;
         }
-    
+
         // the Execute method is called when the attack is executed
         public void Execute()
         {
@@ -60,6 +60,15 @@ namespace Boss.Attack
         {
             laserIndicator.transform.position = indicatorStartPos;
             laserAttack.transform.position = laserStartPos;
+        }
+
+        protected override void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("HELP ME");
+            if (other.gameObject.CompareTag("PlayerTag"))
+            {
+                InvokePlayerDamaged(Damage);
+            }
         }
     }
 }
