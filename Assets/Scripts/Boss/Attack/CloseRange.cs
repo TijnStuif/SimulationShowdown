@@ -23,7 +23,7 @@ namespace Boss.Attack
             CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
             // move them far away
             Reset();
-            Damage = 40;
+            Damage = 10;
         }
 
         public void Execute()
@@ -42,15 +42,6 @@ namespace Boss.Attack
         {
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackOriginalPosition;
             CloseRangeAttackObject.transform.position = CloseRangeAttackOriginalPosition;
-        }
-
-        protected override void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("HELP ME");
-            if (other.gameObject.CompareTag("PlayerTag"))
-            {
-                InvokePlayerDamaged(Damage);
-            }
         }
     }
 }

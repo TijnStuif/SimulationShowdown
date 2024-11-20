@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3723520675400295449}
   - component: {fileID: 1153496618101127667}
   - component: {fileID: 6638662999470578978}
+  - component: {fileID: 523170624407791443}
   m_Layer: 0
   m_Name: CloseRangeAttack
   m_TagString: Untagged
@@ -107,3 +108,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &523170624407791443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535184723765269125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77b47d279efa545abca8ac71ab0a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CloseRangeAttackIndicatorPrefab: {fileID: 3963165450850657802, guid: 78c6d5fe5e179651b8180e3cfe3982a8,
+    type: 3}
+  CloseRangeAttackObjectPrefab: {fileID: 2535184723765269125}

@@ -33,7 +33,7 @@ namespace Boss.Attack
             ResetLaser();
 
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
-            Damage = 20;
+            Damage = 25;
         }
 
         // the Execute method is called when the attack is executed
@@ -60,15 +60,6 @@ namespace Boss.Attack
         {
             laserIndicator.transform.position = indicatorStartPos;
             laserAttack.transform.position = laserStartPos;
-        }
-
-        protected override void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("HELP ME");
-            if (other.gameObject.CompareTag("PlayerTag"))
-            {
-                InvokePlayerDamaged(Damage);
-            }
         }
     }
 }
