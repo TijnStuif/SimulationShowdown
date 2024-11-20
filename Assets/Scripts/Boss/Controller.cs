@@ -8,7 +8,7 @@ namespace Boss
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
-        public int currentHealth;
+        [HideInInspector] public int currentHealth;
         private bool damageLock;
         private bool playerWon;
         private UIDocument winDocument;

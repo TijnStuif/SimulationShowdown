@@ -8,7 +8,7 @@ namespace Player
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
-        public int currentHealth;
+        [HideInInspector] public int currentHealth;
         [SerializeField] private GameObject gameOverPrefab;
         private UIDocument gameOverDocument;
         private bool lost;
