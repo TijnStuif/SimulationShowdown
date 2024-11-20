@@ -14,7 +14,6 @@ public class PlayerHealthbar : MonoBehaviour
     ProgressBar progressbar;
     public Camera cam;
     public UIDocument healthbarDocument;
-    Player currentHealth;
    
     private void Awake()
     {
@@ -33,12 +32,12 @@ public class PlayerHealthbar : MonoBehaviour
         //Access the health of the player from the player script
         int health = GameObject.Find("Player").GetComponent<Player>().currentHealth;
 
-        //sets the haelthbar to a screenpoint
+        //sets the healthbar to a screenpoint on the player position
         Vector3 screen = cam.WorldToScreenPoint(player.position);
 
         //adjust the position and value of the healthbar
-        healthbar.style.top = player.position.y - 310;
-        healthbar.style.width = 200;
+        healthbar.style.top = player.position.y - 230;
+        healthbar.style.width = 150;
         healthbar.style.height = 10;
         progressbar.value = health;
     }

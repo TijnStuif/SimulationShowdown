@@ -1,19 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class HealthBar : MonoBehaviour
+public class UIToolkitBossHealthbar : MonoBehaviour
 {
-
     VisualElement m_uiDocument;
-    public Transform player;
     VisualElement healthbar;
     ProgressBar progressbar;
-    public Camera cam;
     public UIDocument healthbarDocument;
-    Player currentHealth;
+    Boss currentHealth;
+
    
     private void Awake()
     {
@@ -30,31 +27,13 @@ public class HealthBar : MonoBehaviour
     private void Update()
     {
         //Access the health of the player from the player script
-        int health = GameObject.Find("Player").GetComponent<Player>().currentHealth;
+        int health = GameObject.Find("Boss").GetComponent<Boss>().currentHealth;
 
-
-        //adjust the position and value of the healthbar
-        healthbar.style.top = 310;
-        healthbar.style.width = 200;
-        healthbar.style.height = 10;
+        //adjust the value of the healthbar
         progressbar.value = health;
     }
 
 
 
 
-
-
-    public UnityEngine.UI.Slider slider;
-    public UnityEngine.UI.Image fill;
-    public void SetMaxHealth(int health)
-    {
-        slider.maxValue = health;
-        slider.value = health;
-    }
-
-    public void SetHealth(int health)
-    {
-        slider.value = health;
-    }
 }

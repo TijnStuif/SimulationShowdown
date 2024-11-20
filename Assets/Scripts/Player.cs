@@ -8,7 +8,6 @@ using Cursor = UnityEngine.Cursor;
 public class Player : MonoBehaviour
 {
     public int maxHealth = 100;
-    public HealthBar healthBar;
     public int currentHealth;
     private GameObject gameOverFab;
     private UIDocument gameOverDocument;
@@ -26,13 +25,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
     }
 
     public void TakeDamage(int damage)
     {   
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
     }
     // hotfix
     // I think aside from how the boss is identified, this isn't a bad solution
