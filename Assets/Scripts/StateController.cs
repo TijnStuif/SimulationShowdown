@@ -1,13 +1,72 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
+using State = Player.State;
 
+/// <summary>
+/// This class handles state change events and is able to change state such as
+/// game-overing, pausing, freezing state, etc.
+/// It's also a singleton although the Instance has a private access level
+/// so it's not globally accessible but there's only one instance
+/// </summary>
 public class StateController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuPrefab;
-    private UIDocument m_pauseMenuDocument;
+    /// <summary>
+    /// Exception for when a state event handler is not implemented yet
+    /// (Message is overridden)
+    /// </summary>
+    private class StateHandlerNotImplementedException : NotImplementedException
+    {
+        public override string Message => "ERROR: State handler hasn't been implemented in StateController";
+    }
+    
+    /// <summary>
+    /// Exception for if a script was not found
+    /// (Message is based on the script that couldn't be found)
+    /// </summary>
+    private class ScriptNotFoundException : NullReferenceException
+    {
+        public new string Message { get; set; }
+
+        public ScriptNotFoundException(MonoBehaviour script)
+        {
+            Message = $"ERROR: Could not find script: {script.name}";
+        }
+        public ScriptNotFoundException()
+        {
+            Message = "ERROR: Could not find script";
+        }
+    }
+    
+    // prefabs
+    [SerializeField] private GameObject m_pauseMenuPrefab;
+    [SerializeField] private GameObject m_gameOverScreenPrefab;
+    [SerializeField] private GameObject m_winScreenPrefab;
+    
+    // object instances
+    private GameObject m_pauseMenu;
+    private GameObject m_gameOverScreen;
+    private GameObject m_winScreen;
+    
+    // controller scripts
+    private Player.Controller m_playerController;
+    private Boss.Controller m_bossController;
+    
+    // UI controller scripts
+    private PauseMenu.Controller m_pauseMenuController;
+    private GameOverScreen.Controller m_gameOverScreenController;
+    private WinScreen.Controller m_winScreenController;
+
+    private List<AbstractUiController> UiScripts { get; set; }
+    
     private bool m_gamePaused;
+    
+    /// <summary>
+    /// prevents the game to be paused
+    /// </summary>
+    private bool PauseLock { get; set; }
 
     // pseudo singleton which ensures there is no other instance of this class,
     // while not giving any other class access to the instance
@@ -31,31 +90,191 @@ public class StateController : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(this);
-            throw new InvalidOperationException("Can't call awake.\nStateController should only have one instance!");
+            throw new InvalidOperationException("ERROR: Can't call Awake.\nStateController should only have one instance!");
         }
         else
             Instance = this;
         
-        // instantiate pause menu
-        GameObject pauseObj = Instantiate(pauseMenuPrefab);
-        m_pauseMenuDocument = pauseObj.GetComponent<UIDocument>();
-        // hide pause menu
-        m_pauseMenuDocument.rootVisualElement.AddToClassList("hidden");
-        AssignReferences();
+        InitMenus();
     }
 
-    private void AssignReferences()
+    private void InitMenus()
     {
-        // give pause menu controller a reference to self
-        m_pauseMenuDocument.gameObject.GetComponent<PauseMenu.Controller>().StateController = this;
-        // give player controller a reference to self
-        FindObjectOfType<Player.Controller>().StateController = this;
+        InitMenuObjects();
+        InitControllerScripts();
+        HideAllMenus();
+    }
+
+    private void InitMenuObjects()
+    {
+        m_pauseMenu = Instantiate(m_pauseMenuPrefab);
+        m_gameOverScreen = Instantiate(m_gameOverScreenPrefab);
+        m_winScreen = Instantiate(m_winScreenPrefab);
+    }
+
+    private void InitControllerScripts()
+    {
+        UiScripts = new List<AbstractUiController>(3);
+
+        // assign script, if it's null, throw exception
+        if ((m_playerController = FindObjectOfType<Player.Controller>()) == null)
+            throw new ScriptNotFoundException(m_playerController);
+
+        if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
+            throw new ScriptNotFoundException(m_bossController);
+
+        if ((m_pauseMenuController = m_pauseMenu.GetComponent<PauseMenu.Controller>()) == null)
+            throw new ScriptNotFoundException(m_pauseMenuController);
+        else
+            UiScripts.Add(m_pauseMenuController);
+
+        if ((m_gameOverScreenController = m_gameOverScreen.GetComponent<GameOverScreen.Controller>()) == null)
+            throw new ScriptNotFoundException(m_gameOverScreenController);
+        else
+            UiScripts.Add(m_gameOverScreenController);
+
+        if ((m_winScreenController = m_winScreen.GetComponent<WinScreen.Controller>()) == null)
+            throw new ScriptNotFoundException(m_winScreenController);
+        else
+            UiScripts.Add(m_winScreenController);
+    }
+
+    private void HideAllMenus()
+    {
+        foreach (var script in UiScripts)
+        {
+            script.Hide();
+        }
+    }
+
+    private void SubscribeToEvents()
+    {
+        m_bossController.Death += OnBossDeath;
+        m_playerController.StateChange += OnPlayerStateChange;
+        m_pauseMenuController.StateChange += OnPauseMenuStateChange;
+        m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;
+        m_winScreenController.StateChange += OnWinScreenStateChange;
+    }
+    
+    private void UnsubscribeFromEvents()
+    {
+        m_playerController.StateChange -= OnPlayerStateChange;
+        m_pauseMenuController.StateChange -= OnPauseMenuStateChange;
+        m_gameOverScreenController.StateChange -= OnGameOverScreenStateChange;
+        m_winScreenController.StateChange -= OnWinScreenStateChange;
+    }
+
+    private void OnEnable()
+    {
+        SubscribeToEvents();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeFromEvents();
+    }
+
+    private void OnBossDeath()
+    {
+        Win();
+    }
+
+    private void OnPlayerStateChange(Player.State state)
+    {
+        switch (state)
+        {
+            case State.Loss:
+                Lose();
+                break; 
+            case State.Pause:
+                TogglePause();
+                break;     
+            default:
+                throw new StateHandlerNotImplementedException();
+        }
+    }
+
+    private void OnPauseMenuStateChange(PauseMenu.State state)
+    {
+        switch (state)
+        {
+            case PauseMenu.State.ResumeGame:
+                Unpause();
+                break;
+            case PauseMenu.State.ReturnToTitleScreen:
+                ReturnToTitle();
+                break;
+            case PauseMenu.State.Exit:
+                throw new NotImplementedException("ERROR: Still have to implement quitting the game");
+            default:
+                throw new StateHandlerNotImplementedException();
+        }
+    }
+
+    private void OnGameOverScreenStateChange(GameOverScreen.State state)
+    {
+        switch (state)
+        {
+            case GameOverScreen.State.ReturnToTitleScreen:
+                ReturnToTitle();
+                break;
+            case GameOverScreen.State.Restart:
+                RestartScene();
+                break;
+            default:
+                throw new StateHandlerNotImplementedException();
+        }
+    }
+
+    private void OnWinScreenStateChange(WinScreen.State state)
+    {
+        switch (state)
+        {
+            case WinScreen.State.ReturnToTitleScreen:
+                ReturnToTitle();
+                break;
+            case WinScreen.State.Restart:
+                RestartScene();
+                break;
+            default:
+                throw new StateHandlerNotImplementedException();
+        }
+    }
+
+    private void Win()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; 
+        PauseLock = true; 
+        FreezeState(); 
+        m_winScreenController.Show();
+    }
+
+    private void Lose()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        PauseLock = true;
+        FreezeState();
+        m_gameOverScreenController.Show();
+    }
+
+    private void ReturnToTitle()
+    {
+        ThawState();
+        SceneManager.LoadScene("StartMenu");
+    }
+
+    private void RestartScene()
+    {
+        ThawState();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
     /// freeze/pause any operations using delta time
     /// </summary>
-    public void FreezeState()
+    private void FreezeState()
     {
         Time.timeScale = 0f;
         StatePaused = true;
@@ -64,7 +283,7 @@ public class StateController : MonoBehaviour
     /// <summary>
     /// thaw/resume any operations using delta time
     /// </summary>
-    public void ThawState()
+    private void ThawState()
     {
         Time.timeScale = 1f;
         StatePaused = false;
@@ -73,7 +292,7 @@ public class StateController : MonoBehaviour
     /// <summary>
     /// toggle any operations using delta time
     /// </summary>
-    public void ToggleState()
+    private void ToggleState()
     {
         if (StatePaused)
             ThawState();
@@ -84,11 +303,12 @@ public class StateController : MonoBehaviour
     /// <summary>
     /// pauses game by freezing state and showing pause menu
     /// </summary>
-    public void Pause()
+    private void Pause()
     {
-        Debug.Log("pausing game!");
-        m_pauseMenuDocument.rootVisualElement.RemoveFromClassList("hidden");
+        if (PauseLock) return;
+        
         FreezeState();
+        m_pauseMenuController.Show();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         GamePaused = true;
@@ -97,21 +317,25 @@ public class StateController : MonoBehaviour
     /// <summary>
     /// unpauses game by thawing/resuming state and hiding pause menu
     /// </summary>
-    public void Unpause()
+    private void Unpause()
     {
-        Debug.Log("unpausing game!");
-        m_pauseMenuDocument.rootVisualElement.AddToClassList("hidden");
-        ThawState();
-        Cursor.lockState = CursorLockMode.Locked;
+        if (PauseLock) return;
+        
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        m_pauseMenuController.Hide();
+        ThawState();
         GamePaused = false;
     }
     
     /// <summary>
     /// toggle game pausing by toggling state and pause menu
     /// </summary>
-    public void TogglePause()
+    private void TogglePause()
     {
+        if (PauseLock) return;
+        
+        if (GamePaused != StatePaused) return;
         if (GamePaused)
             Unpause();
         else

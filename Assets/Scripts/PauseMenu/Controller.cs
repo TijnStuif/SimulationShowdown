@@ -1,24 +1,28 @@
 using System;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace PauseMenu
 {
-    public class Controller : MonoBehaviour
+    public enum State
     {
-        private VisualElement m_root;
+       ResumeGame,
+       ReturnToTitleScreen,
+       Exit
+    }
+    
+    public class Controller : AbstractUiController
+    {
         private Button m_resumeButton;
-        // I don't know any solution other to replicate a constructor using
-        // UnityEngine.Instantiate() instead
-        // so I'm manually assigning it when instantiating.
-        public StateController StateController { private get; set; }
+        public event Action<State> StateChange;
         
         // get necessary UI components
-        void Awake()
+        private void Awake()
         {
-            m_root = GetComponent<UIDocument>().rootVisualElement;
-            m_resumeButton = m_root.Q<Button>("resume");
+            Root = GetComponent<UIDocument>().rootVisualElement;
+            m_resumeButton = Root.Q<Button>("resume");
         }
+        
+        // this can be refactored in the future in an AbstractUIController class or smth
 
         private void OnEnable()
         {
@@ -31,17 +35,13 @@ namespace PauseMenu
         }
 
         private void OnResumeClicked(ClickEvent evt)
-        {
-            try
-            {
-                StateController.Unpause();
-            }
-            catch (NullReferenceException e)
-            {
-                Debug.Log($"Exception msg: {e.Message}");
-                Debug.Log("Can't toggle pause game\nstate manager is not initialized!");
-                throw;
-            }
+        { 
+            StateChange?.Invoke(State.ResumeGame);
+        }
+
+        private void OnReturnToTitleClicked()
+        { 
+            StateChange?.Invoke(State.ReturnToTitleScreen); 
         }
     }
 }

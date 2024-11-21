@@ -1,25 +1,22 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 namespace Player
 {
+    public enum State
+    {
+        Loss,
+        Pause,
+    }
+        
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
         public HealthBar healthBar;
         private int currentHealth;
-        [SerializeField] private GameObject gameOverPrefab;
-        private UIDocument gameOverDocument;
-        
-        public StateController StateController { private get; set; }
-        private bool Lost { get; set; }
 
-        private void Awake()
-        {
-            gameOverDocument = Instantiate(gameOverPrefab).GetComponent<UIDocument>();
-            gameOverDocument.rootVisualElement.AddToClassList("hidden");
-        }
+        public event Action<State> StateChange;
 
         void Start()
         {
@@ -30,37 +27,18 @@ namespace Player
         public void TakeDamage(int damage)
         {   
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
-        }
-        // hotfix
-        // I think aside from how the boss is identified, this isn't a bad solution
-        // I just want to avoid modifying the scene so I can't add tags to the boss
-        private void OnCollisionEnter(Collision other)
-        {
-            // scuffed hotfix, inefficient, should be refactored ! ! !
-            // when collision happens 
-            // try to get the boss script as component (very inefficient)
-            var bossController = other.gameObject.GetComponent<Boss.Controller>();
-            // if it actually worked, then the collider is a boss
-            // damage it
-            if (bossController != null)
+            if (currentHealth <= 0)
             {
-                bossController.TakeDamage(50);
-                // prevent boss to be damaged anymore
-                bossController.LockDamage();
+                healthBar.SetHealth(0);
+                StateChange?.Invoke(State.Loss);
+                return;
             }
-        }
-        private void OnCollisionExit(Collision other)
-        {
-            // same thing but when a collision ends
-            var bossController = other.gameObject.GetComponent<Boss.Controller>();
-            // if bossController exists, it can now be damaged again
-            if (bossController != null) bossController.UnlockDamage(); 
+            healthBar.SetHealth(currentHealth);
         }
 
         public void OnPause(InputAction.CallbackContext c)
         {
-            StateController.TogglePause();
+            StateChange?.Invoke(State.Pause);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,12 +48,6 @@ namespace Player
 
         private void Update()
         {
-            if (currentHealth <= 0 && Lost == false)
-            {
-                Lost = true;
-                StateController.FreezeState();
-                gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
-            }
             if (Input.GetKeyDown(KeyCode.J))
             {
                 TakeDamage(10);

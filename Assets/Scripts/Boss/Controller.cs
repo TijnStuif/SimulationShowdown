@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 namespace Boss
 {
@@ -10,16 +8,12 @@ namespace Boss
         public int maxHealth = 100;
         public HealthBar healthBar;
         private int currentHealth;
-        private bool damageLock;
-        private bool playerWon;
-        private UIDocument winDocument;
-        [SerializeField] private GameObject winDocumentPrefab;
+        private bool m_damageLock;
+        
+        public event Action Death;
         
         void Awake()
         {
-            var winDocumentObj = Instantiate(winDocumentPrefab);
-            winDocument = winDocumentObj.GetComponent<UIDocument>();
-            winDocument.rootVisualElement.AddToClassList("hidden");
         }
 
         void Start()
@@ -30,37 +24,42 @@ namespace Boss
 
         void Update()
         {
-            if (currentHealth <= 0 && !playerWon)
-            {
-                playerWon = true;
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                winDocument.rootVisualElement.RemoveFromClassList("hidden");
-            }
             if (Input.GetKeyDown(KeyCode.K))
             {
                 TakeDamage(10);
             }
         }
     
-        public void UnlockDamage() => damageLock = false;
-        public void LockDamage() => damageLock = true;
+        private void UnlockDamage() => m_damageLock = false;
+        private void LockDamage() => m_damageLock = true;
 
         public void TakeDamage(int damage)
         {
-            if (damageLock) return;
-            // LockDamage();
-            // Invoke(nameof(UnlockDamage), damageCooldownSeconds);
+            if (m_damageLock) return;
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+            if (currentHealth <= 0)
+            {
+                Death?.Invoke();
+            }
         }
 
-        public void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "PlayerTag")
+            // should use events ! ! !
+            Debug.Log("Ow");
+            if (other.CompareTag("PlayerTag"))
+            { 
+                TakeDamage(50); 
+                // LockDamage();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
             {
-                TakeDamage(50);
+                UnlockDamage();
             }
         }
     }
