@@ -6,20 +6,15 @@ namespace Boss
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
-        public HealthBar healthBar;
-        private int currentHealth;
-        private bool m_damageLock;
+        [HideInInspector] public int currentHealth;
+        private bool damageLock;
+        private bool playerWon;
         
         public event Action Death;
         
-        void Awake()
-        {
-        }
-
         void Start()
         {
             currentHealth = maxHealth;
-            healthBar.SetMaxHealth(maxHealth);
         }
 
         void Update()
@@ -30,14 +25,13 @@ namespace Boss
             }
         }
     
-        private void UnlockDamage() => m_damageLock = false;
-        private void LockDamage() => m_damageLock = true;
+        public void UnlockDamage() => damageLock = false;
+        public void LockDamage() => damageLock = true;
 
         public void TakeDamage(int damage)
         {
-            if (m_damageLock) return;
+            if (damageLock) return;
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
             if (currentHealth <= 0)
             {
                 Death?.Invoke();
@@ -47,7 +41,6 @@ namespace Boss
         private void OnTriggerEnter(Collider other)
         {
             // should use events ! ! !
-            Debug.Log("Ow");
             if (other.CompareTag("PlayerTag"))
             { 
                 TakeDamage(50); 
@@ -59,7 +52,7 @@ namespace Boss
         {
             if (other.CompareTag("Player"))
             {
-                UnlockDamage();
+                // UnlockDamage();
             }
         }
     }

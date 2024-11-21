@@ -43,6 +43,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void ExecuteRandomAttack()
     {
+        Debug.Log(attacks);
         if (attacks.Count == 0)
         {
             Debug.LogWarning("No attacks available to execute.");
