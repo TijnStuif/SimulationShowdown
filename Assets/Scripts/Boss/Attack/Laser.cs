@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class Laser : MonoBehaviour, IAttack
+    public class Laser : DamageAttack, IAttack
     {
+        Player.Controller player;
         public Type Type => Type.Direct;
         private GameObject laserIndicator;
         private GameObject laserAttack;
-        private GameObject player;
         private Player.Controller playerScript;
         private GameObject boss;
         //
@@ -27,12 +27,12 @@ namespace Boss.Attack
         {
             laserIndicator = Instantiate(indicatorPrefab);
             laserAttack = Instantiate(attackPrefab);
-            playerScript = FindObjectOfType<Player.Controller>();
-            player = playerScript.gameObject;
+            player = FindObjectOfType<Player.Controller>();
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             ResetLaser();
 
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
+            damage = 40;
         }
 
         // the Execute method is called when the attack is executed

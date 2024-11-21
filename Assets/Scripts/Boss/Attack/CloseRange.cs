@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class CloseRange : MonoBehaviour, IAttack
+    public class CloseRange : DamageAttack, IAttack
     { 
+        Player.Controller player;
         public Type Type => Type.Direct;
         
         [SerializeField] private GameObject CloseRangeAttackIndicatorPrefab;
@@ -18,11 +19,14 @@ namespace Boss.Attack
 
         private void Awake()
         {
+            player = FindObjectOfType<Player.Controller>();
+
             // instantiate attack objects
             CloseRangeAttackIndicator = Instantiate(CloseRangeAttackIndicatorPrefab);
             CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
             // move them far away
             Reset();
+            damage = 50;
         }
 
         public void Execute()

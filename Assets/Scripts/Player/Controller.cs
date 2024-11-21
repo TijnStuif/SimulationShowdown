@@ -72,14 +72,22 @@ namespace Player
             var bossController = other.gameObject.GetComponent<Boss.Controller>();
             // if bossController exists, it can now be damaged again
             if (bossController != null) bossController.UnlockDamage(); 
-        }   
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Attack")
+            if (other.gameObject.CompareTag("Attack"))
             {
-                TakeDamage(25);
+                switch (other.gameObject.name)
+                {
+                    case "CloseRangeAttack":
+                        TakeDamage(50);
+                        break;
+                    case "LaserAttack":
+                        TakeDamage(40);
+                        break;
+                }
             }
-        }     
+        }
     }
 }
