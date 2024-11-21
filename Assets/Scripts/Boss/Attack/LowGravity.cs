@@ -8,28 +8,55 @@ namespace Boss.Attack
         public Type Type => Type.Environment;
 
         [SerializeField] private float gravityAmount = -1.6f;
-        [SerializeField] private ParticleSystem indicatorParticle;
+        private ParticleSystem indicatorParticle;
 
         public void Awake()
         {
-            indicatorParticle.Stop();
+            // Find the player GameObject
+            GameObject player = GameObject.Find("Player");
+            if (player != null)
+            {
+                // Find the ParticleSystem component on the player GameObject
+                indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
+                Debug.Assert(indicatorParticle, "Particle system component not found!");
+
+                // Disable Play On Awake
+                var main = indicatorParticle.main;
+                main.playOnAwake = false;
+
+                // Stop the particle system
+                indicatorParticle.Stop();
+            }
+            else
+            {
+                Debug.LogError("Player GameObject not found!");
+            }
         }
 
         public void Execute()
         {
-            StartCoroutine(ActivateGravityChange());
+            if (indicatorParticle != null)
+            {
+                StartCoroutine(ActivateGravityChange());
+            }
+            else
+            {
+                Debug.LogError("Cannot execute, particle system not found!");
+            }
         }
 
         private IEnumerator ActivateGravityChange()
         {
+            // Play the particle system
             indicatorParticle.Play();
 
-            yield return new WaitForSeconds(1f);
+            // Wait for 2 seconds
+            yield return new WaitForSeconds(2f);
 
             // Change the gravity
             if (Physics.gravity.y == gravityAmount)
             {
-                Physics.gravity = new Vector3(0, -7f, 0);
+                Physics.gravity = new Vector3(0, -9.81f, 0);
             }
             else
             {
