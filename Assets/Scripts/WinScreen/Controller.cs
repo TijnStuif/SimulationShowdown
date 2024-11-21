@@ -1,52 +1,47 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 using UnityEngine.UIElements;
 
 namespace WinScreen
 {
-    public class Controller : MonoBehaviour
+    public enum State
     {
-        private UIDocument m_uiDocument;
+       Restart,
+       ReturnToTitleScreen
+    }
+    public class Controller : AbstractUiController
+    {
         private Button m_restartButton;
         private Button m_titleButton;
+
+        public event Action<State> StateChange;
         
         void Awake()
         {
-            m_uiDocument = GetComponent<UIDocument>();
-            m_restartButton = m_uiDocument.rootVisualElement.Q<Button>("restart");
-            m_titleButton = m_uiDocument.rootVisualElement.Q<Button>("title-screen");
+            Root = GetComponent<UIDocument>().rootVisualElement;
+            m_restartButton = Root.Q<Button>("restart");
+            m_titleButton = Root.Q<Button>("title-screen");
         }
 
         void OnEnable()
         {
-            m_restartButton.RegisterCallback<ClickEvent>(OnButtonClicked);
-            m_titleButton.RegisterCallback<ClickEvent>(OnButtonClicked);
             m_restartButton.RegisterCallback<ClickEvent>(OnRestartClicked);
             m_titleButton.RegisterCallback<ClickEvent>(OnTitleClicked);
         }
 
         void OnDisable()
         {
-            m_restartButton.UnregisterCallback<ClickEvent>(OnButtonClicked);
-            m_titleButton.UnregisterCallback<ClickEvent>(OnButtonClicked);
             m_restartButton.UnregisterCallback<ClickEvent>(OnRestartClicked);
             m_titleButton.UnregisterCallback<ClickEvent>(OnTitleClicked);
         }
 
-        // for when any button is clicked (it unpauses the game basically)
-        private void OnButtonClicked(ClickEvent evt)
-        {
-            Time.timeScale = 1;
-        }
-
         private void OnRestartClicked(ClickEvent evt)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StateChange?.Invoke(State.Restart);
         }
 
         private void OnTitleClicked(ClickEvent evt)
         {
-            SceneManager.LoadScene("StartMenu");
+            StateChange?.Invoke(State.ReturnToTitleScreen);
         }
     }
 }
