@@ -8,8 +8,7 @@ namespace Boss
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
-        public HealthBar healthBar;
-        private int currentHealth;
+        [HideInInspector] public int currentHealth;
         private bool damageLock;
         private bool playerWon;
         private UIDocument winDocument;
@@ -25,7 +24,6 @@ namespace Boss
         void Start()
         {
             currentHealth = maxHealth;
-            healthBar.SetMaxHealth(maxHealth);
         }
 
         void Update()
@@ -49,7 +47,6 @@ namespace Boss
             // LockDamage();
             // Invoke(nameof(UnlockDamage), damageCooldownSeconds);
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
         }
 
         public void OnTriggerEnter(Collider other)
