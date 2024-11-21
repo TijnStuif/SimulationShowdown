@@ -16,6 +16,7 @@ namespace Player
         private void Awake()
         {
             cam = GameObject.Find("PlayerCamera").GetComponent<Camera>();
+            
             //acccess the UI document
             m_uiDocument = GetComponent<UIDocument>().rootVisualElement;
 
