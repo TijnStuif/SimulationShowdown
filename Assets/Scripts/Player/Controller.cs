@@ -28,7 +28,6 @@ namespace Player
         {
             currentHealth = maxHealth;
             healthBar.SetMaxHealth(maxHealth);
-            DamageAttack.PlayerDamaged += TakeDamage;
         }
 
         private void Update()
@@ -47,7 +46,7 @@ namespace Player
         {   
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
-            Debug.Log("Took damage");
+            Debug.Log($"Took damage + {damage}");
         }
         // hotfix
         // I think aside from how the boss is identified, this isn't a bad solution
@@ -73,6 +72,14 @@ namespace Player
             var bossController = other.gameObject.GetComponent<Boss.Controller>();
             // if bossController exists, it can now be damaged again
             if (bossController != null) bossController.UnlockDamage(); 
-        }        
+        }   
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Attack")
+            {
+                TakeDamage(25);
+            }
+        }     
     }
 }

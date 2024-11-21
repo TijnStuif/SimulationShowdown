@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class Laser : DamageAttack, IAttack
+    public class Laser : MonoBehaviour, IAttack
     {
         public Type Type => Type.Direct;
         private GameObject laserIndicator;
@@ -33,7 +33,6 @@ namespace Boss.Attack
             ResetLaser();
 
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
-            Damage = 25;
         }
 
         // the Execute method is called when the attack is executed
