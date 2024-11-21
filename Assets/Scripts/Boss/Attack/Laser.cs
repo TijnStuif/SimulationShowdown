@@ -32,7 +32,6 @@ namespace Boss.Attack
             ResetLaser();
 
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
-            damage = 40;
         }
 
         // the Execute method is called when the attack is executed

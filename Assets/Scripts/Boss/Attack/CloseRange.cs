@@ -26,7 +26,6 @@ namespace Boss.Attack
             CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
             // move them far away
             Reset();
-            damage = 50;
         }
 
         public void Execute()

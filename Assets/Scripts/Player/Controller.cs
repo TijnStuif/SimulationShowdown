@@ -26,6 +26,7 @@ namespace Player
 
         void Start()
         {
+            DamageAttack.PlayerDamaged += TakeDamage;
             currentHealth = maxHealth;
             healthBar.SetMaxHealth(maxHealth);
         }

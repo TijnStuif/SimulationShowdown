@@ -3,10 +3,17 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public abstract class DamageAttack : MonoBehaviour
+    public class DamageAttack : MonoBehaviour
     {
-        public int damage;
-
-        // protected abstract void OnTriggerEnter(Collider other);
+        public static event Action<int> PlayerDamaged;
+        //add damage via the inspector
+        [SerializeField] private int damage;
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                PlayerDamaged?.Invoke(damage);
+            }
+        }
     }
 }

@@ -384,7 +384,7 @@ MonoBehaviour:
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 1
-  IgnoreTag: PlayerTag
+  IgnoreTag: Player
   CameraRadius: 0.2
   DampingIntoCollision: 0
   DampingFromCollision: 2
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 1604870025}
   m_Layer: 0
   m_Name: PlayerCamera
-  m_TagString: PlayerTag
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -607,6 +607,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameController
+      objectReference: {fileID: 0}
+    - target: {fileID: 7997739378233538426, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
+        type: 3}
+      propertyPath: damage
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8129650348631088945, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
@@ -820,6 +825,11 @@ PrefabInstance:
     - target: {fileID: 5966429538957516893, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966429538957516893, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8545764736834123818, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,

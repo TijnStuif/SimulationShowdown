@@ -54,7 +54,7 @@ namespace Boss
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "PlayerTag")
+            if (other.gameObject.tag == "Player")
             {
                 TakeDamage(50);
             }

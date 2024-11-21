@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "naaxiiduumii56.sln"
+    "dotnet.defaultSolution": "SimulationShowdown.sln"
 }

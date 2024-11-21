@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 58418384715424845}
   - component: {fileID: 4535685019152115351}
   - component: {fileID: 4404354783960098364}
+  - component: {fileID: 1456432228474624500}
   m_Layer: 0
   m_Name: LaserAttack
   m_TagString: Attack
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1456432228474624500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915644990725051121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35d493455d152a4e82356c03d2e9358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 40
