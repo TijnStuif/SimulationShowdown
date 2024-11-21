@@ -10,8 +10,7 @@ namespace Player
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
-        public HealthBar healthBar;
-        private int currentHealth;
+        [HideInInspector] public int currentHealth;
         [SerializeField] private GameObject gameOverPrefab;
         private UIDocument gameOverDocument;
         private bool lost;
@@ -27,7 +26,6 @@ namespace Player
         void Start()
         {
             currentHealth = maxHealth;
-            healthBar.SetMaxHealth(maxHealth);
         }
 
         private void Update()
@@ -45,8 +43,6 @@ namespace Player
         public void TakeDamage(int damage)
         {   
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
-            Debug.Log($"Took damage + {damage}");
         }
         // hotfix
         // I think aside from how the boss is identified, this isn't a bad solution
