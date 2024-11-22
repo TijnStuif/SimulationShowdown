@@ -151,7 +151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2488837912002129018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorMaterial: {fileID: 2100000, guid: 94ec9a087579e6f438cb263266e465a9, type: 2}
+  numberOfTiles: 3

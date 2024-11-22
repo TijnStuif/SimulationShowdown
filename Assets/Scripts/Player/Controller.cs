@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -11,6 +12,7 @@ namespace Player
         [HideInInspector] public int currentHealth;
         [SerializeField] private GameObject gameOverPrefab;
         private UIDocument gameOverDocument;
+        [SerializeField] private Transform playerPosition;
         private bool lost;
 
         private void Awake()
@@ -74,6 +76,13 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.J))
             {
                 TakeDamage(10);
+            }
+
+            //Check if the player is underneath the map
+            //If this is the case the player will die
+            if (playerPosition.position.y <= -5)
+            {
+                TakeDamage(100);
             }
         }
     }
