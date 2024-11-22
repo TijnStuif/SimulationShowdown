@@ -172,6 +172,7 @@ public class StateController : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeFromEvents();
+        ThawState();
     }
 
     private void OnBossDeath()
@@ -267,7 +268,6 @@ public class StateController : MonoBehaviour
 
     private void RestartGameplay()
     {
-        ThawState();
         SceneManager.LoadScene("GameScene");
     }
 
