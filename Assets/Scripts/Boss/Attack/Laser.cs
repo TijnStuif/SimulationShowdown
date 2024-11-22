@@ -1,24 +1,22 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Boss.Attack
 {
     public class Laser : DamageAttack, IAttack
     {
-        Player.Controller player;
         public Type Type => Type.Direct;
         private GameObject laserIndicator;
         private GameObject laserAttack;
+        private GameObject player;
         private Player.Controller playerScript;
         private GameObject boss;
         //
-
+        
         [SerializeField] private GameObject indicatorPrefab;
         [SerializeField] private GameObject attackPrefab;
-
-        private Vector3 indicatorStartPos = new(20, 0, 0);
-        private Vector3 laserStartPos = new(25, 0, 0);
+        
+        private Vector3 indicatorStartPos = new(200, 0, 0);
+        private Vector3 laserStartPos = new(250, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
 
@@ -27,13 +25,14 @@ namespace Boss.Attack
         {
             laserIndicator = Instantiate(indicatorPrefab);
             laserAttack = Instantiate(attackPrefab);
-            player = FindObjectOfType<Player.Controller>();
+            playerScript = FindObjectOfType<Player.Controller>();
+            player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             ResetLaser();
-
+            
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
         }
-
+    
         // the Execute method is called when the attack is executed
         public void Execute()
         {

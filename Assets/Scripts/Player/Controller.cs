@@ -1,49 +1,41 @@
 using System;
 using Boss.Attack;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
+    public enum State
+    {
+        Loss,
+        Pause,
+    }
+        
     public class Controller : MonoBehaviour
     {
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
-        [SerializeField] private GameObject gameOverPrefab;
-        private UIDocument gameOverDocument;
-        private bool lost;
 
-        private void Awake()
-        {
-            // loading resource like this so I don't need to modify the scene
-            // resources can be loaded like this when your resources is in the Assets/Resources folder
-                gameOverDocument = Instantiate(gameOverPrefab).GetComponent<UIDocument>();
-                gameOverDocument.rootVisualElement.AddToClassList("hidden");
-        }
+        public event Action<State> StateChange;
 
-        void Start()
+        void Awake()
         {
             DamageAttack.PlayerDamaged += TakeDamage;
             currentHealth = maxHealth;
         }
 
-        private void Update()
+        public void TakeDamage(int damage)
         {
-            if (currentHealth <= 0 && lost == false)
+            currentHealth -= damage;
+            if (currentHealth <= 0)
             {
-                lost = true;
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                gameOverDocument.rootVisualElement.RemoveFromClassList("hidden");
+                StateChange?.Invoke(State.Loss);
             }
         }
-
-        public void TakeDamage(int damage)
-        {   
-            currentHealth -= damage;
+        
+        public void OnPause(InputAction.CallbackContext c)
+        {
+            StateChange?.Invoke(State.Pause);
         }
         // hotfix
         // I think aside from how the boss is identified, this isn't a bad solution
