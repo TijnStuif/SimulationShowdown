@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class CloseRange : MonoBehaviour, IAttack
+    public class CloseRange : DamageAttack, IAttack
     { 
+        Player.Controller player;
         public Type Type => Type.Direct;
         
         [SerializeField] private GameObject CloseRangeAttackIndicatorPrefab;
@@ -12,12 +13,14 @@ namespace Boss.Attack
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
         
-        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
+        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(0, 0, 5);
         private Vector3 CloseRangeAttackPosition = new Vector3(0, 5, 5);
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
 
         private void Awake()
         {
+            player = FindObjectOfType<Player.Controller>();
+
             // instantiate attack objects
             CloseRangeAttackIndicator = Instantiate(CloseRangeAttackIndicatorPrefab);
             CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
@@ -28,8 +31,8 @@ namespace Boss.Attack
         public void Execute()
         {
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackIndicatorPosition;
-            Invoke(nameof(InitiateCloseRangeAttack), 2f);
-            Invoke(nameof(Reset), 5f);
+            Invoke(nameof(InitiateCloseRangeAttack), 1f);
+            Invoke(nameof(Reset), 2f);
         }
         
         public void InitiateCloseRangeAttack()
