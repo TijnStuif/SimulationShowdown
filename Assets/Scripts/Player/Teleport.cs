@@ -41,8 +41,7 @@ namespace Player
                     throw new InvalidOperationException("ERROR: Please do not adjust this value carelessly, " +
                                                         "it invokes an event\n"+
                                                         "please only call this setter if the new value is different");
-                if (Debug.isDebugBuild)
-                    Debug.Log($"Attack range: {value}");
+                Debug.Log($"Attack range: {value}");
                 
                 switch (value)
                 {
@@ -73,10 +72,10 @@ namespace Player
         {
             float angleToBoss = Vector3.Angle(playerCamera.transform.forward, DirectionToBoss);
 
-            var newRange = (angleToBoss <= aimThreshold);
-            if (InAttackRange == newRange)
+            bool inAttackRange = (angleToBoss <= aimThreshold);
+            if (InAttackRange == inAttackRange) 
                 return;
-            InAttackRange = newRange;
+            InAttackRange = inAttackRange;
         }
 
         private void StandardTeleport()
@@ -119,6 +118,11 @@ namespace Player
 
                 StandardTeleport();
             }
+        }
+
+        public void FixedUpdate()
+        {
+            UpdateAttackRange();
         }
     }
 }
