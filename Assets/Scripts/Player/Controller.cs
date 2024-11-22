@@ -54,7 +54,9 @@ namespace Player
                         break;
                 }
             }
-
+        }
+        private void FixedUpdate()
+        {
             //Check if the player is underneath the map
             //If this is the case the player will die
             if (transform.position.y <= -5)
