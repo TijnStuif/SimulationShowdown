@@ -32,7 +32,7 @@ namespace Player
                 StateChange?.Invoke(State.Loss);
             }
         }
-        
+
         public void OnPause(InputAction.CallbackContext c)
         {
             StateChange?.Invoke(State.Pause);
