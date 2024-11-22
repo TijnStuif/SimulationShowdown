@@ -219,7 +219,7 @@ public class StateController : MonoBehaviour
                 ReturnToTitle();
                 break;
             case GameOverScreen.State.Restart:
-                RestartScene();
+                RestartGameplay();
                 break;
             default:
                 throw new StateHandlerNotImplementedException();
@@ -234,7 +234,7 @@ public class StateController : MonoBehaviour
                 ReturnToTitle();
                 break;
             case WinScreen.State.Restart:
-                RestartScene();
+                RestartGameplay();
                 break;
             default:
                 throw new StateHandlerNotImplementedException();
@@ -265,10 +265,10 @@ public class StateController : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
-    private void RestartScene()
+    private void RestartGameplay()
     {
         ThawState();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameScene");
     }
 
     /// <summary>
