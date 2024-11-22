@@ -12,9 +12,9 @@ namespace Boss.Attack
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
         
-        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(0, 0, 5);
+        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
         private Vector3 CloseRangeAttackPosition = new Vector3(0, 5, 5);
-        private Vector3 CloseRangeAttackOriginalPosition = new Vector3(0, 0, 30);
+        private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
 
         private void Awake()
         {

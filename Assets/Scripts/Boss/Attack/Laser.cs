@@ -15,8 +15,8 @@ namespace Boss.Attack
         [SerializeField] private GameObject indicatorPrefab;
         [SerializeField] private GameObject attackPrefab;
         
-        private Vector3 indicatorStartPos = new(20, 0, 0);
-        private Vector3 laserStartPos = new(25, 0, 0);
+        private Vector3 indicatorStartPos = new(200, 0, 0);
+        private Vector3 laserStartPos = new(250, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
         private int damage = 10;
