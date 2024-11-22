@@ -17,7 +17,7 @@ namespace Player
         
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
-        
+        [SerializeField] private Transform playerPosition;
 
         public event Action<State> StateChange;
 
