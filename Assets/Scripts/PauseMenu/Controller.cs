@@ -1,22 +1,29 @@
-using UnityEngine;
+using System;
 using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 namespace PauseMenu
 {
-    public class Controller : MonoBehaviour
+    public enum State
     {
-        private VisualElement m_root;
+       ResumeGame,
+       ReturnToTitleScreen,
+       Exit
+    }
+    
+    public class Controller : AbstractUiController
+    {
         private Button m_resumeButton;
+        public event Action<State> StateChange;
         
-        // get necessary ui components
-        void Awake()
+        // get necessary UI components
+        private void Awake()
         {
-            m_root = GetComponent<UIDocument>().rootVisualElement;
-            m_resumeButton = m_root.Q<Button>("resume");
+            Root = GetComponent<UIDocument>().rootVisualElement;
+            m_resumeButton = Root.Q<Button>("resume");
         }
+        
+        // this can be refactored in the future in an AbstractUIController class or smth
 
-        // register 
         private void OnEnable()
         {
             m_resumeButton.RegisterCallback<ClickEvent>(OnResumeClicked);
@@ -28,13 +35,13 @@ namespace PauseMenu
         }
 
         private void OnResumeClicked(ClickEvent evt)
-        {
-            // disable pause menu
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            GameControllerScript.GamePaused = false;
-            Time.timeScale = 1;
-            m_root.AddToClassList("hidden");
+        { 
+            StateChange?.Invoke(State.ResumeGame);
+        }
+
+        private void OnReturnToTitleClicked()
+        { 
+            StateChange?.Invoke(State.ReturnToTitleScreen); 
         }
     }
 }

@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8129650348631088945}
   - component: {fileID: 2970072920953877109}
-  - component: {fileID: 20612379413400886}
   - component: {fileID: 523998413288747648}
   - component: {fileID: 2281008845910031178}
   - component: {fileID: 7997739378233538426}
   - component: {fileID: 1472273395187015414}
   - component: {fileID: 4572242106367940043}
+  - component: {fileID: 3302913286780812233}
   - component: {fileID: 8718303700229094477}
   m_Layer: 0
   m_Name: GameController
@@ -51,41 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02336f8fb30ca244bfc8ed29d7ab008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuPrefab: {fileID: 5211759160308796991, guid: b02f3f598ff2e32bda4d52690750e638,
-    type: 3}
   minAttackInterval: 1
   maxAttackInterval: 5
---- !u!114 &20612379413400886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2488837912002129018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: e3f2fae6aa7d24d5d994952ecda87877,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &523998413288747648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1dca492868d65449daf919b87cf0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 50
   CloseRangeAttackIndicatorPrefab: {fileID: 3963165450850657802, guid: 78c6d5fe5e179651b8180e3cfe3982a8,
     type: 3}
   CloseRangeAttackObjectPrefab: {fileID: 2535184723765269125, guid: 1c740a34a2fdd53bfa1dc0b27540a510,
@@ -126,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e9ad5e52799c64cbdcf3d956d8c05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 50
   indicatorPrefab: {fileID: 3956313933832281549, guid: 8bf2ba752f7e81a1a92050c5ed72aec7,
     type: 3}
   attackPrefab: {fileID: 7915644990725051121, guid: bbf028a68926df4a995e31980fda39ce,
@@ -156,6 +125,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3302913286780812233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2488837912002129018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3404344a2c6fb47b6c032daf9c1b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityAmount: -1.6
+  indicatorParticle: {fileID: 0}
 --- !u!114 &8718303700229094477
 MonoBehaviour:
   m_ObjectHideFlags: 0
