@@ -17,7 +17,6 @@ namespace Player
         
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
-        [SerializeField] private Transform playerPosition;
 
         public event Action<State> StateChange;
 
@@ -58,16 +57,9 @@ namespace Player
 
             //Check if the player is underneath the map
             //If this is the case the player will die
-            if (playerPosition.position.y <= -5)
+            if (transform.position.y <= -5)
             {
-                TakeDamage(100);
-            }
-
-            //Check if the player is underneath the map
-            //If this is the case the player will die
-            if (playerPosition.position.y <= -5)
-            {
-                TakeDamage(100);
+                TakeDamage(maxHealth);
             }
         }
     }
