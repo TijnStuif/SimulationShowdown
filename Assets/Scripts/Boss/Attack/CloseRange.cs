@@ -13,7 +13,7 @@ namespace Boss.Attack
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
         
-        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
+        private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(0, 0, 5);
         private Vector3 CloseRangeAttackPosition = new Vector3(0, 5, 5);
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
 
@@ -31,8 +31,8 @@ namespace Boss.Attack
         public void Execute()
         {
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackIndicatorPosition;
-            Invoke(nameof(InitiateCloseRangeAttack), 2f);
-            Invoke(nameof(Reset), 3f);
+            Invoke(nameof(InitiateCloseRangeAttack), 1f);
+            Invoke(nameof(Reset), 2f);
         }
         
         public void InitiateCloseRangeAttack()

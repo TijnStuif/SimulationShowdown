@@ -16,14 +16,6 @@ namespace Boss
         {
             currentHealth = maxHealth;
         }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                TakeDamage(10);
-            }
-        }
     
         public void UnlockDamage() => damageLock = false;
         public void LockDamage() => damageLock = true;
