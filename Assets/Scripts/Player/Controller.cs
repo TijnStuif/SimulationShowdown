@@ -1,4 +1,5 @@
 using System;
+using Boss.Attack;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,7 @@ namespace Player
 
         void Awake()
         {
+            DamageAttack.PlayerDamaged += TakeDamage;
             currentHealth = maxHealth;
         }
 
@@ -38,14 +40,17 @@ namespace Player
 
         private void OnTriggerEnter(Collider other)
         {
-            TakeDamage(10);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.J))
+            if (other.gameObject.CompareTag("Attack"))
             {
-                TakeDamage(10);
+                switch (other.gameObject.name)
+                {
+                    case "CloseRangeAttack":
+                        TakeDamage(50);
+                        break;
+                    case "LaserAttack":
+                        TakeDamage(40);
+                        break;
+                }
             }
         }
     }
