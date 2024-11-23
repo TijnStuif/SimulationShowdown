@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1472273395187015414}
   - component: {fileID: 4572242106367940043}
   - component: {fileID: 3302913286780812233}
+  - component: {fileID: 8718303700229094477}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -137,4 +138,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityAmount: -1.6
-  indicatorParticle: {fileID: 0}
+--- !u!114 &8718303700229094477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2488837912002129018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492219d017ea9554898f708188065d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorMaterial: {fileID: 2100000, guid: 94ec9a087579e6f438cb263266e465a9, type: 2}
+  numberOfTiles: 3

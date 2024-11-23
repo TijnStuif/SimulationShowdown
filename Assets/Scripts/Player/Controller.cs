@@ -1,5 +1,6 @@
 using System;
 using Boss.Attack;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ namespace Player
         
     public class Controller : MonoBehaviour
     {
+        
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
 
@@ -51,6 +53,15 @@ namespace Player
                         TakeDamage(40);
                         break;
                 }
+            }
+        }
+        private void FixedUpdate()
+        {
+            //Check if the player is underneath the map
+            //If this is the case the player will die
+            if (transform.position.y <= -5)
+            {
+                TakeDamage(maxHealth);
             }
         }
     }
