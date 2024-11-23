@@ -14,6 +14,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
     private GameObject targetedTile;
     public Material indicatorMaterial;
     [SerializeField] private int numberOfTiles = 3;
+    private bool attackCompleted = true;
 
     void Start()
     {
@@ -23,14 +24,23 @@ public class FallingPlatforms : MonoBehaviour, IAttack
 
     public void Execute()
     {
-        //Clear the list of targeted tiles to make sure the same tiles are not selected twice
-        targetedTiles.Clear();
+        //Check if the previous attack is completed
+        //This avoids an enumeration exception en possible bugs
+        if (attackCompleted)
+        {
+            attackCompleted = false;
 
-        //Selects random tiles to be removed
-        SelectTiles(numberOfTiles);
+            //Clear the list of targeted tiles to make sure the same tiles are not selected twice
+            targetedTiles.Clear();
+
+            //Selects random tiles to be removed
+            SelectTiles(numberOfTiles);
+            
+            //Start the attack sequence
+            StartCoroutine(Attack());
+
+        }
         
-        //Start the attack sequence
-        StartCoroutine(Attack());
     }
 
     private void SelectTiles(int numberOfTiles)
@@ -71,6 +81,9 @@ public class FallingPlatforms : MonoBehaviour, IAttack
             targetedTile.SetActive(false);
             tilesToRemove.Add(targetedTile);
         }
+
+        //Attack is completed
+        attackCompleted = true;
     }
 }
 
