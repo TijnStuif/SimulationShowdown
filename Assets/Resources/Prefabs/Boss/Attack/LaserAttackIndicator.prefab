@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8567125357232496731}
   - component: {fileID: 7416130387089709174}
   m_Layer: 0
-  m_Name: LaserIndicator
+  m_Name: LaserAttackIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

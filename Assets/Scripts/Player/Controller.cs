@@ -1,4 +1,6 @@
 using System;
+using Boss.Attack;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +14,7 @@ namespace Player
         
     public class Controller : MonoBehaviour
     {
+        
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
 
@@ -19,6 +22,7 @@ namespace Player
 
         void Awake()
         {
+            DamageAttack.PlayerDamaged += TakeDamage;
             currentHealth = maxHealth;
         }
 
@@ -38,14 +42,26 @@ namespace Player
 
         private void OnTriggerEnter(Collider other)
         {
-            TakeDamage(10);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.J))
+            if (other.gameObject.CompareTag("Attack"))
             {
-                TakeDamage(10);
+                switch (other.gameObject.name)
+                {
+                    case "CloseRangeAttack":
+                        TakeDamage(50);
+                        break;
+                    case "LaserAttack":
+                        TakeDamage(40);
+                        break;
+                }
+            }
+        }
+        private void FixedUpdate()
+        {
+            //Check if the player is underneath the map
+            //If this is the case the player will die
+            if (transform.position.y <= -5)
+            {
+                TakeDamage(maxHealth);
             }
         }
     }

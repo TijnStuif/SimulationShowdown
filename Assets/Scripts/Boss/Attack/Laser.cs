@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Boss.Attack
 {
-    public class Laser : MonoBehaviour, IAttack
+    public class Laser : DamageAttack, IAttack
     {
         public Type Type => Type.Direct;
         private GameObject laserIndicator;
@@ -19,7 +19,7 @@ namespace Boss.Attack
         private Vector3 laserStartPos = new(250, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
-        private int damage = 10;
+
 
         private void Awake()
         {
@@ -57,15 +57,6 @@ namespace Boss.Attack
         {
             laserIndicator.transform.position = indicatorStartPos;
             laserAttack.transform.position = laserStartPos;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("player"))
-            {
-                // This should be handled with events ! ! !
-                playerScript.TakeDamage(damage);
-            }
         }
     }
 }

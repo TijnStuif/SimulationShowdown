@@ -12,6 +12,6 @@ public class CooldownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            CooldownText.text = Cooldown.ToString();
+        CooldownText.text = Cooldown.ToString();
     }
 }
