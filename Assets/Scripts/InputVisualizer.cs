@@ -9,6 +9,7 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
+    private Player.Movement playerMovement;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class InputVisualizer : MonoBehaviour
 
     void Start()
     {
+        playerMovement = FindObjectOfType<Player.Movement>();
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");
@@ -51,7 +53,14 @@ public class InputVisualizer : MonoBehaviour
         }
         else
         {
+            if (playerMovement.areControlsInverted)
+            {
+                keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
+            }
+            else
+            {
             keyContainer.style.backgroundColor = new StyleColor(Color.white);
+            }
         }
     }
 }

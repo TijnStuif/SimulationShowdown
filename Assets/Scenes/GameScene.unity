@@ -451,7 +451,7 @@ MonoBehaviour:
   CameraDistance: 8
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   IgnoreTag: Player
   CameraRadius: 0.2
   DampingIntoCollision: 0
@@ -684,17 +684,17 @@ PrefabInstance:
     - target: {fileID: 8129650348631088945, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.022769
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129650348631088945, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 489.25412
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129650348631088945, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.6690774
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129650348631088945, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
@@ -914,17 +914,17 @@ PrefabInstance:
     - target: {fileID: 4910282820497041697, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3994032
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910282820497041697, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1084383
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910282820497041697, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.053759225
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910282820497041697, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
         type: 3}
@@ -959,6 +959,36 @@ PrefabInstance:
     - target: {fileID: 4910282820497041697, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6583971824238040618, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6583971824238040618, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6583971824238040618, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140103788152877539, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140103788152877539, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140103788152877539, guid: bd3f430ae13ecf4ab91227b7c86ca0f8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
