@@ -59,7 +59,7 @@ namespace Player
         {
             //Check if the player is underneath the map
             //If this is the case the player will die
-            if (transform.position.y <= -5)
+            if (transform.position.x <= -15 || transform.position.z <= -15 || transform.position.x >= 15 || transform.position.z >= 15)
             {
                 TakeDamage(maxHealth);
             }
