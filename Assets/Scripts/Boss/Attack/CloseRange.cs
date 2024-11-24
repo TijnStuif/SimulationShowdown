@@ -13,13 +13,14 @@ namespace Boss.Attack
         
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
-        [SerializeField] private Transform boss;
+        private GameObject boss;
         private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
         private Vector3 CloseRangeAttackPosition;
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
 
         private void Awake()
         {
+            boss = FindObjectOfType<Boss.Controller>().gameObject;
             CloseRangeAttackPosition = boss.transform.position;
             // instantiate attack objects
             CloseRangeAttackIndicator = Instantiate(CloseRangeAttackIndicatorPrefab);

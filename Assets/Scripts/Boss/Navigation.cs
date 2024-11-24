@@ -9,10 +9,13 @@ public class Navigation : MonoBehaviour
     [SerializeField] private Transform[] wayPoints;
     private GameObject currentWayPoint;
     [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private GameObject wayPointsPrefab;
 
     private void Awake()
     {
         bossController = GetComponent<Boss.Controller>();
+        Instantiate(wayPointsPrefab, transform.position, Quaternion.identity);
+        wayPoints = wayPointsPrefab.GetComponentsInChildren<Transform>();
         StartCoroutine(LoopWayPointMovement());
     }
 
