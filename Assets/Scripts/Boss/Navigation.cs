@@ -30,7 +30,7 @@ public class Navigation : MonoBehaviour
         {
             yield return new WaitForSeconds(5f);
             GameObject targetedWayPoint = currentWayPoint;
-            currentWayPoint = wayPoints[Random.Range(0, wayPoints.Length)].gameObject;
+            currentWayPoint = wayPoints[Random.Range(0, wayPoints.Length - 1)].gameObject;
             while (currentWayPoint == targetedWayPoint)
             {
                 currentWayPoint = wayPoints[Random.Range(0, wayPoints.Length)].gameObject;
