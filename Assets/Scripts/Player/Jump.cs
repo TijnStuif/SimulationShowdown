@@ -11,6 +11,7 @@ namespace Player
         public void OnJump(InputAction.CallbackContext context)
         {
             Debug.Log("start jump");
+            Debug.Log(playerMovement.isGrounded);
             if (context.performed && playerMovement.isGrounded)
             {
                 Debug.Log("actually jump");

@@ -2262,6 +2262,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6079498749066942727, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8545764736834123818, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
         type: 3}
       propertyPath: m_LocalPosition.x
