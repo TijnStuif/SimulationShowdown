@@ -70,6 +70,7 @@ MonoBehaviour:
     type: 3}
   CloseRangeAttackObjectPrefab: {fileID: 2535184723765269125, guid: 1c740a34a2fdd53bfa1dc0b27540a510,
     type: 3}
+  boss: {fileID: 123481045137763590, guid: 9ef3a2ce9d85f3a7db96f7608c595396, type: 3}
 --- !u!114 &2281008845910031178
 MonoBehaviour:
   m_ObjectHideFlags: 0

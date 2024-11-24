@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4f22072ec40474bbe318e3e305716c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossWayPoints:
+  wayPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -146,6 +146,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  movementSpeed: 5
+  wayPointsPrefab: {fileID: 4285576737901389598, guid: 785ce6df11c643e4a806d0761b6e005f,
+    type: 3}
 --- !u!1001 &8455188462000971906
 PrefabInstance:
   m_ObjectHideFlags: 0
