@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4827579886144144810}
   m_Layer: 0
   m_Name: PlayerFollower
-  m_TagString: PlayerTag
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 5546915181908656107}
   m_Layer: 0
   m_Name: Player
-  m_TagString: PlayerTag
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,8 +463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  gameOverPrefab: {fileID: 7303875515652641951, guid: 594c4b4d124cdcd7db3b23ade81c8339,
-    type: 3}
 --- !u!114 &594137129409595989
 MonoBehaviour:
   m_ObjectHideFlags: 0

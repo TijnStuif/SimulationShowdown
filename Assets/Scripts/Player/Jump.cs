@@ -10,8 +10,10 @@ namespace Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            Debug.Log("start jump");
             if (context.performed && playerMovement.isGrounded)
             {
+                Debug.Log("actually jump");
                 player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
                 player.AddForce(Vector3.up * 5, ForceMode.Impulse);
             }

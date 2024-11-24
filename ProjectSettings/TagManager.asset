@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - player
-  - PlayerTag
   - CloseRangeAttack
   - Boss
+  - BossMovementPoint
   layers:
   - Default
   - TransparentFX

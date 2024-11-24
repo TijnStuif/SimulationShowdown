@@ -41,7 +41,7 @@ namespace Boss
         private void OnTriggerEnter(Collider other)
         {
             // should use events ! ! !
-            if (other.CompareTag("PlayerTag"))
+            if (other.CompareTag("Player"))
             { 
                 TakeDamage(50); 
                 // LockDamage();

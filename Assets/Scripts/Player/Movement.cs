@@ -72,7 +72,7 @@ namespace Player
         //this function checks for ground distance for the player and then applies drag if it does touch the ground
         private void CheckForDrag()
         {
-            isGrounded = Physics.Raycast(player.transform.position, Vector3.down, 1.1f, groundMask);
+            isGrounded = Physics.Raycast(player.transform.position, Vector3.down, 2f, groundMask);
 
             if (isGrounded)
             {
