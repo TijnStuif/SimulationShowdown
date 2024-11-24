@@ -32,7 +32,7 @@ namespace Boss.Attack
         public void Execute()
         {
             CloseRangeAttackPosition = boss.transform.position;
-            CloseRangeAttackIndicator.transform.position = CloseRangeAttackIndicatorPosition;
+            CloseRangeAttackIndicator.transform.position = CloseRangeAttackPosition;
             Invoke(nameof(InitiateCloseRangeAttack), 1f);
             Invoke(nameof(Reset), 2f);
         }
