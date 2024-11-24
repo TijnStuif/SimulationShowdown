@@ -53,6 +53,10 @@ namespace Boss.Attack
 
         private IEnumerator ActivateGravityChange()
         {
+            //set particle to purple
+            var main = indicatorParticle.main;
+            main.startColor = new Color(1, 0, 1, 1);
+
             // Play the particle system
             indicatorParticle.Play();
 
