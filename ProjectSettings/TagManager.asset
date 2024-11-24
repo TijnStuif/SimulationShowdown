@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boss
-  - SimulationBorder
+  - BossMovementPoint
   - Attack
   layers:
   - Default
