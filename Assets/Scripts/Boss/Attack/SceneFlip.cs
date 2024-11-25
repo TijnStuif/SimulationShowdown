@@ -22,7 +22,6 @@ namespace Boss.Attack
             {
                 // Find the ParticleSystem component on the player GameObject
                 indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
-                Debug.Assert(indicatorParticle, "Particle system component not found!");
 
                 // Disable Play On Awake
                 var main = indicatorParticle.main;
@@ -31,10 +30,6 @@ namespace Boss.Attack
                 // Stop the particle system
                 indicatorParticle.Stop();
             }
-            else
-            {
-                Debug.LogError("Player GameObject not found!");
-            }
         }
 
         public void Execute()
@@ -42,10 +37,6 @@ namespace Boss.Attack
             if (indicatorParticle != null)
             {
                 StartCoroutine(ActivateSceneFlip());
-            }
-            else
-            {
-                Debug.LogError("Cannot execute, particle system not found!");
             }
         }
 

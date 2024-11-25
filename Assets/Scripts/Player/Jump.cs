@@ -10,7 +10,6 @@ namespace Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            Debug.Log(playerMovement.isGrounded);
             if (context.performed && playerMovement.isGrounded)
             {
                 player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);

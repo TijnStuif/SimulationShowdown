@@ -31,7 +31,6 @@ namespace Boss.Attack
             }
             else
             {
-                Debug.LogWarning("PlayerMovement component not found.");
             }
         }
 

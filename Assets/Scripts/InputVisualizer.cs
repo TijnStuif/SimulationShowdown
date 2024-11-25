@@ -43,7 +43,6 @@ public class InputVisualizer : MonoBehaviour
     {
         if (keyContainer == null)
         {
-            Debug.LogWarning("Key container is null");
             return;
         }
 
