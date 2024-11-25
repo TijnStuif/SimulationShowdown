@@ -180,7 +180,7 @@ MonoBehaviour:
   speed: 10
   groundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   playerRotator: {fileID: 4913089175857148065}
   areControlsInverted: 0
 --- !u!54 &1484805476840611762
@@ -463,9 +463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  gameOverPrefab: {fileID: 7303875515652641951, guid: 594c4b4d124cdcd7db3b23ade81c8339,
-    type: 3}
-  playerPosition: {fileID: 8545764736834123818}
 --- !u!114 &594137129409595989
 MonoBehaviour:
   m_ObjectHideFlags: 0
