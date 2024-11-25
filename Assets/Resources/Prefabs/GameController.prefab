@@ -70,7 +70,6 @@ MonoBehaviour:
     type: 3}
   CloseRangeAttackObjectPrefab: {fileID: 2535184723765269125, guid: 1c740a34a2fdd53bfa1dc0b27540a510,
     type: 3}
-  boss: {fileID: 123481045137763590, guid: 9ef3a2ce9d85f3a7db96f7608c595396, type: 3}
 --- !u!114 &2281008845910031178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputReverserAttackIndicatorPrefab: {fileID: 2951619880673608283, guid: 45a9b093fe73fd44797be5c3a1d3cd9d,
+    type: 3}
 --- !u!114 &3302913286780812233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3404344a2c6fb47b6c032daf9c1b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityAmount: -1.6
+  gravityAmount: -2.5
 --- !u!114 &8718303700229094477
 MonoBehaviour:
   m_ObjectHideFlags: 0
