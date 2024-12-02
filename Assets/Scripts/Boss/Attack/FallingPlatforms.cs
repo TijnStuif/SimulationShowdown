@@ -8,7 +8,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
 {
     public Type Type => Type.Environment;
     private List<GameObject> tiles;
-    private List<GameObject> tilesToRemove = new List<GameObject>();
+    private List<GameObject> removedTiles = new List<GameObject>();
     private List<GameObject> targetedTiles = new List<GameObject>();
     
     private GameObject targetedTile;
@@ -79,7 +79,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
         foreach (var targetedTile in targetedTiles)
         {
             targetedTile.SetActive(false);
-            tilesToRemove.Add(targetedTile);
+            removedTiles.Add(targetedTile);
         }
 
         //Attack is completed
