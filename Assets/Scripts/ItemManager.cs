@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.iOS;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
