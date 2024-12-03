@@ -1,0 +1,14 @@
+.menu-button {
+    height: 100%;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    border-width: 5px;
+    border-color: rgb(45, 226, 230);
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 200%;
+}
+.menu-button:hover:enabled {
+    color: var(--game-yellow--);
+}

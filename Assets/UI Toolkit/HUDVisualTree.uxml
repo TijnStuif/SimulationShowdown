@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/hud.uss?fileID=7433441132597879392&amp;guid=32c22a1ed711cd749a265614ce409e3a&amp;type=3#hud" />
+    <ui:VisualElement name="HUD" style="flex-grow: 1; height: auto; position: relative; left: auto; top: auto; right: auto; bottom: auto;">
+        <ui:ProgressBar value="100" focusable="false" name="healthbar" high-value="100" style="width: 50%; height: 100%; background-color: rgba(73, 73, 73, 0); -unity-background-image-tint-color: rgb(55, 55, 55); background-image: none; align-self: center; justify-content: center; align-items: stretch; max-height: 100%; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-background-scale-mode: stretch-to-fill; flex-basis: auto; -unity-slice-top: 0; font-size: 50px; -unity-font-style: bold; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; opacity: 1; display: flex; top: -200px; left: auto;" />
+    </ui:VisualElement>
+</ui:UXML>
