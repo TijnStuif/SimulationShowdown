@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3285714092334141711}
   - component: {fileID: 3038252847450476451}
   - component: {fileID: -8026926751682821010}
+  - component: {fileID: 4313459033143527219}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  damageToTake: 25
 --- !u!114 &-8026926751682821010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,19 @@ MonoBehaviour:
   movementSpeed: 5
   wayPointsPrefab: {fileID: 4285576737901389598, guid: 785ce6df11c643e4a806d0761b6e005f,
     type: 3}
+--- !u!114 &4313459033143527219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123481045137763590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73d045afd58aa541b2a800e7de0955f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossController: {fileID: 3038252847450476451}
 --- !u!1001 &8455188462000971906
 PrefabInstance:
   m_ObjectHideFlags: 0

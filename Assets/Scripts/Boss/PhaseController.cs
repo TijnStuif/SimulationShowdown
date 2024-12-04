@@ -6,7 +6,6 @@ namespace Boss
     public class PhaseController : MonoBehaviour
     {
         [SerializeField] private Controller bossController;
-        private int phaseThreshold = 25;
         private enum Phase { 
             One, 
             Two, 
@@ -18,31 +17,29 @@ namespace Boss
         private void Start()
         {
             currentPhase = Phase.One;
+            bossController.OnDamaged += UpdatePhase;
         }
 
-        private void UpdatePhase()
+        private void UpdatePhase(int damage)
         {
-            if (bossController.currentHealth <= phaseThreshold)
+            switch (currentPhase)
             {
-                switch (currentPhase)
-                {
-                    case Phase.One:
-                        currentPhase = Phase.Two;
-                        break;
-                    case Phase.Two:
-                        currentPhase = Phase.Three;
-                        break;
-                    case Phase.Three:
-                        currentPhase = Phase.Four;
-                        break;
-                    case Phase.Four:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                case Phase.One:
+                    currentPhase = Phase.Two;
+                    Debug.Log("Phase Two");
+                    break;
+                case Phase.Two:
+                    currentPhase = Phase.Three;
+                    Debug.Log("Phase Three");
+                    break;
+                case Phase.Three:
+                    currentPhase = Phase.Four;
+                    Debug.Log("Phase Four");
+                    break;
+                case Phase.Four:
+                    Debug.Log("Boss defeated");
+                    break;
             }
-        }
-
-        
+        } 
     }
 }
