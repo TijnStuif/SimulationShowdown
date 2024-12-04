@@ -12,7 +12,7 @@ namespace Boss
             Three, 
             Four 
         }
-        private Phase currentPhase;
+        Phase currentPhase {get; set;}
 
         private void Start()
         {
@@ -26,18 +26,14 @@ namespace Boss
             {
                 case Phase.One:
                     currentPhase = Phase.Two;
-                    Debug.Log("Phase Two");
                     break;
                 case Phase.Two:
                     currentPhase = Phase.Three;
-                    Debug.Log("Phase Three");
                     break;
                 case Phase.Three:
                     currentPhase = Phase.Four;
-                    Debug.Log("Phase Four");
                     break;
                 case Phase.Four:
-                    Debug.Log("Boss defeated");
                     break;
             }
         } 
