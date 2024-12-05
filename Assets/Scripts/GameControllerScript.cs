@@ -9,8 +9,8 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> environmentAttacks;
     private List<IAttack> directAttacks;
     private float timer;
-    public float minAttackInterval = 5f; 
-    public float maxAttackInterval = 15f;
+    public float minAttackInterval = 4f; 
+    public float maxAttackInterval = 5f;
     
     void Start()
     {
@@ -42,12 +42,12 @@ public class GameControllerScript : MonoBehaviour
             return;
         }
 
-        int randomIndex = UnityEngine.Random.Range(0, attacks.Count);
+        int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
     }
 
     private void SetRandomInterval()
     {
-        timer = Mathf.Round(UnityEngine.Random.Range(minAttackInterval, maxAttackInterval));
+        timer = Mathf.Round(Random.Range(minAttackInterval, maxAttackInterval));
     }
 }
