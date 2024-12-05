@@ -10,8 +10,6 @@ namespace Boss.Attack
         private GameObject player;
         private Player.Controller playerScript;
         private GameObject boss;
-        //
-        
         [SerializeField] private GameObject indicatorPrefab;
         [SerializeField] private GameObject attackPrefab;
         
