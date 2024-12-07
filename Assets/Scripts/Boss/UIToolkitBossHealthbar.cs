@@ -21,6 +21,8 @@ public class UIToolkitBossHealthbar : MonoBehaviour
         progressbar = m_uiDocument.Q<ProgressBar>("healthbar");
 
         m_uiDocument.Add(healthbar);
+
+        progressbar.style.top = -450;
     }
 
     private void Update()

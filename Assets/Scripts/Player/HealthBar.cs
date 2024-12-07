@@ -10,6 +10,7 @@ namespace Player
         public Transform player;
         VisualElement healthbar;
         ProgressBar progressbar;
+        Label playertext;
         private Camera cam;
         public UIDocument healthbarDocument;
     
@@ -23,8 +24,17 @@ namespace Player
             //access the healthbar VisualElement and the progressBar
             healthbar = m_uiDocument.Q<VisualElement>("healthbar");
             progressbar = m_uiDocument.Q<ProgressBar>("healthbar");
+            playertext = m_uiDocument.Q<Label>("Playertext");
 
             m_uiDocument.Add(healthbar);
+
+            healthbar.style.width = 500;
+            healthbar.style.left = -580;
+
+            playertext.style.width = 500;
+            playertext.style.top = 940;
+            playertext.style.left = -580;
+
         }
 
         private void Update()
@@ -32,13 +42,6 @@ namespace Player
             //Access the health of the player from the player script
             int health = GameObject.Find("Player").GetComponent<Player.Controller>().currentHealth;
 
-            //sets the healthbar to a screenpoint on the player position
-            Vector3 screen = cam.WorldToScreenPoint(player.position);
-
-            //adjust the position and value of the healthbar
-            healthbar.style.top = player.position.y - 230;
-            healthbar.style.width = 150;
-            healthbar.style.height = 10;
             progressbar.value = health;
         }
     }
