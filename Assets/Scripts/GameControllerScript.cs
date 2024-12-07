@@ -7,21 +7,16 @@ using UnityEngine;
 public class GameControllerScript : MonoBehaviour
 {
     private List<IAttack> attacks;
-    private List<IAttack> environmentAttacks;
-    private List<IAttack> directAttacks;
+    private List<IAttack> allAttacks;
     [SerializeField] private PhaseController phaseController;
     private float timer;
-    public float minAttackInterval = 4f; 
-    public float maxAttackInterval = 5f;
+    public float minAttackInterval = 6f; 
+    public float maxAttackInterval = 8f;
     
     void Start()
     {
-        // Gets all the objects in the scene that have the IAttack interface
+        allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         attacks = phaseController.phases[phaseController.currentPhase];
-
-        // list of attacks per type
-        // environmentAttacks = attacks.Where(attack => attack.Type == Type.Environment).ToList();
-        // directAttacks = attacks.Where(attack => attack.Type == Type.Direct).ToList();
 
         SetRandomInterval(); 
     }

@@ -8,9 +8,6 @@ namespace Boss.Attack
         Player.Controller player;
         public Type Type => Type.Direct;
         
-        [SerializeField] private GameObject CloseRangeAttackIndicatorPrefab;
-        [SerializeField] private GameObject CloseRangeAttackObjectPrefab;
-        
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
         private GameObject boss;
@@ -18,13 +15,13 @@ namespace Boss.Attack
         private Vector3 CloseRangeAttackPosition;
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
 
-        private void Awake()
+        private void Start()
         {
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             CloseRangeAttackPosition = boss.transform.position;
             // instantiate attack objects
-            CloseRangeAttackIndicator = Instantiate(CloseRangeAttackIndicatorPrefab);
-            CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
+            CloseRangeAttackIndicator = GameObject.Find("CloseRangeAttackIndicator");
+            CloseRangeAttackObject = GameObject.Find("CloseRangeAttack");
             // move them far away
             Reset();
         }

@@ -7,46 +7,42 @@ namespace Boss
 {
     public class PhaseController : MonoBehaviour
     {
-        [SerializeField] private Controller bossController;
-        public enum Phase{
-            Phase1,
-            Phase2,
-            Phase3,
-            Phase4
-        }
-        public Dictionary<Phase, List<IAttack>> phases;
-        public Phase currentPhase;
+        private Controller bossController;
+        public Dictionary<int, List<IAttack>> phases;
+        public int currentPhase;
+        private GameControllerScript gameControllerScript;
 
         private void Awake()
         {
-            phases = new Dictionary<Phase, List<IAttack>>{
-                {Phase.Phase1, new List<IAttack>{new Laser(), new CloseRange()}},
-                {Phase.Phase2, new List<IAttack>{new LowGravity(), new InvertedControls()}},
-                {Phase.Phase3, new List<IAttack>{new SceneFlip()}},
-                {Phase.Phase4, new List<IAttack>{}},
+            bossController = FindObjectOfType<Boss.Controller>();
+            gameControllerScript = FindObjectOfType<GameControllerScript>();
+            phases = new Dictionary<int, List<IAttack>>{
+                {1, new List<IAttack>{gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>()}},
+                {2, new List<IAttack>{gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>()}},
+                {3, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
+                {4, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
             };
-            bossController.OnDamaged += UpdatePhase;
-            currentPhase = Phase.Phase1;
+            bossController.ChangedPhase.AddListener(() => UpdatePhase());
+            currentPhase = 1;
         }
 
-        private void UpdatePhase(int damage)
+        private void UpdatePhase()
         {
+            if (currentPhase >= 4) return;
+            currentPhase++;
             switch (currentPhase)
             {
-                case Phase.Phase1:
-                    currentPhase = Phase.Phase2;
-                    Debug.Log(currentPhase);
+                case 2:
+                    gameControllerScript.minAttackInterval = 5f;
+                    gameControllerScript.maxAttackInterval = 7f;
                     break;
-                case Phase.Phase2:
-                    currentPhase = Phase.Phase3;
-                    Debug.Log(currentPhase);
+                case 3:
+                    gameControllerScript.minAttackInterval = 4f;
+                    gameControllerScript.maxAttackInterval = 6f;
                     break;
-                case Phase.Phase3:
-                    currentPhase = Phase.Phase4;
-                    Debug.Log(currentPhase);
-                    break;
-                case Phase.Phase4:
-                Debug.Log(currentPhase);
+                case 4:
+                    gameControllerScript.minAttackInterval = 3f;
+                    gameControllerScript.maxAttackInterval = 5f;
                     break;
             }
         }

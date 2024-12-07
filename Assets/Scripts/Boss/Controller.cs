@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Boss
 {
@@ -12,6 +13,7 @@ namespace Boss
         private int damageToTake = 25;
         public event Action Death;
         public event Action<int> OnDamaged;
+        public UnityEvent ChangedPhase;
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 60;
         
@@ -47,6 +49,7 @@ namespace Boss
             if (other.CompareTag("Player") && invincibilityFrames >= 60)
             {
                 OnDamaged?.Invoke(damageToTake);
+                ChangedPhase?.Invoke();
                 // LockDamage();
             }
         }
