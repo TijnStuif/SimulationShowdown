@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Player;
+using System.Collections;
 
 public class InputVisualizer : MonoBehaviour
 {
@@ -9,7 +11,10 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
+    private VisualElement DashkeyContainer;
+    private VisualElement DashKeyOverlay;
     private Player.Movement playerMovement;
+    private Player.Teleport playerTeleport;
 
     private void Awake()
     {
@@ -20,12 +25,17 @@ public class InputVisualizer : MonoBehaviour
     void Start()
     {
         playerMovement = FindObjectOfType<Player.Movement>();
+        playerTeleport = FindObjectOfType<Player.Teleport>();
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");
         AKeyContainer = visualTree.Q<VisualElement>("AKeyContainer");
         SKeyContainer = visualTree.Q<VisualElement>("SKeyContainer");
         DKeyContainer = visualTree.Q<VisualElement>("DKeyContainer");
+        DashkeyContainer = visualTree.Q<VisualElement>("DashKeyContainer");
+        DashKeyOverlay = visualTree.Q<VisualElement>("DashKeyOverlay");
+
+        playerTeleport.OnDash += HandleDash;
     }
 
     void Update()
@@ -58,8 +68,31 @@ public class InputVisualizer : MonoBehaviour
             }
             else
             {
-            keyContainer.style.backgroundColor = new StyleColor(Color.white);
+                keyContainer.style.backgroundColor = new StyleColor(Color.white);
             }
         }
+    }
+
+    private void HandleDash()
+    {
+        StartCoroutine(FadeDashKeyContainerColor());
+    }
+
+    private IEnumerator FadeDashKeyContainerColor()
+    {
+        float duration = playerTeleport.teleportCooldown;
+        float elapsedTime = 0f;
+
+        DashKeyOverlay.style.width = new Length(100, LengthUnit.Percent);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            DashKeyOverlay.style.width = new Length((1 - t) * 100, LengthUnit.Percent);
+            yield return null;
+        }
+
+        DashKeyOverlay.style.width = new Length(0, LengthUnit.Percent);
     }
 }
