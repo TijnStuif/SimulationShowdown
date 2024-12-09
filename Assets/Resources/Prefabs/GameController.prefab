@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e9ad5e52799c64cbdcf3d956d8c05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 40
   indicatorPrefab: {fileID: 3956313933832281549, guid: 8bf2ba752f7e81a1a92050c5ed72aec7,
     type: 3}
   attackPrefab: {fileID: 7915644990725051121, guid: bbf028a68926df4a995e31980fda39ce,
