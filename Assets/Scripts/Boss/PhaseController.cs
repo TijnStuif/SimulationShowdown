@@ -11,6 +11,7 @@ namespace Boss
         public Dictionary<int, List<IAttack>> phases;
         public int currentPhase;
         private GameControllerScript gameControllerScript;
+        private int phaseHealthThreshold;
 
         private void Awake()
         {
@@ -26,10 +27,26 @@ namespace Boss
             currentPhase = 1;
         }
 
+        private void Start()
+        {
+            phaseHealthThreshold = bossController.maxHealth / 4;
+        }
+
         private void UpdatePhase()
         {
             if (currentPhase >= 4) return;
-            currentPhase++;
+            if (bossController.currentHealth <= phaseHealthThreshold * 3 && bossController.currentHealth > phaseHealthThreshold * 2)
+            {
+                currentPhase = 2;
+            }
+            else if (bossController.currentHealth <= phaseHealthThreshold * 2 && bossController.currentHealth > phaseHealthThreshold)
+            {
+                currentPhase = 3;
+            }
+            else if (bossController.currentHealth <= phaseHealthThreshold)
+            {
+                currentPhase = 4;
+            }
             switch (currentPhase)
             {
                 case 2:
