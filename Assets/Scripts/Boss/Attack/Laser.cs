@@ -10,10 +10,6 @@ namespace Boss.Attack
         private GameObject player;
         private Player.Controller playerScript;
         private GameObject boss;
-        //
-        
-        [SerializeField] private GameObject indicatorPrefab;
-        [SerializeField] private GameObject attackPrefab;
         
         private Vector3 indicatorStartPos = new(200, 0, 0);
         private Vector3 laserStartPos = new(250, 0, 0);
@@ -21,10 +17,10 @@ namespace Boss.Attack
         private float indicatorTime = 1f;
 
 
-        private void Awake()
+        private void Start()
         {
-            laserIndicator = Instantiate(indicatorPrefab);
-            laserAttack = Instantiate(attackPrefab);
+            laserIndicator = GameObject.Find("LaserAttackIndicator");
+            laserAttack = GameObject.Find("LaserAttack");
             playerScript = FindObjectOfType<Player.Controller>();
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;

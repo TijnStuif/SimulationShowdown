@@ -9,13 +9,12 @@ namespace Boss.Attack
 
         private Movement playerMovement;
         private GameObject player;
-        [SerializeField] private GameObject inputReverserAttackIndicatorPrefab;
         private GameObject inputReverserAttackIndicator;
         private Vector3 startPosition = new Vector3(200, 0, -20);
 
         void Start()
         {
-            inputReverserAttackIndicator = Instantiate(inputReverserAttackIndicatorPrefab);
+            inputReverserAttackIndicator = GameObject.Find("InputReverserIndicator");
             player = FindObjectOfType<Player.Controller>().gameObject;
             playerMovement = FindObjectOfType<Movement>();
             inputReverserAttackIndicator.transform.position = startPosition;
