@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492219d017ea9554898f708188065d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorMaterial: {fileID: 2100000, guid: 94ec9a087579e6f438cb263266e465a9, type: 2}
+  indicatorMaterial: {fileID: 2100000, guid: 08732dff2b6e823449a166b72c2260c3, type: 2}
   numberOfTiles: 3
 --- !u!114 &-8366010346727223579
 MonoBehaviour:
