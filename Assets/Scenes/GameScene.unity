@@ -676,6 +676,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
+    - target: {fileID: 3302913286780812233, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572242106367940043, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7997739378233538426, guid: 65d496f6c2f0b892393d4ff8cd1127d9,
         type: 3}
       propertyPath: damage
@@ -1074,6 +1084,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5546915181908656107, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5546915181908656107, guid: e0ca78e9fbf7fc9ad8a919c0a670114b,
         type: 3}
       propertyPath: sourceAsset
