@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3302913286780812233}
   - component: {fileID: 8718303700229094477}
   - component: {fileID: -8366010346727223579}
+  - component: {fileID: 2873278357100001594}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -68,11 +69,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
-  CloseRangeAttackIndicatorPrefab: {fileID: 3963165450850657802, guid: 78c6d5fe5e179651b8180e3cfe3982a8,
-    type: 3}
-  CloseRangeAttackObjectPrefab: {fileID: 2535184723765269125, guid: 1c740a34a2fdd53bfa1dc0b27540a510,
-    type: 3}
-  boss: {fileID: 123481045137763590, guid: 9ef3a2ce9d85f3a7db96f7608c595396, type: 3}
 --- !u!114 &2281008845910031178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,11 +94,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
-  boss: {fileID: 123481045137763590, guid: 9ef3a2ce9d85f3a7db96f7608c595396, type: 3}
-  indicatorPrefab: {fileID: 3956313933832281549, guid: 8bf2ba752f7e81a1a92050c5ed72aec7,
-    type: 3}
-  attackPrefab: {fileID: 7915644990725051121, guid: bbf028a68926df4a995e31980fda39ce,
-    type: 3}
 --- !u!114 &1472273395187015414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,8 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReverserAttackIndicatorPrefab: {fileID: 2951619880673608283, guid: 45a9b093fe73fd44797be5c3a1d3cd9d,
-    type: 3}
 --- !u!114 &3302913286780812233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +159,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73d045afd58aa541b2a800e7de0955f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossController: {fileID: 3038252847450476451, guid: 9ef3a2ce9d85f3a7db96f7608c595396,
-    type: 3}
   currentPhase: 0
+--- !u!114 &2873278357100001594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2488837912002129018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d997a1d07205ba849b3306f2db2cde6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorMaterial: {fileID: 2100000, guid: 94ec9a087579e6f438cb263266e465a9, type: 2}
+  boxMaterial: {fileID: 2100000, guid: a5cc782d7cfd3d648bbb84da33118f7e, type: 2}
