@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3285714092334141711}
   - component: {fileID: 3038252847450476451}
   - component: {fileID: -8026926751682821010}
-  - component: {fileID: 3375512769752685299}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -150,18 +149,6 @@ MonoBehaviour:
   movementSpeed: 5
   wayPointsPrefab: {fileID: 4285576737901389598, guid: 785ce6df11c643e4a806d0761b6e005f,
     type: 3}
---- !u!114 &3375512769752685299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123481045137763590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d997a1d07205ba849b3306f2db2cde6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8455188462000971906
 PrefabInstance:
   m_ObjectHideFlags: 0
