@@ -5,45 +5,51 @@ using UnityEngine;
 
 public class MovingWalls : MonoBehaviour
 {
-
-    private List<GameObject> firstRowWalls;
-    private List<GameObject> secondRowWalls;
-    private List<GameObject> movingWalls = new List<GameObject>();
+    private HashSet<GameObject> movingWalls = new HashSet<GameObject>();
     private GameObject movingWall;
-    private Vector3 moveDirectionWall = new Vector3(0, 0, 0.001f);
+    private Vector3 moveDirectionWall = new Vector3(0, 0, 0.1f);
+    private Vector3 moveToOriginalPosition = new Vector3(0, 0, 30);
+    [SerializeField] private Material indicatorMaterial;
+    [SerializeField] private Material boxMaterial;
+    private List<GameObject> walls = new List<GameObject>();
 
     
     void Start()
     {
-        firstRowWalls = new List<GameObject>(GameObject.FindGameObjectsWithTag("FirstRowWall"));
-        secondRowWalls = new List<GameObject>(GameObject.FindGameObjectsWithTag("SecondRowWall"));
+        walls = new List<GameObject>(GameObject.FindGameObjectsWithTag("Wall"));
 
-        SelectWalls();
-        Debug.Log(firstRowWalls);
+        StartCoroutine(SelectingWalls());
     }
 
-    
-    private void SelectWalls()
+    private IEnumerator SelectingWalls()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            //Selects random tiles and adds them to a list
-            movingWall = firstRowWalls[Random.Range(0, firstRowWalls.Count)]; 
-            movingWalls.Add(movingWall);  
+        movingWall = walls[Random.Range(0, walls.Count)];
+        movingWalls.Add(movingWall);
 
-            movingWall = secondRowWalls[Random.Range(0, secondRowWalls.Count)]; 
-            movingWalls.Add(movingWall);  
+        movingWall.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
-            Debug.Log(movingWalls);
-        }
+        yield return new WaitForSeconds(1f);
+
+        StartCoroutine(SelectingWalls());
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         foreach (var movingWall in movingWalls)
         {
-            movingWall.transform.position -= moveDirectionWall;
-            Debug.Log(movingWall.transform.position);
+            
+            if(movingWall.transform.position.z >= -15)
+            {
+                movingWall.transform.position -= moveDirectionWall;
+            } 
+            else 
+            {
+                movingWall.transform.position += moveToOriginalPosition;
+                movingWall.GetComponent<MeshRenderer>().material = boxMaterial;
+                movingWalls.Remove(movingWall);
+                break;
+            }
         }
+        
     }
 }
