@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.V1
 {
     public class Movement : MonoBehaviour
     {

@@ -1,10 +1,9 @@
 using System;
 using Boss.Attack;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.V1
 {
     public enum State
     {

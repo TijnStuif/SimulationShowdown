@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using Player.V1;
 
 namespace Boss.Attack
 {
@@ -15,7 +16,7 @@ namespace Boss.Attack
         private void Awake()
         {
             // find PlayerFollower (this object is under Player)
-            playerCamera = FindObjectOfType<Player.Rotation>().gameObject.transform;
+            playerCamera = FindObjectOfType<Rotation>().gameObject.transform;
 
             GameObject player = GameObject.Find("Player");
             if (player != null)

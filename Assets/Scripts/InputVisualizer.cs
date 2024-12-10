@@ -1,3 +1,4 @@
+using Player.V1;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,7 +10,7 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
-    private Player.Movement playerMovement;
+    private Movement playerMovement;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class InputVisualizer : MonoBehaviour
 
     void Start()
     {
-        playerMovement = FindObjectOfType<Player.Movement>();
+        playerMovement = FindObjectOfType<Movement>();
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");

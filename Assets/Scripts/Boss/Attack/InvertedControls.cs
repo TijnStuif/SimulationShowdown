@@ -1,4 +1,5 @@
 using Player;
+using Player.V1;
 using UnityEngine;
 
 namespace Boss.Attack
@@ -16,7 +17,7 @@ namespace Boss.Attack
         void Start()
         {
             inputReverserAttackIndicator = Instantiate(inputReverserAttackIndicatorPrefab);
-            player = FindObjectOfType<Player.Controller>().gameObject;
+            player = FindObjectOfType<Player.V1.Controller>().gameObject;
             playerMovement = FindObjectOfType<Movement>();
             inputReverserAttackIndicator.transform.position = startPosition;
         }

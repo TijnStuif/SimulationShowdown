@@ -5,7 +5,7 @@ namespace Boss.Attack
 {
     public class CloseRange : DamageAttack, IAttack
     { 
-        Player.Controller player;
+        Player.V1.Controller player;
         public Type Type => Type.Direct;
         
         [SerializeField] private GameObject CloseRangeAttackIndicatorPrefab;

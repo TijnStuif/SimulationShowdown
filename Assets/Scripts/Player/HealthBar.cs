@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-namespace Player
+namespace Player.V1
 {
     public class HealthBar : MonoBehaviour
     {
@@ -40,7 +39,7 @@ namespace Player
         private void Update()
         {
             //Access the health of the player from the player script
-            int health = GameObject.Find("Player").GetComponent<Player.Controller>().currentHealth;
+            int health = GameObject.Find("Player").GetComponent<Controller>().currentHealth;
 
             progressbar.value = health;
         }

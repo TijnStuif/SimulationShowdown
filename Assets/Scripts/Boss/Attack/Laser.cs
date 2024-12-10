@@ -8,7 +8,7 @@ namespace Boss.Attack
         private GameObject laserIndicator;
         private GameObject laserAttack;
         private GameObject player;
-        private Player.Controller playerScript;
+        private Player.V1.Controller playerScript;
         private GameObject boss;
         //
         
@@ -25,7 +25,7 @@ namespace Boss.Attack
         {
             laserIndicator = Instantiate(indicatorPrefab);
             laserAttack = Instantiate(attackPrefab);
-            playerScript = FindObjectOfType<Player.Controller>();
+            playerScript = FindObjectOfType<Player.V1.Controller>();
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             ResetLaser();

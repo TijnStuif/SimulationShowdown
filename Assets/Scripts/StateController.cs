@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Player.V1;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
-using State = Player.State;
+using State = Player.V1.State;
 
 /// <summary>
 /// This class handles state change events and is able to change state such as
@@ -51,7 +52,7 @@ public class StateController : MonoBehaviour
     private GameObject m_winScreen;
     
     // controller scripts
-    private Player.Controller m_playerController;
+    private Controller m_playerController;
     private Boss.Controller m_bossController;
     
     // UI controller scripts
@@ -117,7 +118,7 @@ public class StateController : MonoBehaviour
         UiScripts = new List<AbstractUiController>(3);
 
         // assign script, if it's null, throw exception
-        if ((m_playerController = FindObjectOfType<Player.Controller>()) == null)
+        if ((m_playerController = FindObjectOfType<Controller>()) == null)
             throw new ScriptNotFoundException(m_playerController);
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
@@ -180,7 +181,7 @@ public class StateController : MonoBehaviour
         Win();
     }
 
-    private void OnPlayerStateChange(Player.State state)
+    private void OnPlayerStateChange(State state)
     {
         switch (state)
         {

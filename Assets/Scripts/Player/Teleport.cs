@@ -1,9 +1,7 @@
-using System.Linq;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.V1
 {
     public class Teleport : MonoBehaviour
     {
