@@ -5,6 +5,7 @@ namespace Boss.Attack
 {
     public class DamageAttack : MonoBehaviour
     {
+        
         public static event Action<int> PlayerDamaged;
         //add damage via the inspector
         [SerializeField] private int damage;

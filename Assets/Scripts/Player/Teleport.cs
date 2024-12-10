@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Cinemachine;
 using UnityEngine;
@@ -9,20 +10,19 @@ namespace Player
     {
         [SerializeField] private Rigidbody player;
         [SerializeField] private Movement playerMovement;
-        
+
         private Transform boss;
-        private Camera playerCamera; 
-        
-        private readonly float teleportCooldown = 2f;
-        private float timeSinceLastTeleport = 0;
-        private readonly float aimThreshold = 30f; 
+        private Camera playerCamera;
+
+        public readonly float teleportCooldown = 2f;
+        public float timeSinceLastTeleport = 0;
+        private readonly float aimThreshold = 30f;
         private readonly float maxTeleportDistance = 10f;
+
+        public event Action OnDash;
 
         private void Awake()
         {
-            // My solution to avoid GameObject.Find
-            // is finding a unique component of the object I need
-            // example: Boss.Controller class is only used for the Boss GameObject
             boss = FindObjectOfType<Boss.Controller>().transform;
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
         }
@@ -34,7 +34,7 @@ namespace Player
                 if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
                 timeSinceLastTeleport = Time.time;
                 player.velocity = Vector3.zero;
-
+                OnDash?.Invoke();
                 Vector3 movementInput = new Vector3(playerMovement.movementInput.x, 0, playerMovement.movementInput.y).normalized;
 
                 if (movementInput.z > 0)
@@ -55,7 +55,7 @@ namespace Player
                 RaycastHit hit;
                 if (Physics.Raycast(player.position, movementInput, out hit, maxTeleportDistance))
                 {
-                    player.position = hit.point - movementInput * 0.5f; 
+                    player.position = hit.point - movementInput * 0.5f;
                 }
                 else
                 {

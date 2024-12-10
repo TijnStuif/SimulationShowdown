@@ -30,9 +30,10 @@ namespace Player
 
             healthbar.style.width = 500;
             healthbar.style.left = -580;
+            healthbar.style.top = -115;
 
             playertext.style.width = 500;
-            playertext.style.top = 940;
+            playertext.style.top = 840;
             playertext.style.left = -580;
 
         }
@@ -44,5 +45,6 @@ namespace Player
 
             progressbar.value = health;
         }
+
     }
 }
