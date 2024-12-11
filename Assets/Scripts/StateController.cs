@@ -20,25 +20,17 @@ public class StateController : MonoBehaviour
     /// </summary>
     private class StateHandlerNotImplementedException : NotImplementedException
     {
-        public override string Message => "ERROR: State handler hasn't been implemented in StateController";
+        public StateHandlerNotImplementedException() : base("ERROR: State handler hasn't been implemented in StateController") {}
     }
     
     /// <summary>
     /// Exception for if a script was not found
-    /// (Message is based on the script that couldn't be found)
+    /// Message should be based on script name
+    /// This should be done using nameof(variableName)
     /// </summary>
     private class ScriptNotFoundException : NullReferenceException
     {
-        public new string Message { get; set; }
-
-        public ScriptNotFoundException(MonoBehaviour script)
-        {
-            Message = $"ERROR: Could not find script: {script.name}";
-        }
-        public ScriptNotFoundException()
-        {
-            Message = "ERROR: Could not find script";
-        }
+        public ScriptNotFoundException(string scriptName) : base($"ERROR: could not find script: {scriptName}") {}
     }
     
     // prefabs
@@ -119,23 +111,23 @@ public class StateController : MonoBehaviour
 
         // assign script, if it's null, throw exception
         if ((m_playerController = FindObjectOfType<Controller>()) == null)
-            throw new ScriptNotFoundException(m_playerController);
+            throw new ScriptNotFoundException(nameof(m_playerController));
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
-            throw new ScriptNotFoundException(m_bossController);
+            throw new ScriptNotFoundException(nameof(m_bossController));
 
         if ((m_pauseMenuController = m_pauseMenu.GetComponent<PauseMenu.Controller>()) == null)
-            throw new ScriptNotFoundException(m_pauseMenuController);
+            throw new ScriptNotFoundException(nameof(m_pauseMenuController));
         else
             UiScripts.Add(m_pauseMenuController);
 
         if ((m_gameOverScreenController = m_gameOverScreen.GetComponent<GameOverScreen.Controller>()) == null)
-            throw new ScriptNotFoundException(m_gameOverScreenController);
+            throw new ScriptNotFoundException(nameof(m_gameOverScreenController));
         else
             UiScripts.Add(m_gameOverScreenController);
 
         if ((m_winScreenController = m_winScreen.GetComponent<WinScreen.Controller>()) == null)
-            throw new ScriptNotFoundException(m_winScreenController);
+            throw new ScriptNotFoundException(nameof(m_winScreenController));
         else
             UiScripts.Add(m_winScreenController);
     }
