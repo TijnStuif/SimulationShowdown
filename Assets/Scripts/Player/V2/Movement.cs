@@ -8,9 +8,10 @@ namespace Player.V2
     /// (WIP)
     /// Handles player movement using CharacterController.
     /// Unity input events update certain Vector3 values.
-    /// In FixedUpdate it calculates the movement Vector3 based on those values.
-    /// (among other things like the camera angle)
-    /// After every movement calculated, CharacterController.Move is called once.
+    /// In FixedUpdate it calculates the movement Vector3 based on those values
+    /// (among other things like the camera angle).
+    /// Player also gets rotated based on the movement direction.
+    /// After the movement vector calculated, CharacterController.Move is called once using it.
     /// </summary>
     public class Movement : MonoBehaviour
     {
@@ -73,7 +74,7 @@ namespace Player.V2
         private float m_turnVelocity;
         
         private float m_speed = 20f;
-        private float m_drag = 0.2f;
+        // private float m_drag = 0.2f;
         private float m_jump = 10f;
 
         // in V1 a ground mask was used
@@ -110,7 +111,7 @@ namespace Player.V2
         private void FixedUpdate()
         {
             CalculateMovement();
-
+            RotateInInputdirection();
             if (m_jump3d.magnitude > MOVEMENT_THRESHOLD)
                 ApplyJump();
             // ApplyDrag(); 
@@ -145,7 +146,6 @@ namespace Player.V2
                     m_direction2d.y *= -1;
                 m_direction3d.Set(m_direction2d.x, 0, m_direction2d.y);
                 m_direction3d.Normalize();
-                m_direction2d = Vector2.zero;
             }
             else if (context.canceled)
             {
@@ -171,7 +171,6 @@ namespace Player.V2
 
         /// <summary>
         /// Calculate movement based on input direction, camera angle, and speed.
-        /// Also sets rotation based on camera angle.
         /// </summary>
         private void CalculateMovement()
         {
@@ -181,11 +180,25 @@ namespace Player.V2
                 return;
             }
             m_movement3d = m_direction3d * m_speed;
+            m_targetAngle = Mathf.Atan2(m_direction2d.x, m_direction2d.y) * Mathf.Rad2Deg;
+        }
+
+        /// <summary>
+        /// Sets rotation based on move direction
+        /// </summary>
+        private void RotateInInputdirection()
+        {
+            // goal:
+            // use direction to get angle in degrees
+            // create euler quaternion to set y rotation 
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, TurnAngle, transform.rotation.eulerAngles.z);
         }
 
         private void Move()
         {
+            #if DEBUG
             Debug.Log(m_movement3d);
+            #endif
             m_characterController.SimpleMove(m_movement3d);
         }
 
