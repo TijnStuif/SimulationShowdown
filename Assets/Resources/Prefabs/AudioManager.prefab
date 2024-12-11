@@ -44,9 +44,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -176,9 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 178081183668582927}
   mainMenuMusic: {fileID: 8300000, guid: 97ad11f73ecf9084480a76d29f989dae, type: 3}
-  bossFightMusic: {fileID: 0}
-  winScreenMusic: {fileID: 0}
-  loseScreenMusic: {fileID: 0}
+  bossFightMusic: {fileID: 8300000, guid: 18057bd30151eac47bad48e94eff1252, type: 3}
+  winScreenMusic: {fileID: 8300000, guid: 8eb02d109dcf89844a133daf570f1f3b, type: 3}
+  gameOverScreenMusic: {fileID: 8300000, guid: d87c93ebed0a26145b7936e4848afdc3, type: 3}
   audioSource: {fileID: 1087225330651422806}
 --- !u!1 &4118032768784687544
 GameObject:
@@ -224,7 +224,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
