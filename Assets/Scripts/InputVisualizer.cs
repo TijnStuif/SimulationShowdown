@@ -1,4 +1,4 @@
-using Player.V1;
+using Player.V2;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,7 +10,8 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
-    private Movement playerMovement;
+    private Player.V2.Movement playerMovement;
+    private Player.V1.Movement m_compatMovementV1;
 
     private void Awake()
     {
@@ -20,8 +21,15 @@ public class InputVisualizer : MonoBehaviour
 
     void Start()
     {
-        playerMovement = FindObjectOfType<Movement>();
+        #if DEBUG
+        if (Compatibility.IsV1)
+        {
+            m_compatMovementV1 = FindObjectOfType<Player.V1.Movement>();
+        }
+        #endif
         if (playerMovement == null)
+            playerMovement = FindObjectOfType<Movement>();
+        if (playerMovement == null && m_compatMovementV1 == null)
             throw new StateController.ScriptNotFoundException(nameof(playerMovement));
         var visualTree = uiDocument.rootVisualElement;
 
@@ -55,13 +63,23 @@ public class InputVisualizer : MonoBehaviour
         }
         else
         {
-            if (playerMovement.areControlsInverted)
+            #if DEBUG
+            if (Compatibility.IsV1)
+            {
+                if (m_compatMovementV1.areControlsInverted)
+                    keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
+                else
+                    keyContainer.style.backgroundColor = new StyleColor(Color.white);
+                return;
+            }
+            #endif
+            if (playerMovement.AreControlsInverted)
             {
                 keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
             }
             else
             {
-            keyContainer.style.backgroundColor = new StyleColor(Color.white);
+                keyContainer.style.backgroundColor = new StyleColor(Color.white);
             }
         }
     }

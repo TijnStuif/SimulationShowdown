@@ -44,7 +44,9 @@ public class StateController : MonoBehaviour
     private GameObject m_winScreen;
     
     // controller scripts
+    #if !DEBUG
     private Controller m_playerController;
+    #endif
     private Boss.Controller m_bossController;
     
     // UI controller scripts
@@ -110,8 +112,10 @@ public class StateController : MonoBehaviour
         UiScripts = new List<AbstractUiController>(3);
 
         // assign script, if it's null, throw exception
+        #if !DEBUG
         if ((m_playerController = FindObjectOfType<Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_playerController));
+        #endif  
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_bossController));
@@ -143,7 +147,9 @@ public class StateController : MonoBehaviour
     private void SubscribeToEvents()
     {
         m_bossController.Death += OnBossDeath;
+        #if !DEBUG
         m_playerController.StateChange += OnPlayerStateChange;
+        #endif
         m_pauseMenuController.StateChange += OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;
         m_winScreenController.StateChange += OnWinScreenStateChange;
@@ -151,7 +157,9 @@ public class StateController : MonoBehaviour
     
     private void UnsubscribeFromEvents()
     {
+        #if !DEBUG
         m_playerController.StateChange -= OnPlayerStateChange;
+        #endif
         m_pauseMenuController.StateChange -= OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange -= OnGameOverScreenStateChange;
         m_winScreenController.StateChange -= OnWinScreenStateChange;

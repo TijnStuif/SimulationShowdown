@@ -1,4 +1,5 @@
-using Player.V1;
+using System;
+using Player.V2;
 using UnityEngine;
 
 namespace Boss.Attack
@@ -8,6 +9,7 @@ namespace Boss.Attack
         public Type Type => Type.Environment;
 
         private Movement playerMovement;
+        private Player.V1.Movement m_compatMovementV1;
         private GameObject player;
         [SerializeField] private GameObject inputReverserAttackIndicatorPrefab;
         private GameObject inputReverserAttackIndicator;
@@ -15,29 +17,34 @@ namespace Boss.Attack
 
         void Start()
         {
+            #if DEBUG
+            if (Compatibility.IsV1)
+                m_compatMovementV1 = FindObjectOfType<Player.V1.Movement>();
+            #endif
+            
             inputReverserAttackIndicator = Instantiate(inputReverserAttackIndicatorPrefab);
-            var playerController = FindObjectOfType<Player.V1.Controller>();
-            if (playerController == null)
-                throw new StateController.ScriptNotFoundException(nameof(playerController));
-            else
-                player = playerController.gameObject;
-            playerMovement = FindObjectOfType<Movement>();
-            if (playerMovement == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null)
+                throw new NullReferenceException($"ERROR: {nameof(player)} not found!");
+            playerMovement = player.GetComponent<Movement>();
+            if (playerMovement == null && m_compatMovementV1 == null)
                 throw new StateController.ScriptNotFoundException(nameof(playerMovement));
             inputReverserAttackIndicator.transform.position = startPosition;
         }
 
         public void Execute()
         {
-            if (playerMovement != null || player != null)
+            inputReverserAttackIndicator.transform.position = player.transform.position;
+            Invoke(nameof(RemoveIndicator), 0.2f);
+            #if DEBUG
+            if (Compatibility.IsV1)
             {
-                inputReverserAttackIndicator.transform.position = player.transform.position;
-                Invoke(nameof(RemoveIndicator), 0.2f);
-                playerMovement.areControlsInverted = !playerMovement.areControlsInverted;
+                m_compatMovementV1.areControlsInverted = !m_compatMovementV1.areControlsInverted;
+                return;
             }
-            else
-            {
-            }
+            #endif
+
+            playerMovement.AreControlsInverted = !playerMovement.AreControlsInverted;
         }
 
         private void RemoveIndicator()
