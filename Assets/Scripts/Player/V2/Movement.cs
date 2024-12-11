@@ -40,14 +40,11 @@ namespace Player.V2
         private Vector2 m_direction2d;
         
         /// <summary>
-        /// Stores move direction using player input.
-        /// </summary>
-        private Vector3 m_direction3d;
-        
-        /// <summary>
         /// Stores non-normalized movement vector used for moving the player on the ground.
         /// </summary>
         private Vector3 m_movement3d;
+
+        private Quaternion m_movementRotation;
         
         /// <summary>
         /// Stores non-normalized vector used for jumping
@@ -56,7 +53,7 @@ namespace Player.V2
         
         // private LayerMask m_groundMask;
         
-        private Transform m_mainCamera;
+        private Transform m_mainCameraTarget;
         
         private CharacterController m_characterController;
         
@@ -73,7 +70,7 @@ namespace Player.V2
         /// </summary>
         private float m_turnVelocity;
         
-        private float m_speed = 20f;
+        [SerializeField] private float m_speed = 10f;
         // private float m_drag = 0.2f;
         private float m_jump = 10f;
 
@@ -99,7 +96,7 @@ namespace Player.V2
             if (cam == null)
                 throw new InvalidOperationException("ERROR: couldn't find main camera");
             else
-                m_mainCamera = cam.transform;
+                m_mainCameraTarget = cam.transform;
         }
 
         /// <summary>
@@ -111,13 +108,13 @@ namespace Player.V2
         private void FixedUpdate()
         {
             CalculateMovement();
-            RotateInInputdirection();
+            RotateUsingMovedirection();
             if (m_jump3d.magnitude > MOVEMENT_THRESHOLD)
                 ApplyJump();
             // ApplyDrag(); 
             // ApplyGravity();
             // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
-            Move();
+            Move(Time.fixedDeltaTime);
         }
 
         /// <summary>
@@ -143,14 +140,11 @@ namespace Player.V2
                 m_direction2d = context.ReadValue<Vector2>();
                 m_direction2d.Normalize();
                 if (AreControlsInverted)
-                    m_direction2d.y *= -1;
-                m_direction3d.Set(m_direction2d.x, 0, m_direction2d.y);
-                m_direction3d.Normalize();
+                    m_direction2d *= -1;
             }
             else if (context.canceled)
             {
                 m_direction2d = Vector2.zero;
-                m_direction3d = Vector3.zero;
             }
         }
 
@@ -174,27 +168,35 @@ namespace Player.V2
         /// </summary>
         private void CalculateMovement()
         {
-            if (m_direction3d == Vector3.zero)
+            if (m_direction2d == Vector2.zero)
             {
                 m_movement3d = Vector3.zero;
                 return;
             }
-            m_movement3d = m_direction3d * m_speed;
-            m_targetAngle = Mathf.Atan2(m_direction2d.x, m_direction2d.y) * Mathf.Rad2Deg;
+            // get angle based on input direction
+            m_targetAngle = Mathf.Atan2(m_direction2d.x, m_direction2d.y) * Mathf.Rad2Deg
+                            + m_mainCameraTarget.eulerAngles.y;
+            m_movementRotation = Quaternion.Euler(0, TurnAngle, 0);
+            m_movement3d = m_movementRotation * Vector3.forward;
+            m_movement3d.Normalize();
+            m_movement3d *= m_speed;
         }
 
         /// <summary>
         /// Sets rotation based on move direction
         /// </summary>
-        private void RotateInInputdirection()
+        private void RotateUsingMovedirection()
         {
             // goal:
             // use direction to get angle in degrees
             // create euler quaternion to set y rotation 
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, TurnAngle, transform.rotation.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(
+                transform.rotation.eulerAngles.x, 
+                m_movementRotation.eulerAngles.y, 
+                transform.rotation.eulerAngles.z);
         }
 
-        private void Move()
+        private void Move(float deltaTime)
         {
             #if DEBUG
             Debug.Log(m_movement3d);
