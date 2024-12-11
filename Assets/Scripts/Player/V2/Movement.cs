@@ -90,6 +90,8 @@ namespace Player.V2
 
         private void Awake()
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             var cam = Camera.main;
             m_characterController = GetComponentInChildren<CharacterController>();
             if (cam == null)
