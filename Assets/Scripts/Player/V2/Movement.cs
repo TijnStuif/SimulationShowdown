@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 namespace Player.V2
 {
     /// <summary>
+    /// (WIP)
     /// Handles player movement using CharacterController.
     /// Unity input events update certain Vector3 values.
     /// In FixedUpdate it calculates the movement Vector3 based on those values.
@@ -23,32 +24,32 @@ namespace Player.V2
         
         /// <summary>
         /// When gravity is used and player is not accelerating, use this value:
-        /// (0, 9.81f, 0)
+        /// (0, 9.81f, 0).
         /// </summary>
         private Vector3 m_baseGravity3d = new(0, INITIAL_Y_GRAVITY, 0);
 
         /// <summary>
-        /// actual gravity applied on player accounting for gravity acceleration
+        /// Actual gravity applied on player accounting for gravity acceleration.
         /// </summary>
         private Vector3 m_gravity3d = new(0, INITIAL_Y_GRAVITY, 0);
 
         /// <summary>
-        /// stores move direction using player input
+        /// Stores move direction using player input.
         /// </summary>
         private Vector2 m_direction2d;
         
         /// <summary>
-        /// stores move direction using player input
+        /// Stores move direction using player input.
         /// </summary>
         private Vector3 m_direction3d;
         
         /// <summary>
-        /// stores non-normalized movement vector used for moving the player on the ground
+        /// Stores non-normalized movement vector used for moving the player on the ground.
         /// </summary>
         private Vector3 m_movement3d;
         
         /// <summary>
-        /// stores non-normalized vector used for jumping
+        /// Stores non-normalized vector used for jumping
         /// </summary>
         private Vector3 m_jump3d;
         
@@ -59,15 +60,15 @@ namespace Player.V2
         private CharacterController m_characterController;
         
         /// <summary>
-        /// direction the player should actually move to in degrees
-        /// affected by camera angle and the SmoothDampAngle function
+        /// Direction the player should actually move to in degrees.
+        /// Affected by camera angle and the SmoothDampAngle function
         /// </summary>
         private float m_targetAngle;
 
         /// <summary>
-        /// field for storing the velocity of the Mathf.SmoothDampAngle function
-        /// DO NOT MODIFY MANUALLY
-        /// should only be used with the ref keyword in the SmoothDampAngle function
+        /// Field for storing the velocity of the Mathf.SmoothDampAngle function.
+        /// DO NOT MODIFY MANUALLY.
+        /// Should only be used with the ref keyword in the SmoothDampAngle function.
         /// </summary>
         private float m_turnVelocity;
         
@@ -79,8 +80,8 @@ namespace Player.V2
         public bool IsGrounded => m_characterController.isGrounded;
         
         /// <summary>
-        /// returns smoothed out angle the player will be moving towards using
-        /// Mathf.SmoothDampAngle
+        /// Returns smoothed out angle the player will be moving towards using
+        /// Mathf.SmoothDampAngle.
         /// </summary>
         private float TurnAngle => Mathf.SmoothDampAngle(
             current: transform.eulerAngles.y, 
@@ -101,10 +102,10 @@ namespace Player.V2
         }
 
         /// <summary>
-        /// calculate movement and move player at fixed time steps.
-        /// if you want to use this function for a different functionality, please
-        /// move this block of code to a new function including this summary
-        /// and call it from FixedUpdate
+        /// Calculate movement and move player at fixed time steps.
+        /// If you want to use this function for a different functionality, please
+        /// move this block of code to a new function including this summary,
+        /// and call it from FixedUpdate.
         /// </summary>
         private void FixedUpdate()
         {
@@ -119,9 +120,9 @@ namespace Player.V2
         }
 
         /// <summary>
-        /// update jump vector based on input unless grounded using IsGrounded boolean
+        /// Update jump vector based on input unless grounded using IsGrounded boolean.
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">unused</param>
         private void OnJump(InputAction.CallbackContext c)
         {
             if (!IsGrounded)
@@ -130,10 +131,10 @@ namespace Player.V2
         }
 
         /// <summary>
-        /// update direction vectors based on input
-        /// reverts controls automatically using AreControlsInverted boolean
+        /// Update direction vectors based on input.
+        /// Reverts controls automatically using AreControlsInverted boolean.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Vector2 value is read</param>
         private void OnMove(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -169,8 +170,8 @@ namespace Player.V2
         }
 
         /// <summary>
-        /// calculate movement based on input direction, camera angle, and speed
-        /// set rotation based on camera angle
+        /// Calculate movement based on input direction, camera angle, and speed.
+        /// Also sets rotation based on camera angle.
         /// </summary>
         private void CalculateMovement()
         {
