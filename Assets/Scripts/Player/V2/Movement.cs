@@ -9,7 +9,6 @@ namespace Player.V2
     /// Unity input events update certain Vector3 values.
     /// In FixedUpdate it calculates the movement Vector3 based on those values.
     /// (among other things like the camera angle)
-    /// After the value is used, it immediately gets reset.
     /// After every movement calculated, CharacterController.Move is called once.
     /// </summary>
     public class Movement : MonoBehaviour
@@ -93,10 +92,10 @@ namespace Player.V2
         {
             var cam = Camera.main;
             m_characterController = GetComponentInChildren<CharacterController>();
-            if (cam != null)
-                m_mainCamera = cam.transform;
-            else
+            if (cam == null)
                 throw new InvalidOperationException("ERROR: couldn't find main camera");
+            else
+                m_mainCamera = cam.transform;
         }
 
         /// <summary>
@@ -107,13 +106,14 @@ namespace Player.V2
         /// </summary>
         private void FixedUpdate()
         {
-            if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
-                CalculateMovement();
+            CalculateMovement();
+
             if (m_jump3d.magnitude > MOVEMENT_THRESHOLD)
                 ApplyJump();
             // ApplyDrag(); 
             // ApplyGravity();
-            Move(Time.fixedDeltaTime);
+            // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
+            Move();
         }
 
         /// <summary>
@@ -131,17 +131,27 @@ namespace Player.V2
         /// update direction vectors based on input
         /// reverts controls automatically using AreControlsInverted boolean
         /// </summary>
-        /// <param name="value"></param>
-        private void OnMove(InputValue value)
+        /// <param name="context"></param>
+        private void OnMove(InputAction.CallbackContext context)
         {
-            m_direction2d = value.Get<Vector2>();
-            if (AreControlsInverted)
-                m_direction2d.y *= -1;
-            m_direction3d.Set(m_direction2d.x, 0, m_direction2d.y);
-            m_direction2d = Vector2.zero;
+            if (context.performed)
+            {
+                m_direction2d = context.ReadValue<Vector2>();
+                m_direction2d.Normalize();
+                if (AreControlsInverted)
+                    m_direction2d.y *= -1;
+                m_direction3d.Set(m_direction2d.x, 0, m_direction2d.y);
+                m_direction3d.Normalize();
+                m_direction2d = Vector2.zero;
+            }
+            else if (context.canceled)
+            {
+                m_direction2d = Vector2.zero;
+                m_direction3d = Vector3.zero;
+            }
         }
 
-        private void OnGravityChanged(Vector3 newGravity)
+        public void OnGravityChanged(Vector3 newGravity)
         {
             m_baseGravity3d = newGravity;
         }
@@ -153,7 +163,6 @@ namespace Player.V2
 
         private void ApplyJump()
         {
-            m_jump3d = Vector3.zero;
             throw new NotImplementedException();
         }
 
@@ -163,14 +172,18 @@ namespace Player.V2
         /// </summary>
         private void CalculateMovement()
         {
-            m_movement3d = m_direction3d.normalized;
-            m_direction3d = Vector2.zero;
+            if (m_direction3d == Vector3.zero)
+            {
+                m_movement3d = Vector3.zero;
+                return;
+            }
+            m_movement3d = m_direction3d * m_speed;
         }
 
-        private void Move(float deltaTime)
+        private void Move()
         {
-            m_characterController.Move(m_movement3d * deltaTime);
-            m_movement3d = Vector3.zero;
+            Debug.Log(m_movement3d);
+            m_characterController.SimpleMove(m_movement3d);
         }
 
         private void ResetGravityAcceleration() => m_gravity3d = m_baseGravity3d;
