@@ -16,8 +16,14 @@ namespace Boss.Attack
         void Start()
         {
             inputReverserAttackIndicator = Instantiate(inputReverserAttackIndicatorPrefab);
-            player = FindObjectOfType<Player.V1.Controller>().gameObject;
+            var playerController = FindObjectOfType<Player.V1.Controller>();
+            if (playerController == null)
+                throw new StateController.ScriptNotFoundException(nameof(playerController));
+            else
+                player = playerController.gameObject;
             playerMovement = FindObjectOfType<Movement>();
+            if (playerMovement == null)
+                throw new StateController.ScriptNotFoundException(nameof(playerMovement));
             inputReverserAttackIndicator.transform.position = startPosition;
         }
 

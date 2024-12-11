@@ -21,6 +21,8 @@ public class InputVisualizer : MonoBehaviour
     void Start()
     {
         playerMovement = FindObjectOfType<Movement>();
+        if (playerMovement == null)
+            throw new StateController.ScriptNotFoundException(nameof(playerMovement));
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");

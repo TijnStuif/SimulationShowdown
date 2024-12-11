@@ -28,7 +28,7 @@ public class StateController : MonoBehaviour
     /// Message should be based on script name
     /// This should be done using nameof(variableName)
     /// </summary>
-    private class ScriptNotFoundException : NullReferenceException
+    public class ScriptNotFoundException : NullReferenceException
     {
         public ScriptNotFoundException(string scriptName) : base($"ERROR: could not find script: {scriptName}") {}
     }

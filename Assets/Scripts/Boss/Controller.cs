@@ -26,6 +26,7 @@ namespace Boss
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
+                Debug.Log("What?");
                 Death?.Invoke();
             }
         }

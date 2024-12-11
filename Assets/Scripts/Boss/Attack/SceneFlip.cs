@@ -16,21 +16,24 @@ namespace Boss.Attack
         private void Awake()
         {
             // find PlayerFollower (this object is under Player)
-            playerCamera = FindObjectOfType<Rotation>().gameObject.transform;
+            var rotationScript = FindObjectOfType<Rotation>();
+            if (rotationScript == null)
+                throw new StateController.ScriptNotFoundException(nameof(rotationScript));
+            playerCamera = rotationScript.gameObject.transform;
 
-            GameObject player = GameObject.Find("Player");
-            if (player != null)
-            {
-                // Find the ParticleSystem component on the player GameObject
-                indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
+            var playerScript = FindObjectOfType<Player.V1.Controller>();
+            if (playerScript == null)
+                throw new StateController.ScriptNotFoundException(nameof(playerScript));
+            var player = playerScript.gameObject;
+            // Find the ParticleSystem component on the player GameObject
+            indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
 
-                // Disable Play On Awake
-                var main = indicatorParticle.main;
-                main.playOnAwake = false;
+            // Disable Play On Awake
+            var main = indicatorParticle.main;
+            main.playOnAwake = false;
 
-                // Stop the particle system
-                indicatorParticle.Stop();
-            }
+            // Stop the particle system
+            indicatorParticle.Stop();
         }
 
         public void Execute()

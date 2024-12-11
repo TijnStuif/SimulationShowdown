@@ -26,6 +26,8 @@ namespace Boss.Attack
             laserIndicator = Instantiate(indicatorPrefab);
             laserAttack = Instantiate(attackPrefab);
             playerScript = FindObjectOfType<Player.V1.Controller>();
+            if (playerScript == null)
+                throw new StateController.ScriptNotFoundException(nameof(playerScript));
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             ResetLaser();
