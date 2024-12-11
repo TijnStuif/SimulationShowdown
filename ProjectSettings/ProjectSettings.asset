@@ -928,10 +928,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 2f97515f-9648-4378-8c89-19c1d7652bd0
+  cloudProjectId: 9f99c114-81b5-4fc1-93dd-8b266c88f82f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: My project
+  projectName: so-retro-simulation
   organizationId: kirbyfan
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
