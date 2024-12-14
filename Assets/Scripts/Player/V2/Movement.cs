@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Player.V2
 {
@@ -16,23 +17,8 @@ namespace Player.V2
     public class Movement : MonoBehaviour
     {
         public bool AreControlsInverted;
-
-        private const float INITIAL_Y_GRAVITY = 9.81f;
         
-        private const float MOVEMENT_THRESHOLD = 0.1f;
-        
-        private const float TURN_SMOOTH_TIME = 0.1f;
-        
-        /// <summary>
-        /// When gravity is used and player is not accelerating, use this value:
-        /// (0, 9.81f, 0).
-        /// </summary>
-        private Vector3 m_baseGravity3d = new(0, INITIAL_Y_GRAVITY, 0);
-
-        /// <summary>
-        /// Actual gravity applied on player accounting for gravity acceleration.
-        /// </summary>
-        private Vector3 m_gravity3d = new(0, INITIAL_Y_GRAVITY, 0);
+        private const float TURN_SMOOTH_TIME = 0.05f;
 
         /// <summary>
         /// Stores move direction using player input.
@@ -42,14 +28,24 @@ namespace Player.V2
         /// <summary>
         /// Stores non-normalized movement vector used for moving the player on the ground.
         /// </summary>
-        private Vector3 m_movement3d;
+        private Vector3 m_groundMovement3d;
 
-        private Quaternion m_movementRotation;
+        /// <summary>
+        /// Property for movement vector (using both ground and vertical movement)
+        /// </summary>
+        private Vector3 Movement3d => m_groundMovement3d + m_verticalMovement3d;
         
         /// <summary>
         /// Stores non-normalized vector used for jumping
         /// </summary>
         private Vector3 m_jump3d;
+
+        /// <summary>
+        /// Stores non-normalized vector used for vertical movement
+        /// </summary>
+        private Vector3 m_verticalMovement3d;
+        
+        private Quaternion m_movementRotation;
         
         // private LayerMask m_groundMask;
         
@@ -72,20 +68,24 @@ namespace Player.V2
         
         [SerializeField] private float m_speed = 10f;
         // private float m_drag = 0.2f;
-        private float m_jump = 10f;
+        [SerializeField] private float m_jumpHeight = 2f;
+
+        public Vector2 Direction2d => m_direction2d;
 
         // in V1 a ground mask was used
         public bool IsGrounded => m_characterController.isGrounded;
-        
+
         /// <summary>
         /// Returns smoothed out angle the player will be moving towards using
         /// Mathf.SmoothDampAngle.
         /// </summary>
-        private float TurnAngle => Mathf.SmoothDampAngle(
-            current: transform.eulerAngles.y, 
-            target: m_targetAngle, 
-            currentVelocity: ref m_turnVelocity, 
-            smoothTime: TURN_SMOOTH_TIME);
+        private float TurnAngle(float deltaTime) => Mathf.SmoothDampAngle(
+            current: transform.eulerAngles.y,
+            target: m_targetAngle,
+            currentVelocity: ref m_turnVelocity,
+            smoothTime: TURN_SMOOTH_TIME,
+            maxSpeed: Mathf.Infinity,
+            deltaTime: deltaTime);
 
         private void Awake()
         {
@@ -107,12 +107,10 @@ namespace Player.V2
         /// </summary>
         private void FixedUpdate()
         {
-            CalculateMovement();
+            CalculateMovement(Time.fixedDeltaTime);
             RotateUsingMovedirection();
-            if (m_jump3d.magnitude > MOVEMENT_THRESHOLD)
-                ApplyJump();
+            ApplyGravity(Time.fixedDeltaTime);
             // ApplyDrag(); 
-            // ApplyGravity();
             // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
             Move(Time.fixedDeltaTime);
         }
@@ -120,12 +118,19 @@ namespace Player.V2
         /// <summary>
         /// Update jump vector based on input unless grounded using IsGrounded boolean.
         /// </summary>
-        /// <param name="c">unused</param>
-        private void OnJump(InputAction.CallbackContext c)
+        /// <param name="context">performed</param>
+        private void OnJump(InputAction.CallbackContext context)
         {
-            if (!IsGrounded)
-                return; 
-            m_jump3d.Set(0, m_jump, 0);
+            if (!IsGrounded) return;
+            if (context.canceled) return;
+            // torricelli's law: https://en.wikipedia.org/wiki/Torricelli%27s_law
+            // v = sqrt(2gh)
+            // g = gravity acceleration constant
+            //     (which is variable in our game, so Physics.gravity.magnitude is used)
+            // h = jump height
+            // since it's a Vector and gravity is variable I multiplied the speed scalar with
+            // the direction of the gravity (which you can get by normalizing the gravity vector)
+            m_verticalMovement3d -= Physics.gravity.normalized * Mathf.Sqrt(2.0f * Physics.gravity.magnitude * m_jumpHeight);
         }
 
         /// <summary>
@@ -148,38 +153,38 @@ namespace Player.V2
             }
         }
 
-        public void OnGravityChanged(Vector3 newGravity)
-        {
-            m_baseGravity3d = newGravity;
-        }
+        // public void OnGravityChanged(Vector3 newGravity) => m_baseGravity3d = newGravity;
         
         // might be for the next sprint
         private void ApplyDrag() => throw new NotImplementedException();
-        
-        private void ApplyGravity() => throw new NotImplementedException();
 
-        private void ApplyJump()
+        private void ApplyGravity(float deltaTime)
         {
-            throw new NotImplementedException();
+            if (IsGrounded && m_verticalMovement3d.y < 0)
+                m_verticalMovement3d.y = 0f;
+            m_verticalMovement3d.y += -9.81f * deltaTime;
         }
 
         /// <summary>
         /// Calculate movement based on input direction, camera angle, and speed.
         /// </summary>
-        private void CalculateMovement()
+        private void CalculateMovement(float deltaTime)
         {
+            if (m_characterController.isGrounded && m_verticalMovement3d.y < 0)
+                m_verticalMovement3d.y = 0;
+                
             if (m_direction2d == Vector2.zero)
             {
-                m_movement3d = Vector3.zero;
+                m_groundMovement3d = Vector3.zero;
                 return;
             }
             // get angle based on input direction
             m_targetAngle = Mathf.Atan2(m_direction2d.x, m_direction2d.y) * Mathf.Rad2Deg
                             + m_mainCameraTarget.eulerAngles.y;
-            m_movementRotation = Quaternion.Euler(0, TurnAngle, 0);
-            m_movement3d = m_movementRotation * Vector3.forward;
-            m_movement3d.Normalize();
-            m_movement3d *= m_speed;
+            m_movementRotation = Quaternion.Euler(0, TurnAngle(deltaTime), 0);
+            m_groundMovement3d = m_movementRotation * Vector3.forward;
+            m_groundMovement3d.Normalize();
+            m_groundMovement3d *= m_speed;
         }
 
         /// <summary>
@@ -198,13 +203,10 @@ namespace Player.V2
 
         private void Move(float deltaTime)
         {
-            #if DEBUG
-            Debug.Log(m_movement3d);
-            #endif
-            m_characterController.SimpleMove(m_movement3d);
+            m_characterController.Move(Movement3d * deltaTime);
         }
 
-        private void ResetGravityAcceleration() => m_gravity3d = m_baseGravity3d;
+        // private void ResetGravityAcceleration() => m_gravity3d = m_baseGravity3d;
 
     }
 }
