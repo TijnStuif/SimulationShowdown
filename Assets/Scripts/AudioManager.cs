@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Boss;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip gameOverScreenMusic;
     [Header("SFX")]
     [SerializeField] AudioSource audioSource;
+    public AudioClip buttonSFX;
+    public AudioClip playerDamagedSFX;
+    public AudioClip playerTeleportedSFX;
+    public AudioClip[] bossDamagedSFX;
+    public AudioClip bossLaserSFX;
+    public AudioClip bossCloseRangeSFX;
+    public AudioClip bossInputReverserSFX;
+    public AudioClip bossSceneFlipSFX;
+    public AudioClip bossLowGravitySFX;
 
     public void PlayMusic(AudioClip musicFile)
     {
@@ -34,5 +44,10 @@ public class AudioManager : MonoBehaviour
     void StopCurrentMusic()
     {
         musicSource.Stop();
+    }
+
+    public void PlaySFX(AudioClip sfxFile)
+    {
+        audioSource.PlayOneShot(sfxFile);
     }
 }

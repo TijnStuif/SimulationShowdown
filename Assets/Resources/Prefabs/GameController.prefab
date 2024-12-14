@@ -54,8 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phaseController: {fileID: -8366010346727223579}
-  minAttackInterval: 2
-  maxAttackInterval: 4
+  minAttackInterval: 6
+  maxAttackInterval: 8
 --- !u!114 &523998413288747648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
+  audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
 --- !u!114 &2281008845910031178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc97e08057658e42aed2b1b4f3ee25f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
 --- !u!114 &7997739378233538426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
+  audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
 --- !u!114 &1472273395187015414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757d30ed34d2e0642a08a125ca90ada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
 --- !u!114 &3302913286780812233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityAmount: -2.5
+  audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
 --- !u!114 &8718303700229094477
 MonoBehaviour:
   m_ObjectHideFlags: 0

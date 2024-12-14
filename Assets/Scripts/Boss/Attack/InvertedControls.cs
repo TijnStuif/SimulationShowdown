@@ -11,6 +11,7 @@ namespace Boss.Attack
         private GameObject player;
         private GameObject inputReverserAttackIndicator;
         private Vector3 startPosition = new Vector3(200, 0, -20);
+        AudioManager audioManager;
 
         void Start()
         {
@@ -18,6 +19,7 @@ namespace Boss.Attack
             player = FindObjectOfType<Player.Controller>().gameObject;
             playerMovement = FindObjectOfType<Movement>();
             inputReverserAttackIndicator.transform.position = startPosition;
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
@@ -27,9 +29,7 @@ namespace Boss.Attack
                 inputReverserAttackIndicator.transform.position = player.transform.position;
                 Invoke(nameof(RemoveIndicator), 0.2f);
                 playerMovement.areControlsInverted = !playerMovement.areControlsInverted;
-            }
-            else
-            {
+                audioManager.PlaySFX(audioManager.bossInputReverserSFX);
             }
         }
 
