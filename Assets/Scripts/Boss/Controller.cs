@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,9 +17,11 @@ namespace Boss
         public UnityEvent ChangedPhase;
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 60;
+        private Material bossMaterial;
         
         void Start()
         {
+            bossMaterial = GetComponent<MeshRenderer>().material;
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
         }
@@ -38,6 +41,7 @@ namespace Boss
         {
             if (damageLock) return;
             currentHealth -= damage;
+            StartCoroutine(InvincibilityFrames());
             if (currentHealth <= 0)
             {
                 Death?.Invoke();
@@ -59,6 +63,20 @@ namespace Boss
             if (other.CompareTag("Player"))
             {
                 // UnlockDamage();
+            }
+        }
+
+        private IEnumerator InvincibilityFrames()
+        {
+            invincibilityFrames = 0;
+            Color baseBossColor = bossMaterial.color;
+            while (true)
+            {
+                Color color = bossMaterial.color;
+                bossMaterial.color = Color.black;
+                yield return new WaitForSeconds(0.2f);
+                bossMaterial.color = baseBossColor;
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }
