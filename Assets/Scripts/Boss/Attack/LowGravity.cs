@@ -8,11 +8,17 @@ namespace Boss.Attack
     {
         public Type Type => Type.Environment;
 
-        [SerializeField] private float gravityAmount = -1.6f;
+        [SerializeField] private float gravityAmount = -4f;
         private ParticleSystem indicatorParticle;
+        
+        public static event Action GravityChanged;
 
         public void Awake()
         {
+            #if DEBUG
+            if (Compatibility.IsV1)
+                gravityAmount = -2.5f;
+            #endif
             // Find the player GameObject
             GameObject player = GameObject.Find("Player");
             if (player != null)
@@ -32,6 +38,7 @@ namespace Boss.Attack
         private void OnDisable()
         {
             Physics.gravity = new Vector3(0,-9.81f, 0);
+            GravityChanged?.Invoke();
         }
 
         public void Execute()
@@ -63,6 +70,7 @@ namespace Boss.Attack
             {
                 Physics.gravity = new Vector3(0, gravityAmount, 0);
             }
+            GravityChanged?.Invoke();
         }
     }
 }

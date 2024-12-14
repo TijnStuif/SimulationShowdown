@@ -278,6 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AreControlsInverted: 0
+  m_speed: 10
+  m_baseJumpHeight: 1.5
 --- !u!1001 &1075779412956753608
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Player.V2
 {
@@ -18,7 +17,17 @@ namespace Player.V2
     {
         public bool AreControlsInverted;
         
+        private const float GRAVITATIONAL_ACCELERATION_CONSTANT = 9.81f;
         private const float TURN_SMOOTH_TIME = 0.05f;
+        
+        /// <summary>
+        /// Jump height if gravity is (0, -9.81f, 0)
+        /// </summary>
+        [SerializeField] private float m_baseJumpHeight = 1.5f;
+        
+        [SerializeField] private float m_speed = 10f;
+        
+        private CharacterController m_characterController;
 
         /// <summary>
         /// Stores move direction using player input.
@@ -26,32 +35,28 @@ namespace Player.V2
         private Vector2 m_direction2d;
         
         /// <summary>
+        /// Jump height scaled with gravity
+        /// (automatically updated in OnGravityChanged)
+        /// </summary>
+        private float m_jumpHeight;
+        
+        /// <summary>
         /// Stores non-normalized movement vector used for moving the player on the ground.
         /// </summary>
         private Vector3 m_groundMovement3d;
-
-        /// <summary>
-        /// Property for movement vector (using both ground and vertical movement)
-        /// </summary>
-        private Vector3 Movement3d => m_groundMovement3d + m_verticalMovement3d;
+        
+        private float m_gravitationalAccelerationVariable;
+        
+        private Vector3 m_gravitationalDirection;
         
         /// <summary>
         /// Stores non-normalized vector used for jumping
         /// </summary>
         private Vector3 m_jump3d;
-
-        /// <summary>
-        /// Stores non-normalized vector used for vertical movement
-        /// </summary>
-        private Vector3 m_verticalMovement3d;
-        
-        private Quaternion m_movementRotation;
-        
-        // private LayerMask m_groundMask;
         
         private Transform m_mainCameraTarget;
-        
-        private CharacterController m_characterController;
+
+        private Quaternion m_movementRotation;
         
         /// <summary>
         /// Direction the player should actually move to in degrees.
@@ -66,14 +71,23 @@ namespace Player.V2
         /// </summary>
         private float m_turnVelocity;
         
-        [SerializeField] private float m_speed = 10f;
-        // private float m_drag = 0.2f;
-        [SerializeField] private float m_jumpHeight = 2f;
-
+        /// <summary>
+        /// Stores non-normalized vector used for vertical movement
+        /// </summary>
+        private Vector3 m_verticalMovement3d;
+        
         public Vector2 Direction2d => m_direction2d;
 
-        // in V1 a ground mask was used
+        /// <summary>
+        /// Returns CharacterController.IsGrounded.
+        /// In V1 a ground mask was used
+        /// </summary>
         public bool IsGrounded => m_characterController.isGrounded;
+        
+        /// <summary>
+        /// Property for movement vector (using both ground and vertical movement)
+        /// </summary>
+        private Vector3 Movement3d => m_groundMovement3d + m_verticalMovement3d;
 
         /// <summary>
         /// Returns smoothed out angle the player will be moving towards using
@@ -84,8 +98,9 @@ namespace Player.V2
             target: m_targetAngle,
             currentVelocity: ref m_turnVelocity,
             smoothTime: TURN_SMOOTH_TIME,
-            maxSpeed: Mathf.Infinity,
-            deltaTime: deltaTime);
+            maxSpeed: Mathf.Infinity, // for some reason setting this as default renders the entire function useless
+            deltaTime: deltaTime);    // so I'm manually setting the default value
+
 
         private void Awake()
         {
@@ -97,6 +112,18 @@ namespace Player.V2
                 throw new InvalidOperationException("ERROR: couldn't find main camera");
             else
                 m_mainCameraTarget = cam.transform;
+        }
+        
+        private void OnEnable()
+        {
+            OnGravityChanged();
+            Boss.Attack.LowGravity.GravityChanged+= OnGravityChanged;
+        }
+
+        private void OnDisable()
+        {
+            OnGravityChanged();
+            Boss.Attack.LowGravity.GravityChanged += OnGravityChanged;
         }
 
         /// <summary>
@@ -113,24 +140,31 @@ namespace Player.V2
             // ApplyDrag(); 
             // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
             Move(Time.fixedDeltaTime);
+            
+            #if DEBUG
+            Debug.Log($"accel var: {m_gravitationalAccelerationVariable}");
+            Debug.Log($"gravi dir: {m_gravitationalDirection}");
+            Debug.Log($"jump height: {m_jumpHeight}");
+            #endif
         }
 
         /// <summary>
         /// Update jump vector based on input unless grounded using IsGrounded boolean.
         /// </summary>
-        /// <param name="context">performed</param>
+        /// <param name="context"></param>
         private void OnJump(InputAction.CallbackContext context)
         {
             if (!IsGrounded) return;
-            if (context.canceled) return;
+            if (!context.performed) return;
             // torricelli's law: https://en.wikipedia.org/wiki/Torricelli%27s_law
             // v = sqrt(2gh)
-            // g = gravity acceleration constant
+            // g = gravitational acceleration constant
             //     (which is variable in our game, so Physics.gravity.magnitude is used)
             // h = jump height
+            //     (this gets scaled with the gravitational acceleration in OnGravityChanged)
+            m_verticalMovement3d -= m_gravitationalDirection * Mathf.Sqrt(2.0f * m_gravitationalAccelerationVariable * m_jumpHeight);
             // since it's a Vector and gravity is variable I multiplied the speed scalar with
             // the direction of the gravity (which you can get by normalizing the gravity vector)
-            m_verticalMovement3d -= Physics.gravity.normalized * Mathf.Sqrt(2.0f * Physics.gravity.magnitude * m_jumpHeight);
         }
 
         /// <summary>
@@ -153,16 +187,33 @@ namespace Player.V2
             }
         }
 
-        // public void OnGravityChanged(Vector3 newGravity) => m_baseGravity3d = newGravity;
+        /// <summary>
+        /// Update gravitational values when gravity is changed
+        /// </summary>
+        public void OnGravityChanged() => UpdateGravity();
+
+        public void UpdateGravity()
+        {
+            Debug.Log("LOG: Gravity changed!");
+            m_gravitationalAccelerationVariable = Physics.gravity.magnitude;
+            m_gravitationalDirection = Physics.gravity.normalized;
+            
+            // scale jump height with gravity changes
+            // if this isn't done then every jump is the same height, no matter how high or low the gravity is
+            // which sorta makes sense, but not really what we want
+            m_jumpHeight = Mathf.Approximately(m_gravitationalAccelerationVariable, GRAVITATIONAL_ACCELERATION_CONSTANT)
+            ? m_baseJumpHeight
+            : GRAVITATIONAL_ACCELERATION_CONSTANT / m_gravitationalAccelerationVariable * m_baseJumpHeight;
+        }
         
-        // might be for the next sprint
+        // might be for a later sprint
         private void ApplyDrag() => throw new NotImplementedException();
 
         private void ApplyGravity(float deltaTime)
         {
             if (IsGrounded && m_verticalMovement3d.y < 0)
                 m_verticalMovement3d.y = 0f;
-            m_verticalMovement3d.y += -9.81f * deltaTime;
+            m_verticalMovement3d += Physics.gravity * deltaTime;
         }
 
         /// <summary>
