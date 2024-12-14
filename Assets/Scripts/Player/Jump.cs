@@ -13,7 +13,7 @@ namespace Player
             if (context.performed && playerMovement.isGrounded)
             {
                 player.velocity = new Vector3(player.velocity.x, 0, player.velocity.z);
-                player.AddForce(Vector3.up * 5, ForceMode.Impulse);
+                player.AddForce(Vector3.up * 7.5f, ForceMode.Impulse);
             }
         }
     }

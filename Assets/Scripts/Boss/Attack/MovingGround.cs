@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
@@ -11,49 +13,81 @@ public class MovingGround : MonoBehaviour
     private HashSet<GameObject> movingFloorTiles = new HashSet<GameObject>();
     private GameObject movingFloor;
     private List<GameObject> floorTiles = new List<GameObject>();
+    private List<GameObject> UpTiles = new List<GameObject>();
+    private List<GameObject> DownTiles = new List<GameObject>();
     [SerializeField] private Material indicatorMaterial;
-    private Vector3 moveDirectionFloor = new Vector3(0, 0.05f, 0);
+    private int movementSwap = 0;
+   
+
 
     void Start()
     {
         floorTiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
 
-        Debug.Log(floorTiles);
         StartCoroutine(SelectingFloorTile());
+
+        movementSwap = 1;
     }
 
     private IEnumerator SelectingFloorTile()
     {
         Debug.Log("Coroutine starts");
         movingFloor = floorTiles[Random.Range(0, floorTiles.Count)];
-        movingFloorTiles.Add(movingFloor);
+        DownTiles.Add(movingFloor);
+        floorTiles.Remove(movingFloor);
 
-        movingFloor.GetComponent<MeshRenderer>().material = indicatorMaterial;
+        
 
         yield return new WaitForSeconds(6f);
 
         StartCoroutine(SelectingFloorTile());
     }
 
-
     private void FixedUpdate()
     {
-        foreach (var movingFloor in movingFloorTiles)
+        if(movementSwap == 1)
+        {
+            StartCoroutine(MoveTileUp());
+        }
+        if(movementSwap == 2)
+        {
+            StartCoroutine(MoveTileDown());
+        }
+    }
+
+
+    private IEnumerator MoveTileUp()
+    {
+        foreach (var movingFloor in DownTiles)
         {
             
-            if(movingFloor.transform.position.y < 24.5)
-            {
-                movingFloor.transform.position += moveDirectionFloor;
-            } 
-            // else 
-            // {
-            //     movingWall.transform.position += moveToOriginalPosition;
-            //     movingWall.GetComponent<MeshRenderer>().material = boxMaterial;
-            //     movingWalls.Remove(movingWall);
-            //     break;
-            // }
+            movingFloor.GetComponent<MeshRenderer>().material = indicatorMaterial;
+
+            yield return new WaitForSeconds(1f);
+
+            movingFloor.transform.position = Vector3.MoveTowards(movingFloor.transform.position, new Vector3(movingFloor.transform.position.x, 2.45f, movingFloor.transform.position.z), 1f * Time.deltaTime);
+            
+
+            yield return new WaitForSeconds(12f);
+
+            UpTiles.Add(movingFloor);
+            DownTiles.Remove(movingFloor);
+            movementSwap = 2;
         }
+    }
+
+    private IEnumerator MoveTileDown()
+    {
+        foreach (var movingFloor in UpTiles)
+        {
+            movingFloor.transform.position = Vector3.MoveTowards(movingFloor.transform.position, new Vector3(movingFloor.transform.position.x, 0, movingFloor.transform.position.z), 1f * Time.deltaTime);
         
+            yield return new WaitForSeconds(12f);
+
+            DownTiles.Add(movingFloor);
+            UpTiles.Remove(movingFloor);
+            movementSwap = 1;
+        }
     }
 
 }
