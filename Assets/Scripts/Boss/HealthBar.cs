@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace Boss
     {
         public Slider slider;
         public Image fill;
+        
         public void SetMaxHealth(int health)
         {
             slider.maxValue = health;
