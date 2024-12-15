@@ -42,8 +42,8 @@ namespace Boss.Attack
             // if (player != null)
             // {
             //     // Find the ParticleSystem component on the player GameObject
-                    if (indicatorParticle == null) 
-                        throw new NullReferenceException("ERROR: could not find Particle System component");
+                    // if (indicatorParticle == null) 
+                    //     throw new NullReferenceException("ERROR: could not find Particle System component");
 
             //     // Disable Play On Awake
             //     var main = indicatorParticle.main;

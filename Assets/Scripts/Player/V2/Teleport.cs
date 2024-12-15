@@ -97,6 +97,7 @@ namespace Player.V2
             // is finding a unique component of the object I need
             // example: Boss.Controller class is only used for the Boss GameObject
             m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
+            m_audioManager = FindObjectOfType<AudioManager>();
             m_mainCamera = Camera.main;
         }
         
