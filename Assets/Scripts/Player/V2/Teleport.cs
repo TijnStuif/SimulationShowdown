@@ -123,9 +123,22 @@ namespace Player.V2
         
         private void StandardTeleport()
         {
-                m_movement.CharacterController.enabled = false;
-            m_movement.
-                    transform.position += m_direction3d * MAX_TELEPORT_DISTANCE;
+                m_movement.CharacterController.enabled = false; 
+                // check if teleporting in wall
+                if (Physics.Raycast(
+                        origin: m_movement.transform.position, 
+                        direction: m_movement.FullMoveDirection3d, 
+                        hitInfo: out RaycastHit hit, 
+                        maxDistance: MAX_TELEPORT_DISTANCE))
+                {
+                    // teleport right in front of the wall
+                    m_movement.transform.position = hit.point - m_movement.FullMoveDirection3d * 0.5f; 
+                }
+                else
+                {
+                    // teleport max distance
+                    transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
+                }
                 m_movement.CharacterController.enabled = true;
         }
 
