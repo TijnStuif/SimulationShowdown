@@ -17,11 +17,13 @@ namespace Player.V2
         
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
+        private AudioManager audioManager;
 
         public event Action<State> StateChange;
 
         void Awake()
         {
+            audioManager = FindObjectOfType<AudioManager>();
             DamageAttack.PlayerDamaged += TakeDamage;
             currentHealth = maxHealth;
         }
@@ -29,6 +31,7 @@ namespace Player.V2
         public void TakeDamage(int damage)
         {
             currentHealth -= damage;
+            audioManager.PlaySFX(audioManager.playerDamagedSFX);
             if (currentHealth <= 0)
             {
                 StateChange?.Invoke(State.Loss);

@@ -24,6 +24,8 @@ namespace Player.V2
         // [SerializeField] private Rigidbody player;
         [SerializeField] private Movement m_movement;
         
+        private AudioManager m_audioManager;
+        
         private Transform m_bossTransform;
         private Camera m_mainCamera;
 
@@ -116,6 +118,7 @@ namespace Player.V2
 
                 if (BossAttacked)
                 {
+                    m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                     Teleported?.Invoke();
                     return;
                 }
@@ -148,6 +151,7 @@ namespace Player.V2
                     transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
                 }
                 m_movement.CharacterController.enabled = true;
+                m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                 Teleported?.Invoke();
         }
 

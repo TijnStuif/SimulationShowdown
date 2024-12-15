@@ -11,6 +11,7 @@ namespace Boss.Attack
         private Transform playerCamera;
         private ParticleSystem indicatorParticle;
         private bool isFlipped = false;
+        AudioManager audioManager;
 
         private void Awake()
         {
@@ -37,28 +38,32 @@ namespace Boss.Attack
             //     playerCamera = rotationScript.gameObject.transform;
             // }
             // #endif
+            // GameObject player = GameObject.Find("Player");
+            // if (player != null)
+            // {
+            //     // Find the ParticleSystem component on the player GameObject
+                    if (indicatorParticle == null) 
+                        throw new NullReferenceException("ERROR: could not find Particle System component");
 
-            // // Find the ParticleSystem component on the player GameObject
-            // indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
-            // if (indicatorParticle == null)
-            //     throw new NullReferenceException("ERROR: could not find Particle System component");
+            //     // Disable Play On Awake
+            //     var main = indicatorParticle.main;
+            //     main.playOnAwake = false;
 
-            // // Disable Play On Awake
-            // var main = indicatorParticle.main;
-            // main.playOnAwake = false;
-
-            // // Stop the particle system
-            // indicatorParticle.Stop();
+            //     // Stop the particle system
+            //     indicatorParticle.Stop();
+            // }
+            // audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
         {
-            #if DEBUG
-            if (Compatibility.IsV1)
-                StartCoroutine(ActivateSceneFlip());
-            else
-                Debug.Log("Scene flip is currently not implemented for Player V2");
-            #endif
+            // #if DEBUG
+            // if (Compatibility.IsV1)
+            //     audioManager.PlaySFX(audioManager.bossSceneFlipSFX);
+            //     StartCoroutine(ActivateSceneFlip());
+            // else
+            //     Debug.Log("Scene flip is currently not implemented for Player V2");
+            // #endif
         }
 
         private IEnumerator ActivateSceneFlip()

@@ -19,7 +19,7 @@ namespace Boss.Attack
         private Vector3 laserStartPos = new(250, 0, 0);
         private float laserLength;
         private float indicatorTime = 1f;
-
+        AudioManager audioManager;
 
         private void Awake()
         {
@@ -30,6 +30,7 @@ namespace Boss.Attack
             playerScript = FindObjectOfType<Player.V2.Controller>();
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
+            audioManager = FindObjectOfType<AudioManager>();
             ResetLaser();
             
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
@@ -40,6 +41,7 @@ namespace Boss.Attack
         // the Execute method is called when the attack is executed
         public void Execute()
         {
+            audioManager.PlaySFX(audioManager.bossLaserSFX);
             SetIndicatorToPlayer();
             Invoke(nameof(ShootLaser), indicatorTime);
             Invoke(nameof(ResetLaser), indicatorTime * 2);

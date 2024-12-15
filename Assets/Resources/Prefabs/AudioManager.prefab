@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -180,6 +180,19 @@ MonoBehaviour:
   winScreenMusic: {fileID: 8300000, guid: 8eb02d109dcf89844a133daf570f1f3b, type: 3}
   gameOverScreenMusic: {fileID: 8300000, guid: d87c93ebed0a26145b7936e4848afdc3, type: 3}
   audioSource: {fileID: 1087225330651422806}
+  buttonSFX: {fileID: 8300000, guid: dadcdb888fd74cc40ae71d1ca461e60a, type: 3}
+  playerDamagedSFX: {fileID: 8300000, guid: c4b9a899e30ceda4080c2e05df6dcf30, type: 3}
+  playerTeleportedSFX: {fileID: 8300000, guid: 5b50fe2f3a87eb24f9a0ef9b98dc2dc4, type: 3}
+  bossDamagedSFX:
+  - {fileID: 8300000, guid: c8ffeb22485942c4fa7fe0dff225cfc7, type: 3}
+  - {fileID: 8300000, guid: 8d09fa9cf60e31644bbdcdb77cdd64f9, type: 3}
+  - {fileID: 8300000, guid: 1ebc92af33640964caeb944b7201d106, type: 3}
+  bossLaserSFX: {fileID: 8300000, guid: d50853e18d6437643825b7b2f0f00728, type: 3}
+  bossCloseRangeSFX: {fileID: 8300000, guid: 23057af349aa8a443a652efbd4642294, type: 3}
+  bossInputReverserSFX: {fileID: 8300000, guid: b901de391fc83c841a503738fd429de4,
+    type: 3}
+  bossSceneFlipSFX: {fileID: 8300000, guid: 905c5e095410f8f4fb5842bf3da0b049, type: 3}
+  bossLowGravitySFX: {fileID: 8300000, guid: de0969f7330cfbd4786a721611bbb38b, type: 3}
 --- !u!1 &4118032768784687544
 GameObject:
   m_ObjectHideFlags: 0
