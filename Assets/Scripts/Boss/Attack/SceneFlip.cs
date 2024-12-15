@@ -11,6 +11,7 @@ namespace Boss.Attack
         private Transform playerCamera;
         private ParticleSystem indicatorParticle;
         private bool isFlipped = false;
+        AudioManager audioManager;
 
         private void Awake()
         {
@@ -30,12 +31,14 @@ namespace Boss.Attack
                 // Stop the particle system
                 indicatorParticle.Stop();
             }
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
         {
             if (indicatorParticle != null)
             {
+                audioManager.PlaySFX(audioManager.bossSceneFlipSFX);
                 StartCoroutine(ActivateSceneFlip());
             }
         }

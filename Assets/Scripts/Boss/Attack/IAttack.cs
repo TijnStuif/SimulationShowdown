@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 namespace Boss.Attack
 {
     public enum Type
@@ -5,6 +8,8 @@ namespace Boss.Attack
         Environment,
         Direct,
     }
+
+    //every attack with a sound should have a serializefield audiomanager variable, since I can't add it with this interface
 
     public interface IAttack
     {

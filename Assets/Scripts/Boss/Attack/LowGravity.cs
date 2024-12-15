@@ -10,6 +10,7 @@ namespace Boss.Attack
 
         [SerializeField] private float gravityAmount = -1.6f;
         private ParticleSystem indicatorParticle;
+        AudioManager audioManager;
 
         public void Awake()
         {
@@ -27,6 +28,7 @@ namespace Boss.Attack
                 // Stop the particle system
                 indicatorParticle.Stop();
             }
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void OnDisable()
@@ -38,6 +40,7 @@ namespace Boss.Attack
         {
             if (indicatorParticle != null)
             {
+                audioManager.PlaySFX(audioManager.bossLowGravitySFX);
                 StartCoroutine(ActivateGravityChange());
             }
         }

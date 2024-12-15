@@ -9,6 +9,7 @@ namespace Boss
     {
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
+        private AudioManager audioManager;
         private bool damageLock;
         private bool playerWon;
         private int damageToTake = 25;
@@ -22,6 +23,7 @@ namespace Boss
         void Start()
         {
             bossMaterial = GetComponent<MeshRenderer>().material;
+            audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
         }
@@ -41,6 +43,7 @@ namespace Boss
         {
             if (damageLock) return;
             currentHealth -= damage;
+            audioManager.PlaySFX(audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, audioManager.bossDamagedSFX.Length)]);
             StartCoroutine(InvincibilityFrames());
             if (currentHealth <= 0)
             {
