@@ -129,6 +129,7 @@ MonoBehaviour:
   ChangedPhase:
     m_PersistentCalls:
       m_Calls: []
+  forceField: {fileID: 3583550300455475471}
 --- !u!114 &-8026926751682821010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,11 +233,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForceField
       objectReference: {fileID: 0}
+    - target: {fileID: 3394720156540222033, guid: 1e540d660e5117e4b8c65668bb0b9a8d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e540d660e5117e4b8c65668bb0b9a8d, type: 3}
+--- !u!1 &3583550300455475471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1799019779132808453, guid: 1e540d660e5117e4b8c65668bb0b9a8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2975809486372488202}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4247040338446042037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1422212077953255359, guid: 1e540d660e5117e4b8c65668bb0b9a8d,
@@ -343,17 +355,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 113d359de03a7c44493ec070fe64d631,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 113d359de03a7c44493ec070fe64d631,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1800001
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 113d359de03a7c44493ec070fe64d631,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.13000011
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 113d359de03a7c44493ec070fe64d631,
         type: 3}

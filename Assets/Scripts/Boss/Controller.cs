@@ -17,22 +17,22 @@ namespace Boss
         public event Action<int> OnDamaged;
         public UnityEvent ChangedPhase;
         private int invincibilityFrames = 0;
-        private int invincibilityFramesMax = 60;
-        private Material bossMaterial;
+        private int invincibilityFramesMax = 300;
+        [SerializeField] GameObject forceField;
         
         void Start()
         {
-            bossMaterial = GetComponent<MeshRenderer>().material;
             audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
+            forceField.SetActive(false);
         }
 
         void Update()
         {
             if (invincibilityFrames < invincibilityFramesMax)
             {
-                invincibilityFrames++;
+                invincibilityFrames += 1;
             }
         }
     
@@ -72,13 +72,11 @@ namespace Boss
         private IEnumerator InvincibilityFrames()
         {
             invincibilityFrames = 0;
-            Color baseBossColor = bossMaterial.color;
-            while (true)
+            while (invincibilityFrames < invincibilityFramesMax)
             {
-                Color color = bossMaterial.color;
-                bossMaterial.color = Color.black;
+                forceField.SetActive(true);
                 yield return new WaitForSeconds(0.2f);
-                bossMaterial.color = baseBossColor;
+                forceField.SetActive(false);
                 yield return new WaitForSeconds(0.2f);
             }
         }
