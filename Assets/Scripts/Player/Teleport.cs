@@ -13,7 +13,8 @@ namespace Player
 
         private Transform boss;
         private Camera playerCamera;
-
+        private AudioManager audioManager;
+        
         public readonly float teleportCooldown = 2f;
         public float timeSinceLastTeleport = 0;
         private readonly float aimThreshold = 30f;
@@ -23,6 +24,7 @@ namespace Player
 
         private void Awake()
         {
+            audioManager = FindObjectOfType<AudioManager>();
             boss = FindObjectOfType<Boss.Controller>().transform;
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
         }
@@ -34,6 +36,7 @@ namespace Player
                 if (Time.time - timeSinceLastTeleport < teleportCooldown) return;
                 timeSinceLastTeleport = Time.time;
                 player.velocity = Vector3.zero;
+                audioManager.PlaySFX(audioManager.playerTeleportedSFX);
                 OnDash?.Invoke();
                 Vector3 movementInput = new Vector3(playerMovement.movementInput.x, 0, playerMovement.movementInput.y).normalized;
 

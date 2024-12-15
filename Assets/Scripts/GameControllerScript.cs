@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Boss;
 using Boss.Attack;
 using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
 {
+    private Boss.Controller bossController;
     private List<IAttack> attacks;
     private List<IAttack> allAttacks;
     [SerializeField] private PhaseController phaseController;
@@ -15,6 +15,8 @@ public class GameControllerScript : MonoBehaviour
     
     void Start()
     {
+        bossController = FindObjectOfType<Boss.Controller>();
+        bossController.ChangedPhase.AddListener(() => UpdateAttacks());
         allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         attacks = phaseController.phases[phaseController.currentPhase];
 
@@ -39,7 +41,6 @@ public class GameControllerScript : MonoBehaviour
             return;
         }
 
-        attacks = phaseController.phases[phaseController.currentPhase];
         int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
     }
@@ -47,5 +48,10 @@ public class GameControllerScript : MonoBehaviour
     private void SetRandomInterval()
     {
         timer = Mathf.Round(Random.Range(minAttackInterval, maxAttackInterval));
+    }
+
+    public void UpdateAttacks()
+    {
+        attacks = phaseController.phases[phaseController.currentPhase];
     }
 }

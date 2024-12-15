@@ -38,11 +38,13 @@ namespace GameOverScreen
 
         private void OnRestartClicked(ClickEvent evt)
         {
+            PlayButtonSound();
             StateChange?.Invoke(State.Restart);
         }
 
         private void OnTitleScreenClicked(ClickEvent evt)
         {
+            PlayButtonSound();
             StateChange?.Invoke(State.ReturnToTitleScreen);
         }
     }
