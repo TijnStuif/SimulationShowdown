@@ -1,23 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class MovingGround : MonoBehaviour
 {
 
-    private List<(Transform, State)> movingFloorTiles = new List<(Transform, State)>();
-    private (Transform, State) movingFloor;
-    private List<(Transform, State)> floorTiles = new List<(Transform, State)>();
-    private List<GameObject> UpTiles = new List<GameObject>();
-    private List<GameObject> DownTiles = new List<GameObject>();
-    private List<(Transform, State)> floorTilesToRemove = new List<(Transform, State)>(); 
+    private List<GameObject> movingFloorTiles = new List<GameObject>();
+    private GameObject movingFloor;
+    private List<GameObject> floorTiles = new List<GameObject>();
     [SerializeField] private Material indicatorMaterial;
+    private int moveDirection = 1;
    
    private enum State
    {
@@ -29,15 +24,17 @@ public class MovingGround : MonoBehaviour
 
     void Start()
     {
-        floorTiles = new List<(Transform, State)>();
 
-        var tiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
+        floorTiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
+        // floorTiles = new List<(Transform, State)>();
 
-        foreach(var tile in tiles)
-        {
-            var tuple = (tile.transform, State.Down);
-            floorTiles.Add(tuple);
-        }
+        // var tiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
+
+        // foreach(var tile in tiles)
+        // {
+        //     var tuple = (tile.transform, State.Down);
+        //     floorTiles.Add(tuple);
+        // }
 
         StartCoroutine(SelectingFloorTile());
 
@@ -45,13 +42,13 @@ public class MovingGround : MonoBehaviour
 
     private IEnumerator SelectingFloorTile()
     {
-        Debug.Log("Coroutine starts");
         movingFloor = floorTiles[Random.Range(0, floorTiles.Count)];
         movingFloorTiles.Add(movingFloor);
+        
 
-        movingFloorTiles[i].Item1.gameObject.GetComponent<MeshRenderer>().material = indicatorMaterial;
+        movingFloor.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2.5f);
 
         StartCoroutine(SelectingFloorTile());
     }
@@ -60,36 +57,77 @@ public class MovingGround : MonoBehaviour
     {
         for (int i = 0; i < movingFloorTiles.Count; i++)
         {
-            floorTilesToRemove.Add(movingFloorTiles[i]);
-
-            if(movingFloorTiles[i].Item2 == State.Down)
+            var currentTile = movingFloorTiles[i];
+            if(currentTile.transform.position.y >= 2.45)
             {
-               movingFloorTiles[i].Item1.transform.position = Vector3.MoveTowards(movingFloorTiles[i].Item1.position, new Vector3(movingFloorTiles[i].Item1.position.x, 2.45f, movingFloorTiles[i].Item1.position.z), 1f * Time.deltaTime); 
-
-               if(movingFloorTiles[i].Item1.position.y == 2.45f)
-               {
-                    
-                    movingFloorTiles[i].Item2 = State.Middle;
-               }
+                moveDirection = -1;
             } 
-
-            if(movingFloorTiles[i].Item2 == State.Middle)
+            if(currentTile.transform.position.y <= 0f)
             {
-               movingFloorTiles[i].Item1.transform.position = Vector3.MoveTowards(movingFloorTiles[i].Item1.position, new Vector3(movingFloorTiles[i].Item1.position.x, 2.45f, movingFloorTiles[i].Item1.position.z), 1f * Time.deltaTime); 
-            } 
-
-            if(movingFloorTiles[i].Item2 == State.Up)
-            {
-               movingFloorTiles[i].Item1.transform.position = Vector3.MoveTowards(movingFloorTiles[i].Item1.position, new Vector3(movingFloorTiles[i].Item1.position.x, 2.45f, movingFloorTiles[i].Item1.position.z), 1f * Time.deltaTime); 
-            } 
+                moveDirection = 1;
+            }
+            
+            currentTile.transform.position += new Vector3(0, 0.01f * moveDirection, 0);
         }
-        
-        foreach (var tileToRemove in floorTilesToRemove)
-        {
-            movingFloorTiles.Remove(tileToRemove);
-        }
-        floorTilesToRemove.Clear();
+
+
+        //StartCoroutine(MoveTiles());
     }
+    
+    
+    // private IEnumerator MoveTiles()
+    // {
+    //     float speed = 1f;
+
+    //     for (int i = 0; i < movingFloorTiles.Count; i++)
+    //     {
+    //         var currentTile = movingFloorTiles[i];
+            
+    //         if(currentTile.Item2 == State.Down)
+    //         {
+    //            currentTile.Item1.transform.position = Vector3.MoveTowards(currentTile.Item1.position, new Vector3(currentTile.Item1.position.x, 2.45f, currentTile.Item1.position.z), speed * Time.deltaTime); 
+
+    //            if(currentTile.Item1.position.y >= 2.45f)
+    //            {
+    //                 currentTile.Item2 = State.Middle;
+    //                 currentTile.Item1.position = new Vector3(currentTile.Item1.position.x, 2.45f, currentTile.Item1.position.z);
+                    
+    //                 floorTiles.Add(currentTile);
+    //                 movingFloorTiles.RemoveAt(i);
+    //                 i--;
+
+    //                 break;
+    //            }
+    //         } 
+
+    //         yield return new WaitForEndOfFrame();
+
+    //         if(currentTile.Item2 == State.Middle)
+    //         {
+    //             currentTile.Item1.transform.position = Vector3.MoveTowards(currentTile.Item1.position, new Vector3(currentTile.Item1.position.x, 4.9f, currentTile.Item1.position.z), speed * Time.deltaTime);
+
+    //             if(Mathf.Abs(currentTile.Item1.position.y - 4.9f) < 0.01f)
+    //             {    
+    //                 currentTile.Item2 = State.Up;
+    //                 currentTile.Item1.position = new Vector3(currentTile.Item1.position.x, 4.9f, currentTile.Item1.position.z);
+
+    //                 floorTiles.Add(currentTile);
+    //                 movingFloorTiles.RemoveAt(i);
+    //                 i--;
+    //                 break;
+    //             }
+    //         } 
+
+    //         yield return new WaitForEndOfFrame();
+
+    //         if(currentTile.Item2 == State.Up)
+    //         {
+    //            currentTile.Item1.transform.position = Vector3.MoveTowards(currentTile.Item1.position, new Vector3(currentTile.Item1.position.x, 2.45f, currentTile.Item1.position.z), speed * Time.deltaTime); 
+    //         } 
+
+    //         yield return new WaitForEndOfFrame();
+    //     }
+    // }
 
 
 }
