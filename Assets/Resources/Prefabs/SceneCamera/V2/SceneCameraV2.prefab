@@ -70,7 +70,7 @@ MonoBehaviour:
   m_AngularDamping: 0
   m_Heading:
     m_Definition: 2
-    m_VelocityFilterStrength: 4
+    m_VelocityFilterStrength: 0
     m_Bias: 0
   m_RecenterToTargetHeading:
     m_enabled: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_AngularDamping: 0
   m_Heading:
     m_Definition: 2
-    m_VelocityFilterStrength: 4
+    m_VelocityFilterStrength: 0
     m_Bias: 0
   m_RecenterToTargetHeading:
     m_enabled: 0
@@ -280,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 5924950163471431654}
   serializedVersion: 2
   m_LocalRotation: {x: 0.018141463, y: 0.00000003035507, z: 0.0000000047179616, w: 0.99983543}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00000047683716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_AngularDamping: 0
   m_Heading:
     m_Definition: 2
-    m_VelocityFilterStrength: 4
+    m_VelocityFilterStrength: 0
     m_Bias: 0
   m_RecenterToTargetHeading:
     m_enabled: 0
@@ -597,8 +597,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8360293828776017027}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.0000000148458765, y: -0.00000008518712, z: -0.000000009793737,
+    w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00000047683716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -678,7 +679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9088917791718844451}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.3351946, z: -4.6687117}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -730,7 +731,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 2
+    m_MaxSpeed: 1
     m_AccelTime: 0.2
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -754,7 +755,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 200
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -771,7 +772,7 @@ MonoBehaviour:
       m_LegacyVelocityFilterStrength: -1
   m_Heading:
     m_Definition: 2
-    m_VelocityFilterStrength: 4
+    m_VelocityFilterStrength: 0
     m_Bias: 0
   m_RecenterToTargetHeading:
     m_enabled: 0
@@ -875,17 +876,17 @@ PrefabInstance:
     - target: {fileID: 6267593513983088932, guid: 3ddeb075dd4bf00a4976727a91b70ae6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.000000012552553
       objectReference: {fileID: 0}
     - target: {fileID: 6267593513983088932, guid: 3ddeb075dd4bf00a4976727a91b70ae6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.00000009129305
       objectReference: {fileID: 0}
     - target: {fileID: 6267593513983088932, guid: 3ddeb075dd4bf00a4976727a91b70ae6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.00000001589057
       objectReference: {fileID: 0}
     - target: {fileID: 6267593513983088932, guid: 3ddeb075dd4bf00a4976727a91b70ae6,
         type: 3}
