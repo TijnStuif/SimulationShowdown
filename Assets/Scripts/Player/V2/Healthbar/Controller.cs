@@ -20,14 +20,6 @@ namespace Player.V2.Healthbar
             m_healthbar = m_uiDocument.Q<VisualElement>("healthbar");
             m_progressbar = m_uiDocument.Q<ProgressBar>("healthbar");
             m_playertext = m_uiDocument.Q<Label>("Playertext");
-
-            m_healthbar.style.width = 500;
-            m_healthbar.style.left = -580;
-
-            m_playertext.style.width = 500;
-            m_playertext.style.top = 940;
-            m_playertext.style.left = -580;
-
         }
 
         // this used to call GameObject.Find and GetComponent<T> every frame
