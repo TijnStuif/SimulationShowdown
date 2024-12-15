@@ -75,8 +75,14 @@ namespace Player.V2
         /// Stores non-normalized vector used for vertical movement
         /// </summary>
         private Vector3 m_verticalMovement3d;
+
+        /// <summary>
+        /// Stores vector for actual move direction
+        /// not only accounting for input, but also the camera angle
+        /// </summary>
+        public Vector3 FullMoveDirection3d;
         
-        public Vector2 Direction2d => m_direction2d;
+        public CharacterController CharacterController => m_characterController;
 
         /// <summary>
         /// Returns CharacterController.IsGrounded.
@@ -140,12 +146,6 @@ namespace Player.V2
             // ApplyDrag(); 
             // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
             Move(Time.fixedDeltaTime);
-            
-            #if DEBUG
-            Debug.Log($"accel var: {m_gravitationalAccelerationVariable}");
-            Debug.Log($"gravi dir: {m_gravitationalDirection}");
-            Debug.Log($"jump height: {m_jumpHeight}");
-            #endif
         }
 
         /// <summary>
@@ -190,21 +190,8 @@ namespace Player.V2
         /// <summary>
         /// Update gravitational values when gravity is changed
         /// </summary>
-        public void OnGravityChanged() => UpdateGravity();
+        private void OnGravityChanged() => UpdateGravity();
 
-        public void UpdateGravity()
-        {
-            Debug.Log("LOG: Gravity changed!");
-            m_gravitationalAccelerationVariable = Physics.gravity.magnitude;
-            m_gravitationalDirection = Physics.gravity.normalized;
-            
-            // scale jump height with gravity changes
-            // if this isn't done then every jump is the same height, no matter how high or low the gravity is
-            // which sorta makes sense, but not really what we want
-            m_jumpHeight = Mathf.Approximately(m_gravitationalAccelerationVariable, GRAVITATIONAL_ACCELERATION_CONSTANT)
-            ? m_baseJumpHeight
-            : GRAVITATIONAL_ACCELERATION_CONSTANT / m_gravitationalAccelerationVariable * m_baseJumpHeight;
-        }
         
         // might be for a later sprint
         private void ApplyDrag() => throw new NotImplementedException();
@@ -226,7 +213,7 @@ namespace Player.V2
                 
             if (m_direction2d == Vector2.zero)
             {
-                m_groundMovement3d = Vector3.zero;
+                m_groundMovement3d = FullMoveDirection3d = Vector3.zero;
                 return;
             }
             // get angle based on input direction
@@ -235,9 +222,16 @@ namespace Player.V2
             m_movementRotation = Quaternion.Euler(0, TurnAngle(deltaTime), 0);
             m_groundMovement3d = m_movementRotation * Vector3.forward;
             m_groundMovement3d.Normalize();
+            FullMoveDirection3d = m_groundMovement3d;
             m_groundMovement3d *= m_speed;
         }
 
+
+        private void Move(float deltaTime)
+        {
+            m_characterController.Move(Movement3d * deltaTime);
+        }
+        
         /// <summary>
         /// Sets rotation based on move direction
         /// </summary>
@@ -251,10 +245,18 @@ namespace Player.V2
                 m_movementRotation.eulerAngles.y, 
                 transform.rotation.eulerAngles.z);
         }
-
-        private void Move(float deltaTime)
+        
+        private void UpdateGravity()
         {
-            m_characterController.Move(Movement3d * deltaTime);
+            m_gravitationalAccelerationVariable = Physics.gravity.magnitude;
+            m_gravitationalDirection = Physics.gravity.normalized;
+            
+            // scale jump height with gravity changes
+            // if this isn't done then every jump is the same height, no matter how high or low the gravity is
+            // which sorta makes sense, but not really what we want
+            m_jumpHeight = Mathf.Approximately(m_gravitationalAccelerationVariable, GRAVITATIONAL_ACCELERATION_CONSTANT)
+            ? m_baseJumpHeight
+            : GRAVITATIONAL_ACCELERATION_CONSTANT / m_gravitationalAccelerationVariable * m_baseJumpHeight;
         }
 
         // private void ResetGravityAcceleration() => m_gravity3d = m_baseGravity3d;

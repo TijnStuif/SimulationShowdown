@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 3605498916072417750}
   - component: {fileID: 5224359031839466195}
   - component: {fileID: 1163710539973594832}
+  - component: {fileID: 4900860332971092804}
   m_Layer: 0
   m_Name: PlayerV2
   m_TagString: Player
@@ -204,8 +205,8 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerTeleport, Assembly-CSharp
+      - m_Target: {fileID: 4900860332971092804}
+        m_TargetAssemblyTypeName: Player.V2.Teleport, Assembly-CSharp
         m_MethodName: OnTeleport
         m_Mode: 0
         m_Arguments:
@@ -214,7 +215,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
     m_ActionId: 6b8ccdcb-e032-4c8d-a4c7-b68ac04c7771
     m_ActionName: Player/Teleport[/Keyboard/shift]
@@ -278,8 +279,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AreControlsInverted: 0
-  m_speed: 10
   m_baseJumpHeight: 1.5
+  m_speed: 10
+--- !u!114 &4900860332971092804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330063805393249459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdc6006b4e074252818e51a41e34e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_movement: {fileID: 1163710539973594832}
 --- !u!1001 &1075779412956753608
 PrefabInstance:
   m_ObjectHideFlags: 0
