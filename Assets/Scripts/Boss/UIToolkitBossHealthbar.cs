@@ -33,7 +33,7 @@ public class UIToolkitBossHealthbar : MonoBehaviour
 
     private void Start()
     {
-        // Define the thresholds for the boss phases
+        // set the width between each threshold bar based on the number of phases
         int phaseCount = phaseController.phases.Count - 1;
         int[] thresholds = new int[phaseCount];
         for (int i = 0; i < phaseCount; i++)
@@ -42,7 +42,7 @@ public class UIToolkitBossHealthbar : MonoBehaviour
         }
 
 
-        // Add threshold bars
+        // stylize the threshold bars
         foreach (int threshold in thresholds)
         {
             VisualElement thresholdBar = new VisualElement();
