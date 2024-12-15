@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Player.V2;
+using Player.V1;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
+using State = Player.V1.State;
 
+namespace V1
+{
 /// <summary>
-/// V1 script
 /// This class handles state change events and is able to change state such as
 /// game-overing, pausing, freezing state, etc.
 /// It's also a singleton although the Instance has a private access level
@@ -181,9 +183,6 @@ public class StateController : MonoBehaviour
                 Lose();
                 break; 
             case State.Pause:
-                #if DEBUG
-                Debug.Log("Paused!");
-                #endif
                 TogglePause();
                 break;     
             default:
@@ -337,4 +336,5 @@ public class StateController : MonoBehaviour
         else
             Pause();
     }
+}
 }

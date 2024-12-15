@@ -15443,6 +15443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667946949389038696}
   - component: {fileID: 9126966506450358610}
+  - component: {fileID: 9126966506450358611}
   m_Layer: 0
   m_Name: StateController
   m_TagString: Untagged
@@ -25724,6 +25725,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888027d84b59d3e8cb4a9e964de6226c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pauseMenuPrefab: {fileID: 5211759160308796991, guid: b02f3f598ff2e32bda4d52690750e638,
+    type: 3}
+  m_gameOverScreenPrefab: {fileID: 7303875515652641951, guid: 594c4b4d124cdcd7db3b23ade81c8339,
+    type: 3}
+  m_winScreenPrefab: {fileID: 4311019253932802618, guid: 1bf5728357abbdd88a0067d2c6ae0039,
+    type: 3}
+--- !u!114 &9126966506450358611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939014914810996721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a68ff53544043bb1ac1a1b221b43b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pauseMenuPrefab: {fileID: 5211759160308796991, guid: b02f3f598ff2e32bda4d52690750e638,

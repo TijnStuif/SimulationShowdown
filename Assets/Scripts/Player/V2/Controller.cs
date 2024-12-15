@@ -3,7 +3,7 @@ using Boss.Attack;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// copy-pasted from V1
+// copypasted from V1
 namespace Player.V2
 {
     public enum State
