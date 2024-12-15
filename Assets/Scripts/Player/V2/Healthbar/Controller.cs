@@ -7,9 +7,9 @@ namespace Player.V2.Healthbar
     {
         [SerializeField] private Player.V2.Controller m_controller;
         private VisualElement m_uiDocument;
-        private VisualElement healthbar;
-        private ProgressBar progressbar;
-        private Label playertext;
+        private VisualElement m_healthbar;
+        private ProgressBar m_progressbar;
+        private Label m_playertext;
     
         private void Awake()
         {
@@ -17,16 +17,16 @@ namespace Player.V2.Healthbar
             m_uiDocument = GetComponent<UIDocument>().rootVisualElement;
 
             // access UI Elements
-            healthbar = m_uiDocument.Q<VisualElement>("healthbar");
-            progressbar = m_uiDocument.Q<ProgressBar>("healthbar");
-            playertext = m_uiDocument.Q<Label>("Playertext");
+            m_healthbar = m_uiDocument.Q<VisualElement>("healthbar");
+            m_progressbar = m_uiDocument.Q<ProgressBar>("healthbar");
+            m_playertext = m_uiDocument.Q<Label>("Playertext");
 
-            healthbar.style.width = 500;
-            healthbar.style.left = -580;
+            m_healthbar.style.width = 500;
+            m_healthbar.style.left = -580;
 
-            playertext.style.width = 500;
-            playertext.style.top = 940;
-            playertext.style.left = -580;
+            m_playertext.style.width = 500;
+            m_playertext.style.top = 940;
+            m_playertext.style.left = -580;
 
         }
 
@@ -34,7 +34,7 @@ namespace Player.V2.Healthbar
         // please don't do that
         private void FixedUpdate()
         {
-            progressbar.value = m_controller.currentHealth;
+            m_progressbar.value = m_controller.currentHealth;
         }
     }
 }
