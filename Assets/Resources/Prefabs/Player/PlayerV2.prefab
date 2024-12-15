@@ -45,8 +45,10 @@ GameObject:
   - component: {fileID: 7416737978971873147}
   - component: {fileID: 3605498916072417750}
   - component: {fileID: 5224359031839466195}
+  - component: {fileID: 1000618510667487879}
   - component: {fileID: 1163710539973594832}
   - component: {fileID: 4900860332971092804}
+  - component: {fileID: 702510229736696073}
   m_Layer: 0
   m_Name: PlayerV2
   m_TagString: Player
@@ -266,6 +268,20 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1000618510667487879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330063805393249459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a953894d750a12b08b2d101e22d550f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!114 &1163710539973594832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +297,7 @@ MonoBehaviour:
   AreControlsInverted: 0
   m_baseJumpHeight: 1.5
   m_speed: 10
+  FullMoveDirection3d: {x: 0, y: 0, z: 0}
 --- !u!114 &4900860332971092804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +311,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movement: {fileID: 1163710539973594832}
+--- !u!114 &702510229736696073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330063805393249459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fca401fe996fb5548b3d5a6e779d0e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  healthbarDocument: {fileID: 0}
 --- !u!1001 &1075779412956753608
 PrefabInstance:
   m_ObjectHideFlags: 0
