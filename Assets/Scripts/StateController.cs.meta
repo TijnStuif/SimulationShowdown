@@ -4,11 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - m_pauseMenuPrefab: {fileID: 5211759160308796991, guid: b02f3f598ff2e32bda4d52690750e638,
-      type: 3}
-  - m_gameOverScreenPrefab: {fileID: 7303875515652641951, guid: 594c4b4d124cdcd7db3b23ade81c8339,
-      type: 3}
-  - m_winScreenPrefab: {fileID: 4311019253932802618, guid: 1bf5728357abbdd88a0067d2c6ae0039,
+  - m_pauseMenuPrefab: {instanceID: 0}
+  - m_gameOverScreenPrefab: {instanceID: 0}
+  - m_winScreenPrefab: {instanceID: 0}
+  - m_audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Player.V1;
+using Player.V2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
-using State = Player.V1.State;
 
 namespace V1
 {

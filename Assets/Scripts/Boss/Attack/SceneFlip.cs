@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections;
-using Player.V1;
-using UnityEngine.SceneManagement;
 
 namespace Boss.Attack
 {
@@ -16,41 +14,41 @@ namespace Boss.Attack
 
         private void Awake()
         {
-            MonoBehaviour playerScript = null;
-            #if DEBUG
-            if (Compatibility.IsV1)
-            {
-                playerScript = FindObjectOfType<Player.V1.Controller>();
-            }
-            #endif
-            if (playerScript == null)
-                playerScript = FindObjectOfType<Player.V2.Movement>();
-            if (playerScript == null)
-                throw new StateController.ScriptNotFoundException(nameof(playerScript));
-            var player = playerScript.gameObject;
-            
-            #if DEBUG
-            if (Compatibility.IsV1)
-            {
-                // find PlayerFollower (this object is under Player)
-                var rotationScript = player.GetComponentInChildren<Rotation>();
-                if (rotationScript == null)
-                    throw new StateController.ScriptNotFoundException(nameof(rotationScript));
-                playerCamera = rotationScript.gameObject.transform;
-            }
-            #endif
+            // MonoBehaviour playerScript = null;
+            // #if DEBUG
+            // if (Compatibility.IsV1)
+            // {
+            //     playerScript = FindObjectOfType<Player.V2.Controller>();
+            // }
+            // #endif
+            // if (playerScript == null)
+            //     playerScript = FindObjectOfType<Player.V2.Movement>();
+            // if (playerScript == null)
+            //     throw new StateController.ScriptNotFoundException(nameof(playerScript));
+            // var player = playerScript.gameObject;
+            // 
+            // #if DEBUG
+            // if (Compatibility.IsV1)
+            // {
+            //     // find PlayerFollower (this object is under Player)
+            //     var rotationScript = player.GetComponentInChildren<Rotation>();
+            //     if (rotationScript == null)
+            //         throw new StateController.ScriptNotFoundException(nameof(rotationScript));
+            //     playerCamera = rotationScript.gameObject.transform;
+            // }
+            // #endif
 
-            // Find the ParticleSystem component on the player GameObject
-            indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
-            if (indicatorParticle == null)
-                throw new NullReferenceException("ERROR: could not find Particle System component");
+            // // Find the ParticleSystem component on the player GameObject
+            // indicatorParticle = player.GetComponentInChildren<ParticleSystem>();
+            // if (indicatorParticle == null)
+            //     throw new NullReferenceException("ERROR: could not find Particle System component");
 
-            // Disable Play On Awake
-            var main = indicatorParticle.main;
-            main.playOnAwake = false;
+            // // Disable Play On Awake
+            // var main = indicatorParticle.main;
+            // main.playOnAwake = false;
 
-            // Stop the particle system
-            indicatorParticle.Stop();
+            // // Stop the particle system
+            // indicatorParticle.Stop();
         }
 
         public void Execute()

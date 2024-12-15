@@ -13,6 +13,7 @@ namespace Player.V2
            Inside,
            Outside
         }
+        public readonly float Cooldown = 2f;
         
         private const float TELEPORT_COOLDOWN = 2f;
         private const float AIM_THRESHOLD = 30f;
@@ -33,6 +34,8 @@ namespace Player.V2
         private Vector3 DirectionToBoss => (m_bossTransform.position - transform.position).normalized;
 
         private Vector3 m_direction3d;
+        
+        public event Action Teleported;
         
         private bool BossAttacked 
         {
@@ -111,13 +114,18 @@ namespace Player.V2
 
                 m_direction3d = m_movement.FullMoveDirection3d;
 
-                if (BossAttacked) return;
+                if (BossAttacked)
+                {
+                    Teleported?.Invoke();
+                    return;
+                }
 
                 #if DEBUG
                 Debug.Log("Teleporting!");
                 #endif
                 
                 StandardTeleport();
+                Teleported?.Invoke();
             }
         }
         
@@ -140,6 +148,7 @@ namespace Player.V2
                     transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
                 }
                 m_movement.CharacterController.enabled = true;
+                Teleported?.Invoke();
         }
 
         private void UpdateAttackRange()

@@ -1,6 +1,7 @@
 using Player.V2;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class InputVisualizer : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement AKeyContainer;
     private VisualElement SKeyContainer;
     private VisualElement DKeyContainer;
+    private VisualElement DashkeyContainer;
+    private VisualElement DashKeyOverlay;
     private Player.V2.Movement playerMovement;
-    private Player.V1.Movement m_compatMovementV1;
+    private Player.V2.Teleport playerTeleport;
 
     private void Awake()
     {
@@ -21,22 +24,20 @@ public class InputVisualizer : MonoBehaviour
 
     void Start()
     {
-        #if DEBUG
-        if (Compatibility.IsV1)
-        {
-            m_compatMovementV1 = FindObjectOfType<Player.V1.Movement>();
-        }
-        #endif
+        playerMovement = FindObjectOfType<Movement>();
         if (playerMovement == null)
-            playerMovement = FindObjectOfType<Movement>();
-        if (playerMovement == null && m_compatMovementV1 == null)
             throw new StateController.ScriptNotFoundException(nameof(playerMovement));
+        playerTeleport = FindObjectOfType<Player.V2.Teleport>();
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");
         AKeyContainer = visualTree.Q<VisualElement>("AKeyContainer");
         SKeyContainer = visualTree.Q<VisualElement>("SKeyContainer");
         DKeyContainer = visualTree.Q<VisualElement>("DKeyContainer");
+        DashkeyContainer = visualTree.Q<VisualElement>("DashKeyContainer");
+        DashKeyOverlay = visualTree.Q<VisualElement>("DashKeyOverlay");
+
+        playerTeleport.Teleported += HandleDash;
     }
 
     void Update()
@@ -63,16 +64,6 @@ public class InputVisualizer : MonoBehaviour
         }
         else
         {
-            #if DEBUG
-            if (Compatibility.IsV1)
-            {
-                if (m_compatMovementV1.areControlsInverted)
-                    keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
-                else
-                    keyContainer.style.backgroundColor = new StyleColor(Color.white);
-                return;
-            }
-            #endif
             if (playerMovement.AreControlsInverted)
             {
                 keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
@@ -82,5 +73,28 @@ public class InputVisualizer : MonoBehaviour
                 keyContainer.style.backgroundColor = new StyleColor(Color.white);
             }
         }
+    }
+
+    private void HandleDash()
+    {
+        StartCoroutine(FadeDashKeyContainerColor());
+    }
+
+    private IEnumerator FadeDashKeyContainerColor()
+    {
+        float duration = playerTeleport.Cooldown;
+        float elapsedTime = 0f;
+
+        DashKeyOverlay.style.width = new Length(100, LengthUnit.Percent);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            DashKeyOverlay.style.width = new Length((1 - t) * 100, LengthUnit.Percent);
+            yield return null;
+        }
+
+        DashKeyOverlay.style.width = new Length(0, LengthUnit.Percent);
     }
 }
