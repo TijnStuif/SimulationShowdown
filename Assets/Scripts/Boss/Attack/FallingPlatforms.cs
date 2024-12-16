@@ -8,7 +8,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
 {
     public Type Type => Type.Environment;
     private List<GameObject> tiles;
-    private List<GameObject> tilesToRemove = new List<GameObject>();
+    private List<GameObject> removedTiles = new List<GameObject>();
     private List<GameObject> targetedTiles = new List<GameObject>();
     
     private GameObject targetedTile;
@@ -65,7 +65,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
         //Loops through each selected tile in the list
         foreach (var targetedTile in targetedTiles)
         {
-            //changes the color to red to indicate the tile is going to be removed
+            //Changes the color to red to indicate the tile is going to be removed
             targetedTile.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
             //Lets the routine pause for a second to create some sort of animation of different tiles being selected
@@ -79,7 +79,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
         foreach (var targetedTile in targetedTiles)
         {
             targetedTile.SetActive(false);
-            tilesToRemove.Add(targetedTile);
+            removedTiles.Add(targetedTile);
         }
 
         //Attack is completed

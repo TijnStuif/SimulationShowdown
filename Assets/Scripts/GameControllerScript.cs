@@ -5,27 +5,20 @@ using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
 {
+    private Boss.Controller bossController;
     private List<IAttack> attacks;
-    private List<IAttack> environmentAttacks;
-    private List<IAttack> directAttacks;
+    private List<IAttack> allAttacks;
+    [SerializeField] private PhaseController phaseController;
     private float timer;
-    public float minAttackInterval = 5f; 
-    public float maxAttackInterval = 15f;
+    public float minAttackInterval = 6f; 
+    public float maxAttackInterval = 8f;
     
     void Start()
     {
-        // Gets all the objects in the scene that have the IAttack interface
-        attacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
-        
-        // Debug log all attacks
-        foreach (var attack in attacks)
-        {
-            Debug.Log($"{attack.GetType().Name} - Type: {attack.Type}");
-        }
-
-        // list of attacks per type
-        environmentAttacks = attacks.Where(attack => attack.Type == Type.Environment).ToList();
-        directAttacks = attacks.Where(attack => attack.Type == Type.Direct).ToList();
+        bossController = FindObjectOfType<Boss.Controller>();
+        bossController.ChangedPhase.AddListener(() => UpdateAttacks());
+        allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
+        attacks = phaseController.phases[phaseController.currentPhase];
 
         SetRandomInterval(); 
     }
@@ -43,21 +36,22 @@ public class GameControllerScript : MonoBehaviour
 
     private void ExecuteRandomAttack()
     {
-        Debug.Log(attacks);
         if (attacks.Count == 0)
         {
-            Debug.LogWarning("No attacks available to execute.");
             return;
         }
 
-        int randomIndex = UnityEngine.Random.Range(0, attacks.Count);
+        int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
-        Debug.Log($"Executed attack: {attacks[randomIndex].GetType().Name}");
     }
 
     private void SetRandomInterval()
     {
-        timer = Mathf.Round(UnityEngine.Random.Range(minAttackInterval, maxAttackInterval));
-        Debug.Log($"Next attack in {timer} seconds");
+        timer = Mathf.Round(Random.Range(minAttackInterval, maxAttackInterval));
+    }
+
+    public void UpdateAttacks()
+    {
+        attacks = phaseController.phases[phaseController.currentPhase];
     }
 }

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Player.V2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
-using State = Player.State;
 
 /// <summary>
+/// V1 script
 /// This class handles state change events and is able to change state such as
 /// game-overing, pausing, freezing state, etc.
 /// It's also a singleton although the Instance has a private access level
@@ -19,25 +20,17 @@ public class StateController : MonoBehaviour
     /// </summary>
     private class StateHandlerNotImplementedException : NotImplementedException
     {
-        public override string Message => "ERROR: State handler hasn't been implemented in StateController";
+        public StateHandlerNotImplementedException() : base("ERROR: State handler hasn't been implemented in StateController") {}
     }
     
     /// <summary>
     /// Exception for if a script was not found
-    /// (Message is based on the script that couldn't be found)
+    /// Message should be based on script name
+    /// This should be done using nameof(variableName)
     /// </summary>
-    private class ScriptNotFoundException : NullReferenceException
+    public class ScriptNotFoundException : NullReferenceException
     {
-        public new string Message { get; set; }
-
-        public ScriptNotFoundException(MonoBehaviour script)
-        {
-            Message = $"ERROR: Could not find script: {script.name}";
-        }
-        public ScriptNotFoundException()
-        {
-            Message = "ERROR: Could not find script";
-        }
+        public ScriptNotFoundException(string scriptName) : base($"ERROR: could not find script: {scriptName}") {}
     }
     
     // prefabs
@@ -51,13 +44,15 @@ public class StateController : MonoBehaviour
     private GameObject m_winScreen;
     
     // controller scripts
-    private Player.Controller m_playerController;
+    private Controller m_playerController;
     private Boss.Controller m_bossController;
+    private AudioManager m_audioManager;
     
     // UI controller scripts
     private PauseMenu.Controller m_pauseMenuController;
     private GameOverScreen.Controller m_gameOverScreenController;
     private WinScreen.Controller m_winScreenController;
+
 
     private List<AbstractUiController> UiScripts { get; set; }
     
@@ -110,6 +105,7 @@ public class StateController : MonoBehaviour
         m_pauseMenu = Instantiate(m_pauseMenuPrefab);
         m_gameOverScreen = Instantiate(m_gameOverScreenPrefab);
         m_winScreen = Instantiate(m_winScreenPrefab);
+        m_audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     private void InitControllerScripts()
@@ -117,24 +113,24 @@ public class StateController : MonoBehaviour
         UiScripts = new List<AbstractUiController>(3);
 
         // assign script, if it's null, throw exception
-        if ((m_playerController = FindObjectOfType<Player.Controller>()) == null)
-            throw new ScriptNotFoundException(m_playerController);
+        if ((m_playerController = FindObjectOfType<Controller>()) == null)
+            throw new ScriptNotFoundException(nameof(m_playerController));
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
-            throw new ScriptNotFoundException(m_bossController);
+            throw new ScriptNotFoundException(nameof(m_bossController));
 
         if ((m_pauseMenuController = m_pauseMenu.GetComponent<PauseMenu.Controller>()) == null)
-            throw new ScriptNotFoundException(m_pauseMenuController);
+            throw new ScriptNotFoundException(nameof(m_pauseMenuController));
         else
             UiScripts.Add(m_pauseMenuController);
 
         if ((m_gameOverScreenController = m_gameOverScreen.GetComponent<GameOverScreen.Controller>()) == null)
-            throw new ScriptNotFoundException(m_gameOverScreenController);
+            throw new ScriptNotFoundException(nameof(m_gameOverScreenController));
         else
             UiScripts.Add(m_gameOverScreenController);
 
         if ((m_winScreenController = m_winScreen.GetComponent<WinScreen.Controller>()) == null)
-            throw new ScriptNotFoundException(m_winScreenController);
+            throw new ScriptNotFoundException(nameof(m_winScreenController));
         else
             UiScripts.Add(m_winScreenController);
     }
@@ -180,7 +176,7 @@ public class StateController : MonoBehaviour
         Win();
     }
 
-    private void OnPlayerStateChange(Player.State state)
+    private void OnPlayerStateChange(State state)
     {
         switch (state)
         {
@@ -188,6 +184,9 @@ public class StateController : MonoBehaviour
                 Lose();
                 break; 
             case State.Pause:
+                #if DEBUG
+                Debug.Log("Paused!");
+                #endif
                 TogglePause();
                 break;     
             default:
@@ -244,17 +243,22 @@ public class StateController : MonoBehaviour
 
     private void Win()
     {
+        Debug.Log("You win!");
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true; 
-        PauseLock = true; 
-        FreezeState(); 
+        Cursor.visible = true;
+        m_audioManager.PlayMusic(m_audioManager.winScreenMusic);
+        PauseLock = true;
+        FreezeState();
         m_winScreenController.Show();
+        
     }
 
     private void Lose()
     {
+        Debug.Log("You lose!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        m_audioManager.PlayMusic(m_audioManager.gameOverScreenMusic);
         PauseLock = true;
         FreezeState();
         m_gameOverScreenController.Show();
@@ -262,13 +266,17 @@ public class StateController : MonoBehaviour
 
     private void ReturnToTitle()
     {
+        Debug.Log("Returning to title screen");
         ThawState();
         SceneManager.LoadScene("StartMenu");
+        m_audioManager.PlayMusic(m_audioManager.mainMenuMusic);
     }
 
     private void RestartGameplay()
     {
+        Debug.Log("Restarting gameplay");
         SceneManager.LoadScene("GameScene");
+        m_audioManager.PlayMusic(m_audioManager.bossFightMusic);
     }
 
     /// <summary>
@@ -306,12 +314,13 @@ public class StateController : MonoBehaviour
     private void Pause()
     {
         if (PauseLock) return;
-        
+        m_audioManager.DampenMusic();
         FreezeState();
         m_pauseMenuController.Show();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         GamePaused = true;
+        
     }
 
     /// <summary>
@@ -320,7 +329,7 @@ public class StateController : MonoBehaviour
     private void Unpause()
     {
         if (PauseLock) return;
-        
+        m_audioManager.UndampenMusic();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         m_pauseMenuController.Hide();

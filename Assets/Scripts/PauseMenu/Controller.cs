@@ -35,13 +35,15 @@ namespace PauseMenu
         }
 
         private void OnResumeClicked(ClickEvent evt)
-        { 
+        {
+            PlayButtonSound();
             StateChange?.Invoke(State.ResumeGame);
         }
 
         private void OnReturnToTitleClicked()
-        { 
-            StateChange?.Invoke(State.ReturnToTitleScreen); 
+        {
+            PlayButtonSound();
+            StateChange?.Invoke(State.ReturnToTitleScreen);
         }
     }
 }
