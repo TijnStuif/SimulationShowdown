@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5262513158506515192}
   - component: {fileID: 7989023719012704363}
   m_Layer: 0
-  m_Name: low-gravity-particle
+  m_Name: PlayerParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
