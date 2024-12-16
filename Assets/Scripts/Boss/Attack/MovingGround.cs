@@ -5,27 +5,49 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
+public class MovingTile
+    {
+        public GameObject tile;
+        public int moveDirection;
+
+        public MovingTile(GameObject tile, int value)
+        {
+            this.tile = tile;
+            this.moveDirection = value;
+        }
+
+    public static implicit operator GameObject(MovingTile v)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class MovingGround : MonoBehaviour
 {
 
     private List<GameObject> movingFloorTiles = new List<GameObject>();
     private GameObject movingFloor;
-    private List<GameObject> floorTiles = new List<GameObject>();
+    private List<MovingTile> floorTilesList = new List<MovingTile>();
     [SerializeField] private Material indicatorMaterial;
-    private int moveDirection = 1;
+    
    
-   private enum State
-   {
-    Down,
-    Middle,
-    Up
-   }
+//    private enum State
+//    {
+//     Down,
+//     Middle,
+//     Up
+//    }
 
 
     void Start()
     {
 
-        floorTiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
+        GameObject[] floorTiles = GameObject.FindGameObjectsWithTag("SimulationBorder");
+
+        foreach(GameObject tiles in floorTiles)
+        {
+            floorTilesList.Add(new MovingTile(tiles, 1));
+        }
         // floorTiles = new List<(Transform, State)>();
 
         // var tiles = new List<GameObject>(GameObject.FindGameObjectsWithTag("SimulationBorder"));
@@ -42,9 +64,8 @@ public class MovingGround : MonoBehaviour
 
     private IEnumerator SelectingFloorTile()
     {
-        movingFloor = floorTiles[Random.Range(0, floorTiles.Count)];
+        movingFloor = floorTilesList[Random.Range(0, floorTilesList.Count)];
         movingFloorTiles.Add(movingFloor);
-        
 
         movingFloor.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
@@ -60,14 +81,14 @@ public class MovingGround : MonoBehaviour
             var currentTile = movingFloorTiles[i];
             if(currentTile.transform.position.y >= 2.45)
             {
-                moveDirection = -1;
+                floorTilesList[i].moveDirection = -1;
             } 
             if(currentTile.transform.position.y <= 0f)
             {
-                moveDirection = 1;
+                floorTilesList[i].moveDirection = 1;
             }
             
-            currentTile.transform.position += new Vector3(0, 0.01f * moveDirection, 0);
+            currentTile.transform.position += new Vector3(0, 0.01f * floorTilesList[i].moveDirection, 0);
         }
 
 
