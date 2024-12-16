@@ -533,7 +533,7 @@ PrefabInstance:
     - target: {fileID: 185574840940635552, guid: 75faf7844b9de7a46bf6f80562864fe6,
         type: 3}
       propertyPath: m_Name
-      value: low-gravity-particle
+      value: PlayerParticleSystem
       objectReference: {fileID: 0}
     - target: {fileID: 583923098250110350, guid: 75faf7844b9de7a46bf6f80562864fe6,
         type: 3}
