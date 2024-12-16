@@ -29,6 +29,8 @@ namespace Player.V2
         
         private CharacterController m_characterController;
 
+        private Animator m_animator;
+
         /// <summary>
         /// Stores move direction using player input.
         /// </summary>
@@ -110,6 +112,7 @@ namespace Player.V2
 
         private void Awake()
         {
+            m_animator = GetComponentInChildren<Animator>();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             var cam = Camera.main;
@@ -146,6 +149,7 @@ namespace Player.V2
             // ApplyDrag(); 
             // if (m_direction3d.magnitude > MOVEMENT_THRESHOLD)
             Move(Time.fixedDeltaTime);
+            UpdateAnimator();
         }
 
         /// <summary>
@@ -156,6 +160,8 @@ namespace Player.V2
         {
             if (!IsGrounded) return;
             if (!context.performed) return;
+            m_animator.SetTrigger("isJumping");
+            Debug.Log(m_animator.GetBool("isJumping"));
             // torricelli's law: https://en.wikipedia.org/wiki/Torricelli%27s_law
             // v = sqrt(2gh)
             // g = gravitational acceleration constant
@@ -261,5 +267,11 @@ namespace Player.V2
 
         // private void ResetGravityAcceleration() => m_gravity3d = m_baseGravity3d;
 
+        private void UpdateAnimator()
+        {
+            bool isWalking = m_direction2d.magnitude > 0;
+            m_animator.SetBool("isIdle", !isWalking);
+            m_animator.SetBool("isWalking", isWalking);      
+        }
     }
 }
