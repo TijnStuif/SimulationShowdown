@@ -1,6 +1,6 @@
+using Player.V2;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Player;
 using System.Collections;
 
 public class InputVisualizer : MonoBehaviour
@@ -13,8 +13,8 @@ public class InputVisualizer : MonoBehaviour
     private VisualElement DKeyContainer;
     private VisualElement DashkeyContainer;
     private VisualElement DashKeyOverlay;
-    private Player.Movement playerMovement;
-    private Player.Teleport playerTeleport;
+    private Player.V2.Movement playerMovement;
+    private Player.V2.Teleport playerTeleport;
 
     private void Awake()
     {
@@ -24,8 +24,10 @@ public class InputVisualizer : MonoBehaviour
 
     void Start()
     {
-        playerMovement = FindObjectOfType<Player.Movement>();
-        playerTeleport = FindObjectOfType<Player.Teleport>();
+        playerMovement = FindObjectOfType<Movement>();
+        if (playerMovement == null)
+            throw new StateController.ScriptNotFoundException(nameof(playerMovement));
+        playerTeleport = FindObjectOfType<Player.V2.Teleport>();
         var visualTree = uiDocument.rootVisualElement;
 
         WKeyContainer = visualTree.Q<VisualElement>("WKeyContainer");
@@ -35,7 +37,7 @@ public class InputVisualizer : MonoBehaviour
         DashkeyContainer = visualTree.Q<VisualElement>("DashKeyContainer");
         DashKeyOverlay = visualTree.Q<VisualElement>("DashKeyOverlay");
 
-        playerTeleport.OnDash += HandleDash;
+        playerTeleport.Teleported += HandleDash;
     }
 
     void Update()
@@ -62,7 +64,7 @@ public class InputVisualizer : MonoBehaviour
         }
         else
         {
-            if (playerMovement.areControlsInverted)
+            if (playerMovement.AreControlsInverted)
             {
                 keyContainer.style.backgroundColor = new StyleColor(Color.magenta);
             }
@@ -80,7 +82,7 @@ public class InputVisualizer : MonoBehaviour
 
     private IEnumerator FadeDashKeyContainerColor()
     {
-        float duration = playerTeleport.teleportCooldown;
+        float duration = playerTeleport.Cooldown;
         float elapsedTime = 0f;
 
         DashKeyOverlay.style.width = new Length(100, LengthUnit.Percent);

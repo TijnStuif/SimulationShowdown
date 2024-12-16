@@ -97,8 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e9ad5e52799c64cbdcf3d956d8c05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 40
   audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
+  indicatorPrefab: {fileID: 3956313933832281549, guid: 8bf2ba752f7e81a1a92050c5ed72aec7,
+    type: 3}
+  attackPrefab: {fileID: 7915644990725051121, guid: bbf028a68926df4a995e31980fda39ce,
     type: 3}
 --- !u!114 &1472273395187015414
 MonoBehaviour:
@@ -128,6 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
     type: 3}
+  inputReverserAttackIndicatorPrefab: {fileID: 2951619880673608283, guid: 45a9b093fe73fd44797be5c3a1d3cd9d,
+    type: 3}
 --- !u!114 &3302913286780812233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a3404344a2c6fb47b6c032daf9c1b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityAmount: -2.5
+  gravityAmount: -4
   audioManager: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
     type: 3}
 --- !u!114 &8718303700229094477
@@ -155,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492219d017ea9554898f708188065d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorMaterial: {fileID: 2100000, guid: 08732dff2b6e823449a166b72c2260c3, type: 2}
+  indicatorMaterial: {fileID: 2100000, guid: 94ec9a087579e6f438cb263266e465a9, type: 2}
   numberOfTiles: 3
 --- !u!114 &-8366010346727223579
 MonoBehaviour:

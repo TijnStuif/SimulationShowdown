@@ -8,8 +8,12 @@ namespace Boss.Attack
         private GameObject laserIndicator;
         private GameObject laserAttack;
         private GameObject player;
-        private Player.Controller playerScript;
+        private Player.V2.Controller playerScript;
         private GameObject boss;
+        //
+        
+        [SerializeField] private GameObject indicatorPrefab;
+        [SerializeField] private GameObject attackPrefab;
         
         private Vector3 indicatorStartPos = new(200, 0, 0);
         private Vector3 laserStartPos = new(250, 0, 0);
@@ -17,11 +21,13 @@ namespace Boss.Attack
         private float indicatorTime = 1f;
         AudioManager audioManager;
 
-        private void Start()
+        private void Awake()
         {
-            laserIndicator = GameObject.Find("LaserAttackIndicator");
+            // laserIndicator = Instantiate(indicatorPrefab);
+            // laserAttack = Instantiate(attackPrefab);
             laserAttack = GameObject.Find("LaserAttack");
-            playerScript = FindObjectOfType<Player.Controller>();
+            laserIndicator = GameObject.Find("LaserAttackIndicator");
+            playerScript = FindObjectOfType<Player.V2.Controller>();
             player = playerScript.gameObject;
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             audioManager = FindObjectOfType<AudioManager>();
@@ -29,6 +35,8 @@ namespace Boss.Attack
             
             laserLength = Vector3.Distance(laserAttack.transform.position, laserAttack.transform.position + laserAttack.transform.localScale / 2);
         }
+        // to make script enable and disable'able
+        private void Start() {}
     
         // the Execute method is called when the attack is executed
         public void Execute()

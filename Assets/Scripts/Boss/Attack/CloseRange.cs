@@ -5,7 +5,7 @@ namespace Boss.Attack
 {
     public class CloseRange : DamageAttack, IAttack
     { 
-        Player.Controller player;
+        Player.V2.Controller player;
         public Type Type => Type.Direct;
         
         private GameObject CloseRangeAttackIndicator;
