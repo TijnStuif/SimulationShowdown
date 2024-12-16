@@ -6,7 +6,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-public class MovingTile
+
+
+public class MovingGround : MonoBehaviour
+{
+
+    private class MovingTile
     {
         public GameObject tile;
         public int moveDirection;
@@ -16,10 +21,7 @@ public class MovingTile
             this.tile = tile;
             this.moveDirection = 1;
         }
-}
-
-public class MovingGround : MonoBehaviour
-{
+    }
 
     private List<MovingTile> movingFloorTiles = new List<MovingTile>();
     private MovingTile movingFloor;
