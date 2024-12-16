@@ -15,9 +15,10 @@ namespace Player.V2
         }
         public readonly float Cooldown = 2f;
         
+        private const float AIM_THRESHOLD = 50f;
+        private const float ATTACK_RANGE = 10f;
+        private const float MAX_TELEPORT_DISTANCE = 20f;
         private const float TELEPORT_COOLDOWN = 2f;
-        private const float AIM_THRESHOLD = 30f;
-        private const float MAX_TELEPORT_DISTANCE = 10f;
         
         public static event Action<BossRange> RangeChange;
         
@@ -70,16 +71,18 @@ namespace Player.V2
                     throw new InvalidOperationException("ERROR: Please do not adjust this value carelessly, " +
                                                         "it invokes an event\n"+
                                                         "please only call this setter if the new value is different");
-                #if DEBUG
-                Debug.Log($"Attack range: {value}");
-                #endif
-                
                 switch (value)
                 {
                     case true:
+                        #if DEBUG
+                        Debug.Log("in range!");
+                        #endif
                         RangeChange?.Invoke(BossRange.Inside);
                         break;
                     case false:
+                        #if DEBUG
+                        Debug.Log("outside range!");
+                        #endif
                         RangeChange?.Invoke(BossRange.Outside);
                         break;
                 }
@@ -104,6 +107,9 @@ namespace Player.V2
         private void FixedUpdate()
         {
             UpdateAttackRange();
+            // #if DEBUG
+            // Debug.Log(Vector3.Distance(transform.position, m_bossTransform.position));
+            // #endif
         }
         
         private void OnTeleport(InputAction.CallbackContext context)
@@ -158,9 +164,10 @@ namespace Player.V2
 
         private void UpdateAttackRange()
         {
-            float angleToBoss = Vector3.Angle(m_mainCamera.transform.forward, DirectionToBoss);
+            float angleToBoss = Vector3.Angle(m_movement.FullMoveDirection3d, m_bossTransform.position);
+            float bossDistance = Vector3.Distance(m_bossTransform.position, transform.position);
 
-            bool inAttackRange = (angleToBoss <= AIM_THRESHOLD);
+            bool inAttackRange = (angleToBoss <= AIM_THRESHOLD && bossDistance <= ATTACK_RANGE);
             if (InAttackRange == inAttackRange) 
                 return;
             InAttackRange = inAttackRange;
