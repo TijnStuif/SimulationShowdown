@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Boss.Attack;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,10 @@ namespace Player.V2
         public void TakeDamage(int damage)
         {
             CurrentHealth -= damage;
+            // I unfortunately could not get anything to work aside from this
+            // Maybe AudioManager should be a singleton
+            if (m_audioManager == null)
+                m_audioManager = FindObjectOfType<AudioManager>();
             m_audioManager.PlaySFX(m_audioManager.playerDamagedSFX);
             if (CurrentHealth <= 0)
             {

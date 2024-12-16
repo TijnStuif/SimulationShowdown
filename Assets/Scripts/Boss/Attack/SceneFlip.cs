@@ -38,12 +38,14 @@ namespace Boss.Attack
             if (m_audioManager == null)
                 throw new NullReferenceException("ERROR: AudioManager not found");
         }
+        
 
         // For some reason you can only set scripts as active/inactive
         // if this method is declared
         // even if it has an empty function body
         private void Start()
         {
+            m_audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
