@@ -10,7 +10,7 @@ namespace Boss.Attack
     {
         public Type Type => Type.Environment;
         /// <summary>
-        /// Both the amount of time before flipping (since indicator)
+        /// Amount of time before flipping (since indicator)
         /// </summary>
         [SerializeField] private float m_indicatorTime = 2f;
         /// <summary>
@@ -20,25 +20,28 @@ namespace Boss.Attack
 
         private AudioManager m_audioManager;
         private CinemachineFreeLook m_cinemachineFreeLook;
-        private ParticleSystem m_indicatorParticle;
+        private ParticleSystem m_playerParticleSystem;
 
         private void Awake()
         {
-            m_indicatorParticle = FindObjectOfType<Player.V2.Controller>()
+            m_playerParticleSystem = FindObjectOfType<Player.V2.Controller>()
                 .gameObject
                 .GetComponentInChildren<ParticleSystem>();
-            if (m_indicatorParticle == null)
+            if (m_playerParticleSystem == null)
                 throw new NullReferenceException("ERROR: indicator particle system not found");
             
             m_cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
             if (m_cinemachineFreeLook == null)
-                throw new NullReferenceException("ERROR: CM FreeLook camera not found");
+                throw new NullReferenceException("ERROR: CM FreeLook component not found");
             
             m_audioManager = FindObjectOfType<AudioManager>();
             if (m_audioManager == null)
                 throw new NullReferenceException("ERROR: AudioManager not found");
         }
 
+        // For some reason you can only set scripts as active/inactive
+        // if this method is declared
+        // even if it has an empty function body
         private void Start()
         {
         }
@@ -52,10 +55,10 @@ namespace Boss.Attack
         private IEnumerator ActivateSceneFlip()
         {
             // Change the color of the particle to yellow
-            var main = m_indicatorParticle.main;
+            var main = m_playerParticleSystem.main;
             main.startColor = new Color(1, 1, 0, 1);
             // Play the particle system
-            m_indicatorParticle.Play();
+            m_playerParticleSystem.Play();
             // Wait
             yield return new WaitForSeconds(m_indicatorTime);
             
@@ -67,7 +70,7 @@ namespace Boss.Attack
             
             // Play particles again
             main.startColor = new Color(1, 1, 0, 1);
-            m_indicatorParticle.Play();
+            m_playerParticleSystem.Play();
             // Wait
             yield return new WaitForSeconds(m_indicatorTime);
             
