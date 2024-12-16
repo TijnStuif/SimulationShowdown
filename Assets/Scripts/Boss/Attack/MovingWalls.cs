@@ -9,7 +9,6 @@ public class MovingWalls : MonoBehaviour
     private GameObject movingWall;
     private Vector3 moveDirectionWall = new Vector3(0, 0, 0.1f);
     private Vector3 moveToOriginalPosition = new Vector3(0, 0, 30);
-    [SerializeField] private Material indicatorMaterial;
     [SerializeField] private Material boxMaterial;
     private List<GameObject> walls = new List<GameObject>();
 
@@ -25,8 +24,6 @@ public class MovingWalls : MonoBehaviour
     {
         movingWall = walls[Random.Range(0, walls.Count)];
         movingWalls.Add(movingWall);
-
-        movingWall.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
         yield return new WaitForSeconds(1f);
 
