@@ -43,7 +43,6 @@ namespace Boss
             audioManager.PlaySFX(audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, audioManager.bossDamagedSFX.Length)]);
             if (currentHealth <= 0)
             {
-                Debug.Log("What?");
                 Death?.Invoke();
             }
         }
