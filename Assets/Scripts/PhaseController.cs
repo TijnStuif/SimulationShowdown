@@ -57,5 +57,8 @@ public class PhaseController : MonoBehaviour
                 gameControllerScript.maxAttackInterval = 5f;
                 break;
         }
+        #if DEBUG
+        Debug.Log($"Current phase {currentPhase}");
+        #endif
     }
 }

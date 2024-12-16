@@ -39,11 +39,17 @@ public class GameControllerScript : MonoBehaviour
     {
         if (attacks.Count == 0)
         {
+            #if DEBUG
+            Debug.Log("No attacks left to execute");
+            #endif
             return;
         }
 
         int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
+        #if DEBUG
+        Debug.Log($"executing {attacks[randomIndex].GetType()}");
+        #endif
     }
 
     private void SetRandomInterval()
@@ -54,5 +60,12 @@ public class GameControllerScript : MonoBehaviour
     public void UpdateAttacks()
     {
         attacks = phaseController.phases[phaseController.currentPhase];
+        #if DEBUG
+        Debug.Log($"Updating attacks (phase {phaseController.currentPhase})");
+        foreach (var attack in attacks)
+        {
+            Debug.Log($"{attack.GetType().Name}"); 
+        }
+        #endif
     }
 }

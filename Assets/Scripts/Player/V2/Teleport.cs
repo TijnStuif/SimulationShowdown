@@ -1,11 +1,19 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.XR;
 
 namespace Player.V2
 {
     public class Teleport : MonoBehaviour
     {
+        public enum MashState
+        {
+           F,
+           J
+        }
         public enum BossRange
         {
            Inside,
@@ -19,16 +27,22 @@ namespace Player.V2
         /// scalar for moving the player slightly away from the boss when attacking
         /// </summary>
         private const float BOSS_ATTACK_OFFSET = 2f;
+
+        private const float MASH_LENGTH = 3f;
         private const float MAX_TELEPORT_DISTANCE = 20f;
         private const float TELEPORT_COOLDOWN = 2f;
         
         public static event Action<BossRange> RangeChange;
+        public static event Action<float, MashState> OnBossAttacked;
         
         [SerializeField] private Movement m_movement;
+        [SerializeField] private float m_damage = 0.3f;
         
         private AudioManager m_audioManager;
         
         private Transform m_bossTransform;
+
+        private bool m_isInMashSequence;
         private Camera m_mainCamera;
 
         private float m_timeSinceLastTeleport;
@@ -59,17 +73,22 @@ namespace Player.V2
                 Navigation.Frozen = true;
                 GameControllerScript.Frozen = true;
                 UpdateDirectionToBoss();
+                // teleport in front of boss
+                transform.position += m_directionToBoss * distanceToBoss;
+                transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
+                
+                // force player to face boss
                 var angle = Mathf.Atan2(
                                 y: m_bossTransform.position.x - transform.position.x, 
                                 x: m_bossTransform.position.z - transform.position.z) 
                             * Mathf.Rad2Deg;
-                transform.position += m_directionToBoss * distanceToBoss;
-                transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
                 transform.rotation = Quaternion.Euler(0, angle, 0);
+
+                StartCoroutine(ButtonMashSequence());
+                // button mash period of time
+                // every input does a lil bit of damage
                 
-                // do this later
-                // m_movement.ThawController();
-                // Navigation.Frozen = false;
+                // unfreeze player and boss
                 return true;
             }
         }
@@ -122,6 +141,27 @@ namespace Player.V2
             // #if DEBUG
             // Debug.Log(Vector3.Distance(transform.position, m_bossTransform.position));
             // #endif
+        }
+
+        private IEnumerator ButtonMashSequence()
+        {
+            m_isInMashSequence = true;
+            yield return new WaitForSeconds(MASH_LENGTH);
+            m_movement.ThawController();
+            GameControllerScript.Frozen = false;
+            Navigation.Frozen = false;
+            m_isInMashSequence = false;
+        }
+        
+        public void OnMash(InputAction.CallbackContext context)
+        {
+            if (m_isInMashSequence == false) return;
+            InputBinding? binding = context.action.GetBindingForControl(context.control);
+            if (binding.ToString() == "Mash:<Keyboard>/f[Keyboard&Mouse]" )
+                OnBossAttacked?.Invoke(m_damage, MashState.F);
+            if (binding.ToString() == "Mash:<Keyboard>/j[Keyboard&Mouse]" )
+                OnBossAttacked?.Invoke(m_damage, MashState.J);
+            Debug.Log(binding.ToString());
         }
         
         private void OnTeleport(InputAction.CallbackContext context)
