@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,7 @@ namespace Boss
     {
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
+        private AudioManager audioManager;
         private bool damageLock;
         private bool playerWon;
         private int damageToTake = 25;
@@ -15,19 +17,22 @@ namespace Boss
         public event Action<int> OnDamaged;
         public UnityEvent ChangedPhase;
         private int invincibilityFrames = 0;
-        private int invincibilityFramesMax = 60;
+        private int invincibilityFramesMax = 300;
+        [SerializeField] GameObject forceField;
         
         void Start()
         {
+            audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
+            forceField.SetActive(false);
         }
 
         void Update()
         {
             if (invincibilityFrames < invincibilityFramesMax)
             {
-                invincibilityFrames++;
+                invincibilityFrames += 1;
             }
         }
     
@@ -38,6 +43,8 @@ namespace Boss
         {
             if (damageLock) return;
             currentHealth -= damage;
+            audioManager.PlaySFX(audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, audioManager.bossDamagedSFX.Length)]);
+            StartCoroutine(InvincibilityFrames());
             if (currentHealth <= 0)
             {
                 Death?.Invoke();
@@ -59,6 +66,18 @@ namespace Boss
             if (other.CompareTag("Player"))
             {
                 // UnlockDamage();
+            }
+        }
+
+        private IEnumerator InvincibilityFrames()
+        {
+            invincibilityFrames = 0;
+            while (invincibilityFrames < invincibilityFramesMax)
+            {
+                forceField.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+                forceField.SetActive(false);
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }

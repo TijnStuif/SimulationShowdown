@@ -25,6 +25,10 @@ public class MovingGround : MonoBehaviour
     private MovingTile movingFloor;
     private List<MovingTile> floorTilesList = new List<MovingTile>();
     private List<MovingTile> toRemove = new List<MovingTile>();
+    private const float SPEED = 0.02f; 
+    private const float UPPER_BOUNDARY = 2.45f;
+    private const float LOWER_BOUNDARY = 0f;
+    private const int MAX_AMOUNT_MOVING_FLOORS = 10;
 
 
     void Start()
@@ -38,8 +42,6 @@ public class MovingGround : MonoBehaviour
         {
             floorTilesList.Add(new MovingTile(tiles, 1));
         }
-
-  
 
         StartCoroutine(SelectingFloorTile());
 
@@ -58,7 +60,7 @@ public class MovingGround : MonoBehaviour
     private IEnumerator SelectingFloorTile()
     {
         
-        if(movingFloorTiles.Count <= 10)
+        if(movingFloorTiles.Count <= MAX_AMOUNT_MOVING_FLOORS)
         {
             movingFloor = floorTilesList[Random.Range(0, floorTilesList.Count)];
             movingFloorTiles.Add(movingFloor);
@@ -78,22 +80,22 @@ public class MovingGround : MonoBehaviour
             {
                 var currentTile = movingFloorTiles[i];
 
-                if(currentTile.tile.transform.position.y >= 2.45)
+                if(currentTile.tile.transform.position.y >= UPPER_BOUNDARY)
                 {
                     movingFloorTiles[i].moveDirection = -1;
                 } 
 
-                if(currentTile.tile.transform.position.y <= 0f)
+                if(currentTile.tile.transform.position.y <= LOWER_BOUNDARY)
                 {
                     movingFloorTiles[i].moveDirection = 1;
                 }
                 
-                if(currentTile.tile.transform.position.y < 0f)
+                if(currentTile.tile.transform.position.y < LOWER_BOUNDARY)
                 {
                     toRemove.Add(currentTile);
                 }
                 
-                currentTile.tile.transform.position += new Vector3(0, 0.02f * movingFloorTiles[i].moveDirection, 0);
+                currentTile.tile.transform.position += new Vector3(0, SPEED * movingFloorTiles[i].moveDirection, 0);
             }
         }
         

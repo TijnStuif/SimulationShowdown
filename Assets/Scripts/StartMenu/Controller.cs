@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace StartMenu
 {
-    public class Controller : MonoBehaviour
+    public class Controller : AbstractUiController
     {
         private VisualElement m_root;
         private Button m_startButton;
@@ -29,6 +29,7 @@ namespace StartMenu
 
         private void OnStartClicked(ClickEvent evt)
         {
+            PlayButtonSound();
             SceneManager.LoadScene("GameScene");
         }
     }

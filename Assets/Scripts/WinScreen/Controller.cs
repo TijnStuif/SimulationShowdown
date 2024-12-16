@@ -36,11 +36,13 @@ namespace WinScreen
 
         private void OnRestartClicked(ClickEvent evt)
         {
+            PlayButtonSound();
             StateChange?.Invoke(State.Restart);
         }
 
         private void OnTitleClicked(ClickEvent evt)
         {
+            PlayButtonSound();
             StateChange?.Invoke(State.ReturnToTitleScreen);
         }
     }

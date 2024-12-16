@@ -50,3 +50,5 @@ MonoBehaviour:
     type: 3}
   m_winScreenPrefab: {fileID: 4311019253932802618, guid: 1bf5728357abbdd88a0067d2c6ae0039,
     type: 3}
+  m_audioManagerPrefab: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+    type: 3}
