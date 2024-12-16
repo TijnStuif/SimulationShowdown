@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AreControlsInverted: 0
-  m_baseJumpHeight: 1.5
   m_speed: 10
   FullMoveDirection3d: {x: 0, y: 0, z: 0}
 --- !u!114 &4900860332971092804
@@ -660,7 +659,7 @@ PrefabInstance:
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
@@ -670,7 +669,7 @@ PrefabInstance:
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
@@ -685,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7101833444984899025, guid: 266c26c5b8f5f51468601907054a4de1,
         type: 3}
