@@ -23,7 +23,7 @@ namespace Player.V2
         /// <summary>
         /// Jump height if gravity is (0, -9.81f, 0)
         /// </summary>
-        [SerializeField] private float m_baseJumpHeight = 1.5f;
+        private const float m_baseJumpHeight = 1.5f;
         
         [SerializeField] private float m_speed = 10f;
         
