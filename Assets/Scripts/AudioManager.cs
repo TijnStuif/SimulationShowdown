@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Boss;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance;
     [Header("Music")]
     [SerializeField] AudioSource musicSource;
     public AudioClip mainMenuMusic;
@@ -23,6 +25,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip bossInputReverserSFX;
     public AudioClip bossSceneFlipSFX;
     public AudioClip bossLowGravitySFX;
+
+    private void Awake()
+    {
+        // Unity singleton
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(this);
+    }
 
     public void PlayMusic(AudioClip musicFile)
     {

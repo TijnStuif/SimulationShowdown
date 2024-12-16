@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class MainMenuSceneCheck : MonoBehaviour
 {
-    private AudioManager audioManager;
+    private static AudioManager AudioManager => AudioManager.Instance;
     private void OnEnable()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        audioManager.PlayMusic(audioManager.mainMenuMusic);
+        AudioManager.PlayMusic(AudioManager.mainMenuMusic);
     }
 }
