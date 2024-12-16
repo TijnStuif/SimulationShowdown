@@ -14,7 +14,7 @@ namespace Boss.Attack
         private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
         private Vector3 CloseRangeAttackPosition;
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
-        private static AudioManager AudioManager => AudioManager.Instance;
+        AudioManager audioManager;
 
         private void Start()
         {
@@ -25,13 +25,14 @@ namespace Boss.Attack
             CloseRangeAttackObject = GameObject.Find("CloseRangeAttack");
             // move them far away
             Reset();
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
         {
             CloseRangeAttackPosition = boss.transform.position;
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackPosition;
-            AudioManager.PlaySFX(AudioManager.bossCloseRangeSFX);
+            audioManager.PlaySFX(audioManager.bossCloseRangeSFX);
             Invoke(nameof(InitiateCloseRangeAttack), 1f);
             Invoke(nameof(Reset), 2f);
         }

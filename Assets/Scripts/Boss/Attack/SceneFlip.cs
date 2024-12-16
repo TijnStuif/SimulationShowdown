@@ -18,7 +18,7 @@ namespace Boss.Attack
         /// </summary>
         [SerializeField] private float m_flippedTime = 3f;
 
-        private static AudioManager AudioManager => AudioManager.Instance;
+        private AudioManager m_audioManager;
         private CinemachineFreeLook m_cinemachineFreeLook;
         private ParticleSystem m_playerParticleSystem;
 
@@ -33,8 +33,9 @@ namespace Boss.Attack
             m_cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
             if (m_cinemachineFreeLook == null)
                 throw new NullReferenceException("ERROR: CM FreeLook component not found");
-
-            if (AudioManager == null)
+            
+            m_audioManager = FindObjectOfType<AudioManager>();
+            if (m_audioManager == null)
                 throw new NullReferenceException("ERROR: AudioManager not found");
         }
 
@@ -47,8 +48,8 @@ namespace Boss.Attack
 
         public void Execute()
         {
-            AudioManager.PlaySFX(AudioManager.bossSceneFlipSFX);
-            StartCoroutine(ActivateSceneFlip());
+                m_audioManager.PlaySFX(m_audioManager.bossSceneFlipSFX);
+                StartCoroutine(ActivateSceneFlip());
         }
 
         private IEnumerator ActivateSceneFlip()

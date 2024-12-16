@@ -24,7 +24,7 @@ namespace Player.V2
         // [SerializeField] private Rigidbody player;
         [SerializeField] private Movement m_movement;
         
-        private static AudioManager AudioManager => AudioManager.Instance;
+        private AudioManager m_audioManager;
         
         private Transform m_bossTransform;
         private Camera m_mainCamera;
@@ -97,6 +97,7 @@ namespace Player.V2
             // is finding a unique component of the object I need
             // example: Boss.Controller class is only used for the Boss GameObject
             m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
+            m_audioManager = FindObjectOfType<AudioManager>();
             m_mainCamera = Camera.main;
         }
         
@@ -118,7 +119,7 @@ namespace Player.V2
 
                 if (BossAttacked)
                 {
-                    AudioManager.PlaySFX(AudioManager.playerTeleportedSFX);
+                    m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                     Teleported?.Invoke();
                     return;
                 }
@@ -151,7 +152,7 @@ namespace Player.V2
                     transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
                 }
                 m_movement.CharacterController.enabled = true;
-                AudioManager.PlaySFX(AudioManager.playerTeleportedSFX);
+                m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                 Teleported?.Invoke();
         }
 

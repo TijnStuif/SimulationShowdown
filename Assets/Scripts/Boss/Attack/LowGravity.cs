@@ -9,7 +9,7 @@ namespace Boss.Attack
         public Type Type => Type.Environment;
 
         [SerializeField] private float gravityAmount = -4f;
-        private static AudioManager AudioManager => AudioManager.Instance;
+        private AudioManager audioManager;
         private ParticleSystem indicatorParticle;
         
         public static event Action GravityChanged;
@@ -30,7 +30,7 @@ namespace Boss.Attack
                 // Stop the particle system
                 indicatorParticle.Stop();
             }
-
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void OnDisable()
@@ -43,7 +43,7 @@ namespace Boss.Attack
         {
             if (indicatorParticle != null)
             {
-                AudioManager.PlaySFX(AudioManager.bossLowGravitySFX);
+                audioManager.PlaySFX(audioManager.bossLowGravitySFX);
                 StartCoroutine(ActivateGravityChange());
             }
         }

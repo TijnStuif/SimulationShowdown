@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class BossFightSceneCheck : MonoBehaviour
 {
+    private AudioManager audioManager;
     private void OnEnable()
     {
-        AudioManager.Instance.PlayMusic(AudioManager.Instance.bossFightMusic);
+        audioManager = FindObjectOfType<AudioManager>();
+        audioManager.PlayMusic(audioManager.bossFightMusic);
     }
 }

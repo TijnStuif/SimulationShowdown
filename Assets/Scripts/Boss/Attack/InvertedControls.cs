@@ -12,7 +12,7 @@ namespace Boss.Attack
         [SerializeField] private GameObject inputReverserAttackIndicatorPrefab;
         private GameObject inputReverserAttackIndicator;
         private Vector3 startPosition = new Vector3(200, 0, -20);
-        private static AudioManager AudioManager => AudioManager.Instance;
+        AudioManager audioManager;
 
         void Start()
         {
@@ -21,6 +21,7 @@ namespace Boss.Attack
             playerMovement = FindObjectOfType<Movement>();
             player = playerMovement.gameObject;
             inputReverserAttackIndicator.transform.position = startPosition;
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
@@ -30,7 +31,7 @@ namespace Boss.Attack
                 inputReverserAttackIndicator.transform.position = player.transform.position;
                 Invoke(nameof(RemoveIndicator), 0.2f);
                 playerMovement.AreControlsInverted = !playerMovement.AreControlsInverted;
-                AudioManager.PlaySFX(AudioManager.bossInputReverserSFX);
+                audioManager.PlaySFX(audioManager.bossInputReverserSFX);
             }
         }
 

@@ -26,7 +26,7 @@ namespace Player.V2.Healthbar
         // please don't do that
         private void FixedUpdate()
         {
-            m_progressbar.value = m_controller.CurrentHealth;
+            m_progressbar.value = m_controller.currentHealth;
         }
     }
 }

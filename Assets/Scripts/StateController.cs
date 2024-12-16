@@ -46,7 +46,7 @@ public class StateController : MonoBehaviour
     // controller scripts
     private Controller m_playerController;
     private Boss.Controller m_bossController;
-    private static AudioManager AudioManager => AudioManager.Instance;
+    private AudioManager m_audioManager;
     
     // UI controller scripts
     private PauseMenu.Controller m_pauseMenuController;
@@ -105,6 +105,7 @@ public class StateController : MonoBehaviour
         m_pauseMenu = Instantiate(m_pauseMenuPrefab);
         m_gameOverScreen = Instantiate(m_gameOverScreenPrefab);
         m_winScreen = Instantiate(m_winScreenPrefab);
+        m_audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     private void InitControllerScripts()
@@ -245,7 +246,7 @@ public class StateController : MonoBehaviour
         Debug.Log("You win!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        AudioManager.PlayMusic(AudioManager.winScreenMusic);
+        m_audioManager.PlayMusic(m_audioManager.winScreenMusic);
         PauseLock = true;
         FreezeState();
         m_winScreenController.Show();
@@ -257,7 +258,7 @@ public class StateController : MonoBehaviour
         Debug.Log("You lose!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        AudioManager.PlayMusic(AudioManager.gameOverScreenMusic);
+        m_audioManager.PlayMusic(m_audioManager.gameOverScreenMusic);
         PauseLock = true;
         FreezeState();
         m_gameOverScreenController.Show();
@@ -268,14 +269,14 @@ public class StateController : MonoBehaviour
         Debug.Log("Returning to title screen");
         ThawState();
         SceneManager.LoadScene("StartMenu");
-        AudioManager.PlayMusic(AudioManager.mainMenuMusic);
+        m_audioManager.PlayMusic(m_audioManager.mainMenuMusic);
     }
 
     private void RestartGameplay()
     {
         Debug.Log("Restarting gameplay");
         SceneManager.LoadScene("GameScene");
-        AudioManager.PlayMusic(AudioManager.bossFightMusic);
+        m_audioManager.PlayMusic(m_audioManager.bossFightMusic);
     }
 
     /// <summary>
@@ -313,7 +314,7 @@ public class StateController : MonoBehaviour
     private void Pause()
     {
         if (PauseLock) return;
-        AudioManager.DampenMusic();
+        m_audioManager.DampenMusic();
         FreezeState();
         m_pauseMenuController.Show();
         Cursor.lockState = CursorLockMode.None;
@@ -328,7 +329,7 @@ public class StateController : MonoBehaviour
     private void Unpause()
     {
         if (PauseLock) return;
-        AudioManager.UndampenMusic();
+        m_audioManager.UndampenMusic();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         m_pauseMenuController.Hide();

@@ -8,7 +8,7 @@ namespace Boss
     {
         public int maxHealth = 100;
         [HideInInspector] public int currentHealth;
-        private static AudioManager AudioManager => AudioManager.Instance; 
+        private AudioManager audioManager;
         private bool damageLock;
         private bool playerWon;
         private int damageToTake = 25;
@@ -20,6 +20,7 @@ namespace Boss
         
         void Start()
         {
+            audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
         }
@@ -39,7 +40,7 @@ namespace Boss
         {
             if (damageLock) return;
             currentHealth -= damage;
-            AudioManager.PlaySFX(AudioManager.bossDamagedSFX[UnityEngine.Random.Range(0, AudioManager.bossDamagedSFX.Length)]);
+            audioManager.PlaySFX(audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, audioManager.bossDamagedSFX.Length)]);
             if (currentHealth <= 0)
             {
                 Debug.Log("What?");
