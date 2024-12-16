@@ -581,6 +581,11 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 8253771946892069114}
+    - target: {fileID: 8091340960579496416, guid: 04f7b48d4957344eb84f5273ce4c0aec,
+        type: 3}
+      propertyPath: m_YAxis.m_InvertInput
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
