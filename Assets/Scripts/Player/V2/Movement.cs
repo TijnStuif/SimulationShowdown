@@ -39,6 +39,8 @@ namespace Player.V2
         /// (automatically updated in OnGravityChanged)
         /// </summary>
         private float m_jumpHeight;
+
+        private bool m_frozen;
         
         /// <summary>
         /// Stores non-normalized movement vector used for moving the player on the ground.
@@ -196,6 +198,18 @@ namespace Player.V2
         // might be for a later sprint
         private void ApplyDrag() => throw new NotImplementedException();
 
+        public void FreezeController()
+        {
+            m_frozen = true;
+            m_characterController.enabled = false;
+        }
+
+        public void ThawController()
+        {
+            m_frozen = false;
+            m_characterController.enabled = true;
+        }
+
         private void ApplyGravity(float deltaTime)
         {
             if (IsGrounded && m_verticalMovement3d.y < 0)
@@ -237,6 +251,8 @@ namespace Player.V2
         /// </summary>
         private void RotateUsingMovedirection()
         {
+            if (m_frozen == true)
+                return;
             // goal:
             // use direction to get angle in degrees
             // create euler quaternion to set y rotation 

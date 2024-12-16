@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
+    public static bool Frozen { private get; set; }
     private Boss.Controller bossController;
     [SerializeField] private Transform[] wayPoints;
     private GameObject currentWayPoint;
@@ -24,7 +25,7 @@ public class Navigation : MonoBehaviour
 
     private void Update()
     {
-        if (currentWayPoint != null)
+        if (currentWayPoint != null && Frozen == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentWayPoint.transform.position, movementSpeed * Time.deltaTime);
             if (bossController.transform.position == currentWayPoint.transform.position)

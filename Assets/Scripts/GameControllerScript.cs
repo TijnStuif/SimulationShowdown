@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
 {
+    public static bool Frozen;
     private Boss.Controller bossController;
     private List<IAttack> attacks;
     private List<IAttack> allAttacks;
@@ -27,7 +28,7 @@ public class GameControllerScript : MonoBehaviour
     {
         timer -= Time.deltaTime; 
 
-        if (timer <= 0f)
+        if (timer <= 0f && Frozen == false)
         {
             ExecuteRandomAttack();
             SetRandomInterval(); 

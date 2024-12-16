@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// borrowed from commit 758f5aa
-// ( feature/player-attack-indicator )
 namespace Player.V2
 {
     public class Teleport : MonoBehaviour
@@ -17,12 +15,15 @@ namespace Player.V2
         
         private const float AIM_THRESHOLD = 50f;
         private const float ATTACK_RANGE = 10f;
+        /// <summary>
+        /// scalar for moving the player slightly away from the boss when attacking
+        /// </summary>
+        private const float BOSS_ATTACK_OFFSET = 2f;
         private const float MAX_TELEPORT_DISTANCE = 20f;
         private const float TELEPORT_COOLDOWN = 2f;
         
         public static event Action<BossRange> RangeChange;
         
-        // [SerializeField] private Rigidbody player;
         [SerializeField] private Movement m_movement;
         
         private AudioManager m_audioManager;
@@ -34,17 +35,16 @@ namespace Player.V2
         
         private bool m_inAttackRange;
         
-        private Vector3 DirectionToBoss => (m_bossTransform.position - transform.position).normalized;
+        private Vector3 m_directionToBoss;
 
         private Vector3 m_direction3d;
         
         public event Action Teleported;
         
-        private bool BossAttacked 
+        private bool BossAttacked
         {
             get
             {
-                
                 UpdateAttackRange();
                 if (!InAttackRange) return false;
                     
@@ -54,9 +54,22 @@ namespace Player.V2
                 
                 float distanceToBoss = Vector3.Distance(transform.position, m_bossTransform.position);
 
-                m_movement.CharacterController.enabled = false;
-                transform.position += DirectionToBoss * distanceToBoss;
-                m_movement.CharacterController.enabled = true;
+                m_movement.FreezeController();
+                // boss navigation
+                Navigation.Frozen = true;
+                GameControllerScript.Frozen = true;
+                UpdateDirectionToBoss();
+                var angle = Mathf.Atan2(
+                                y: m_bossTransform.position.x - transform.position.x, 
+                                x: m_bossTransform.position.z - transform.position.z) 
+                            * Mathf.Rad2Deg;
+                transform.position += m_directionToBoss * distanceToBoss;
+                transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
+                transform.rotation = Quaternion.Euler(0, angle, 0);
+                
+                // do this later
+                // m_movement.ThawController();
+                // Navigation.Frozen = false;
                 return true;
             }
         }
@@ -140,7 +153,7 @@ namespace Player.V2
         
         private void StandardTeleport()
         {
-                m_movement.CharacterController.enabled = false; 
+                m_movement.FreezeController();
                 // check if teleporting in wall
                 if (Physics.Raycast(
                         origin: m_movement.transform.position, 
@@ -156,7 +169,7 @@ namespace Player.V2
                     // teleport max distance
                     transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
                 }
-                m_movement.CharacterController.enabled = true;
+                m_movement.ThawController();
                 m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                 Teleported?.Invoke();
         }
@@ -172,6 +185,11 @@ namespace Player.V2
             if (InAttackRange == inAttackRange) 
                 return;
             InAttackRange = inAttackRange;
+        }
+
+        private void UpdateDirectionToBoss()
+        {
+            m_directionToBoss = (m_bossTransform.position - transform.position).normalized;
         }
 
     }
