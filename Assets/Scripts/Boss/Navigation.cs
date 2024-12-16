@@ -9,13 +9,13 @@ public class Navigation : MonoBehaviour
     private GameObject currentWayPoint;
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private GameObject wayPointsPrefab;
-    private Player.Controller playerController;
+    private Player.V2.Controller playerController;
     public event Action OnBossReachedWayPoint;
 
     private void Awake()
     {
         bossController = GetComponent<Boss.Controller>();
-        playerController = FindObjectOfType<Player.Controller>();
+        playerController = FindObjectOfType<Player.V2.Controller>();
         Instantiate(wayPointsPrefab, transform.position, Quaternion.identity);
         wayPoints = wayPointsPrefab.GetComponentsInChildren<Transform>();
         OnBossReachedWayPoint += BossReachedWayPoint;
