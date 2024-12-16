@@ -45,7 +45,6 @@ namespace Player.V2
             get
             {
                 
-                if (!(m_direction3d.z > 0)) return false;
                 UpdateAttackRange();
                 if (!InAttackRange) return false;
                     
@@ -91,7 +90,7 @@ namespace Player.V2
             }
         }
 
-        private bool CanTeleport => ((Time.time - m_timeSinceLastTeleport) >= TELEPORT_COOLDOWN);
+        private bool CooldownInactive => ((Time.time - m_timeSinceLastTeleport) >= TELEPORT_COOLDOWN);
         
 
         private void Awake()
@@ -104,7 +103,7 @@ namespace Player.V2
             m_mainCamera = Camera.main;
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
             UpdateAttackRange();
             // #if DEBUG
@@ -116,7 +115,7 @@ namespace Player.V2
         {
             if (context.performed)
             {
-                if (!CanTeleport) return;
+                if (!CooldownInactive) return;
                 
                 m_timeSinceLastTeleport = Time.time;
                 // transform.velocity = Vector3.zero;
@@ -164,10 +163,12 @@ namespace Player.V2
 
         private void UpdateAttackRange()
         {
-            float angleToBoss = Vector3.Angle(m_movement.FullMoveDirection3d, m_bossTransform.position);
+            // float angleToBoss = Vector3.Angle(m_movement.FullMoveDirection3d, m_bossTransform.position);
             float bossDistance = Vector3.Distance(m_bossTransform.position, transform.position);
 
-            bool inAttackRange = (angleToBoss <= AIM_THRESHOLD && bossDistance <= ATTACK_RANGE);
+            // bool inAttackRange = (angleToBoss <= AIM_THRESHOLD && bossDistance <= ATTACK_RANGE);
+            // in this case player direction doesn't matter and it's just attack range
+            bool inAttackRange = (bossDistance <= ATTACK_RANGE);
             if (InAttackRange == inAttackRange) 
                 return;
             InAttackRange = inAttackRange;

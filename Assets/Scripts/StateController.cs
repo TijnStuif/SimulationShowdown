@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Player.V2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Controller = PlayerAttackIndicator.Controller;
 using Cursor = UnityEngine.Cursor;
 
 /// <summary>
@@ -44,7 +45,7 @@ public class StateController : MonoBehaviour
     private GameObject m_winScreen;
     
     // controller scripts
-    private Controller m_playerController;
+    private Player.V2.Controller m_playerController;
     private Boss.Controller m_bossController;
     private AudioManager m_audioManager;
     
@@ -113,7 +114,7 @@ public class StateController : MonoBehaviour
         UiScripts = new List<AbstractUiController>(3);
 
         // assign script, if it's null, throw exception
-        if ((m_playerController = FindObjectOfType<Controller>()) == null)
+        if ((m_playerController = FindObjectOfType<Player.V2.Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_playerController));
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)

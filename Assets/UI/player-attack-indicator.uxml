@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/global.uss?fileID=7433441132597879392&amp;guid=da8a0606667ca8dd990d22d4627269b4&amp;type=3#global" />
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="indicator" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pixel%20Play/Sprites/WhiteBox.png?fileID=2800000&amp;guid=c511f893cf83d4b47910f09c80807805&amp;type=3#WhiteBox&quot;); width: 10%; height: 10%; position: absolute; -unity-background-scale-mode: scale-to-fit; left: -100px; top: -50px;" />
+    </ui:VisualElement>
+</ui:UXML>
