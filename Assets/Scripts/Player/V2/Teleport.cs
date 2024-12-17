@@ -173,6 +173,7 @@ namespace Player.V2
                 if (BossAttacked)
                 {
                     m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
+                    m_audioManager.PlaySFX(m_audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, m_audioManager.bossDamagedSFX.Length)]);
                     Teleported?.Invoke();
                     return;
                 }

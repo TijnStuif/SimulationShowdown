@@ -50,31 +50,11 @@ namespace Boss
         {
             if (damageLock) return;
             currentHealth -= damage;
-            if (audioManager == null)
-                audioManager = FindObjectOfType<AudioManager>();
-            audioManager.PlaySFX(audioManager.bossDamagedSFX[UnityEngine.Random.Range(0, audioManager.bossDamagedSFX.Length)]);
+            
             StartCoroutine(InvincibilityFrames());
             if (currentHealth <= 0)
             {
                 Death?.Invoke();
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            // if (other.CompareTag("Player") && invincibilityFrames >= 60)
-            // {
-            //     // OnDamaged?.Invoke();
-            //     ChangedPhase?.Invoke();
-            //     // LockDamage();
-            // }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                // UnlockDamage();
             }
         }
 
