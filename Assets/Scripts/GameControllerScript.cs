@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Boss.Attack;
+using Player.V2;
 using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
 {
-    public static bool Frozen;
+    private bool m_attacksAreFrozen;
     private Boss.Controller bossController;
     private List<IAttack> attacks;
     private List<IAttack> allAttacks;
@@ -20,6 +21,7 @@ public class GameControllerScript : MonoBehaviour
         bossController.ChangedPhase.AddListener(() => UpdateAttacks());
         allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         attacks = phaseController.phases[phaseController.currentPhase];
+        Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
 
         SetRandomInterval(); 
     }
@@ -28,7 +30,7 @@ public class GameControllerScript : MonoBehaviour
     {
         timer -= Time.deltaTime; 
 
-        if (timer <= 0f && Frozen == false)
+        if (timer <= 0f && m_attacksAreFrozen == false)
         {
             ExecuteRandomAttack();
             SetRandomInterval(); 
@@ -38,12 +40,7 @@ public class GameControllerScript : MonoBehaviour
     private void ExecuteRandomAttack()
     {
         if (attacks.Count == 0)
-        {
-            #if DEBUG
-            Debug.Log("No attacks left to execute");
-            #endif
             return;
-        }
 
         int randomIndex = Random.Range(0, attacks.Count);
         attacks[randomIndex].Execute();
@@ -52,6 +49,18 @@ public class GameControllerScript : MonoBehaviour
         #endif
     }
 
+    private void OnMashSequenceStateChange(Teleport.MashState state)
+    {
+        switch (state)
+        {
+            case Teleport.MashState.Start:
+                m_attacksAreFrozen = true;
+                break;
+            case Teleport.MashState.End:
+                m_attacksAreFrozen = false;
+                break;
+        }
+    }
     private void SetRandomInterval()
     {
         timer = Mathf.Round(Random.Range(minAttackInterval, maxAttackInterval));
@@ -60,12 +69,5 @@ public class GameControllerScript : MonoBehaviour
     public void UpdateAttacks()
     {
         attacks = phaseController.phases[phaseController.currentPhase];
-        #if DEBUG
-        Debug.Log($"Updating attacks (phase {phaseController.currentPhase})");
-        foreach (var attack in attacks)
-        {
-            Debug.Log($"{attack.GetType().Name}"); 
-        }
-        #endif
     }
 }

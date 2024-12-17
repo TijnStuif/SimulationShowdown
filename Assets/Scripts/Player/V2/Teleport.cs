@@ -11,8 +11,8 @@ namespace Player.V2
     {
         public enum MashState
         {
-           F,
-           J
+           Start,
+           End,
         }
         public enum BossRange
         {
@@ -34,7 +34,8 @@ namespace Player.V2
         private const float TELEPORT_COOLDOWN = 2f;
         
         public static event Action<BossRange> RangeChange;
-        public static event Action<float, MashState> OnBossAttacked;
+        public static event Action<MashState> MashSequenceStateChange;
+        public static event Action<float> OnBossAttacked;
         
         [SerializeField] private Movement m_movement;
         [SerializeField] private float m_damage = 0.3f;
@@ -67,24 +68,6 @@ namespace Player.V2
                 Debug.Log("Attacking Boss!");
                 #endif
                 
-                float distanceToBoss = Vector3.Distance(transform.position, m_bossTransform.position);
-
-                m_movement.FreezeController();
-                // boss navigation
-                Navigation.Frozen = true;
-                GameControllerScript.Frozen = true;
-                UpdateDirectionToBoss();
-                // teleport in front of boss
-                transform.position += m_directionToBoss * distanceToBoss;
-                transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
-                
-                // force player to face boss
-                var angle = Mathf.Atan2(
-                                y: m_bossTransform.position.x - transform.position.x, 
-                                x: m_bossTransform.position.z - transform.position.z) 
-                            * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0, angle, 0);
-
                 StartCoroutine(ButtonMashSequence());
                 // button mash period of time
                 // every input does a lil bit of damage
@@ -147,27 +130,33 @@ namespace Player.V2
         private IEnumerator ButtonMashSequence()
         {
             // fine
+            MashSequenceStateChange?.Invoke(MashState.Start);
             m_isInMashSequence = true;
+            
+            float distanceToBoss = Vector3.Distance(transform.position, m_bossTransform.position);
+            UpdateDirectionToBoss();
+            // teleport in front of boss
+            transform.position += m_directionToBoss * distanceToBoss;
+            transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
+                
+            // force player to face boss
+            var angle = Mathf.Atan2(
+                            y: m_bossTransform.position.x - transform.position.x, 
+                            x: m_bossTransform.position.z - transform.position.z) 
+                            * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+            
             yield return new WaitForSeconds(MASH_LENGTH);
-            // should be handled by event
-            m_movement.ThawController();
-            // should be handled by event
-            GameControllerScript.Frozen = false;
-            // should be handled by event
-            Navigation.Frozen = false;
-            // ok
+            
+            MashSequenceStateChange?.Invoke(MashState.End);
             m_isInMashSequence = false;
+            
         }
         
         public void OnMash(InputAction.CallbackContext context)
         {
             if (m_isInMashSequence == false) return;
-            InputBinding? binding = context.action.GetBindingForControl(context.control);
-            if (binding.ToString() == "Mash:<Keyboard>/f[Keyboard&Mouse]" )
-                OnBossAttacked?.Invoke(m_damage, MashState.F);
-            if (binding.ToString() == "Mash:<Keyboard>/j[Keyboard&Mouse]" )
-                OnBossAttacked?.Invoke(m_damage, MashState.J);
-            Debug.Log(binding.ToString());
+                OnBossAttacked?.Invoke(m_damage);
         }
         
         private void OnTeleport(InputAction.CallbackContext context)

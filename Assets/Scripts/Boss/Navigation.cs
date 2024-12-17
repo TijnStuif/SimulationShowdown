@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using Player.V2;
 using UnityEngine;
 
 public class Navigation : MonoBehaviour
 {
-    public static bool Frozen { private get; set; }
     private Boss.Controller bossController;
+    private bool frozen;
     [SerializeField] private Transform[] wayPoints;
     private GameObject currentWayPoint;
     [SerializeField] private float movementSpeed = 5f;
@@ -21,11 +22,13 @@ public class Navigation : MonoBehaviour
         wayPoints = wayPointsPrefab.GetComponentsInChildren<Transform>();
         OnBossReachedWayPoint += BossReachedWayPoint;
         StartCoroutine(LoopWayPointMovement());
+
+        Player.V2.Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
     }
 
     private void Update()
     {
-        if (currentWayPoint != null && Frozen == false)
+        if (currentWayPoint != null && frozen == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentWayPoint.transform.position, movementSpeed * Time.deltaTime);
             if (bossController.transform.position == currentWayPoint.transform.position)
@@ -61,6 +64,18 @@ public class Navigation : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
+    private void OnMashSequenceStateChange(Teleport.MashState state)
+    {
+        switch (state)
+        {
+            case Teleport.MashState.Start:
+                frozen = true;
+                break;
+            case Teleport.MashState.End:
+                frozen = false;
+                break;
+        }
+    }
     private void BossReachedWayPoint()
     {
         currentWayPoint = null;

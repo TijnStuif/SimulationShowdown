@@ -120,6 +120,8 @@ namespace Player.V2
                 throw new InvalidOperationException("ERROR: couldn't find main camera");
             else
                 m_mainCameraTarget = cam.transform;
+            
+            Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
         }
         
         private void OnEnable()
@@ -167,6 +169,19 @@ namespace Player.V2
             m_verticalMovement3d -= m_gravitationalDirection * Mathf.Sqrt(2.0f * m_gravitationalAccelerationVariable * m_jumpHeight);
             // since it's a Vector and gravity is variable I multiplied the speed scalar with
             // the direction of the gravity (which you can get by normalizing the gravity vector)
+        }
+
+        private void OnMashSequenceStateChange(Teleport.MashState state)
+        {
+            switch (state)
+            {
+                case Teleport.MashState.Start:
+                    FreezeController();
+                    break;
+                case Teleport.MashState.End:
+                    ThawController();
+                    break;
+            }
         }
 
         /// <summary>

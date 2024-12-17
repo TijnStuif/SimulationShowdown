@@ -30,7 +30,7 @@ namespace Boss
             OnDamaged += (float i) => ChangedPhase.Invoke();
         }
 
-        private void OnTeleportOnBossAttacked(float damage, Teleport.MashState s)
+        private void OnTeleportOnBossAttacked(float damage)
         {
             OnDamaged?.Invoke(damage);
         }
