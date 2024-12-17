@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/global.uss?fileID=7433441132597879392&amp;guid=da8a0606667ca8dd990d22d4627269b4&amp;type=3#global" />
+    <ui:VisualElement name="root" style="flex-grow: 1; justify-content: center; align-items: center; align-self: center; flex-wrap: nowrap; flex-direction: row; width: 100%; height: 100%;">
+        <ui:VisualElement name="F" class="game-key" style="top: 15%; right: 2.5%; align-items: center; justify-content: center; align-self: center;">
+            <ui:Label tabindex="-1" text="F" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Letter" style="font-size: 50px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="J" class="game-key" style="align-items: center; justify-content: center; align-self: center; top: 15%; left: 2.5%;">
+            <ui:Label tabindex="-1" text="J" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Letter" style="font-size: 50px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -20,6 +20,7 @@ namespace Player.V2
            Outside
         }
         public readonly float Cooldown = 2f;
+        public bool IsInMashSequence => m_isInMashSequence;
         
         private const float AIM_THRESHOLD = 50f;
         private const float ATTACK_RANGE = 10f;
@@ -145,11 +146,16 @@ namespace Player.V2
 
         private IEnumerator ButtonMashSequence()
         {
+            // fine
             m_isInMashSequence = true;
             yield return new WaitForSeconds(MASH_LENGTH);
+            // should be handled by event
             m_movement.ThawController();
+            // should be handled by event
             GameControllerScript.Frozen = false;
+            // should be handled by event
             Navigation.Frozen = false;
+            // ok
             m_isInMashSequence = false;
         }
         
