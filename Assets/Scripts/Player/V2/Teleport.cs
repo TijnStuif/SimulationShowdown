@@ -1,50 +1,66 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.XR;
 
-// borrowed from commit 758f5aa
-// ( feature/player-attack-indicator )
 namespace Player.V2
 {
     public class Teleport : MonoBehaviour
     {
+        public enum MashState
+        {
+           Start,
+           End,
+        }
         public enum BossRange
         {
            Inside,
            Outside
         }
         public readonly float Cooldown = 2f;
+        public bool IsInMashSequence => m_isInMashSequence;
         
         private const float AIM_THRESHOLD = 50f;
         private const float ATTACK_RANGE = 10f;
+        /// <summary>
+        /// scalar for moving the player slightly away from the boss when attacking
+        /// </summary>
+        private const float BOSS_ATTACK_OFFSET = 2f;
+
+        private const float MASH_LENGTH = 3f;
         private const float MAX_TELEPORT_DISTANCE = 20f;
         private const float TELEPORT_COOLDOWN = 2f;
         
         public static event Action<BossRange> RangeChange;
+        public static event Action<MashState> MashSequenceStateChange;
+        public static event Action<float> OnBossAttacked;
         
-        // [SerializeField] private Rigidbody player;
         [SerializeField] private Movement m_movement;
+        [SerializeField] private float m_damage = 0.3f;
         
         private AudioManager m_audioManager;
         
         private Transform m_bossTransform;
+
+        private bool m_isInMashSequence;
         private Camera m_mainCamera;
 
         private float m_timeSinceLastTeleport;
         
         private bool m_inAttackRange;
         
-        private Vector3 DirectionToBoss => (m_bossTransform.position - transform.position).normalized;
+        private Vector3 m_directionToBoss;
 
         private Vector3 m_direction3d;
         
         public event Action Teleported;
         
-        private bool BossAttacked 
+        private bool BossAttacked
         {
             get
             {
-                
                 UpdateAttackRange();
                 if (!InAttackRange) return false;
                     
@@ -52,11 +68,11 @@ namespace Player.V2
                 Debug.Log("Attacking Boss!");
                 #endif
                 
-                float distanceToBoss = Vector3.Distance(transform.position, m_bossTransform.position);
-
-                m_movement.CharacterController.enabled = false;
-                transform.position += DirectionToBoss * distanceToBoss;
-                m_movement.CharacterController.enabled = true;
+                StartCoroutine(ButtonMashSequence());
+                // button mash period of time
+                // every input does a lil bit of damage
+                
+                // unfreeze player and boss
                 return true;
             }
         }
@@ -110,6 +126,38 @@ namespace Player.V2
             // Debug.Log(Vector3.Distance(transform.position, m_bossTransform.position));
             // #endif
         }
+
+        private IEnumerator ButtonMashSequence()
+        {
+            // fine
+            MashSequenceStateChange?.Invoke(MashState.Start);
+            m_isInMashSequence = true;
+            
+            float distanceToBoss = Vector3.Distance(transform.position, m_bossTransform.position);
+            UpdateDirectionToBoss();
+            // teleport in front of boss
+            transform.position += m_directionToBoss * distanceToBoss;
+            transform.position -= new Vector3(m_directionToBoss.x, 0, m_directionToBoss.z) * BOSS_ATTACK_OFFSET;
+                
+            // force player to face boss
+            var angle = Mathf.Atan2(
+                            y: m_bossTransform.position.x - transform.position.x, 
+                            x: m_bossTransform.position.z - transform.position.z) 
+                            * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+            
+            yield return new WaitForSeconds(MASH_LENGTH);
+            
+            MashSequenceStateChange?.Invoke(MashState.End);
+            m_isInMashSequence = false;
+            
+        }
+        
+        public void OnMash(InputAction.CallbackContext context)
+        {
+            if (m_isInMashSequence == false) return;
+                OnBossAttacked?.Invoke(m_damage);
+        }
         
         private void OnTeleport(InputAction.CallbackContext context)
         {
@@ -140,7 +188,7 @@ namespace Player.V2
         
         private void StandardTeleport()
         {
-                m_movement.CharacterController.enabled = false; 
+                m_movement.FreezeController();
                 // check if teleporting in wall
                 if (Physics.Raycast(
                         origin: m_movement.transform.position, 
@@ -156,7 +204,7 @@ namespace Player.V2
                     // teleport max distance
                     transform.position += m_movement.FullMoveDirection3d * MAX_TELEPORT_DISTANCE;
                 }
-                m_movement.CharacterController.enabled = true;
+                m_movement.ThawController();
                 m_audioManager.PlaySFX(m_audioManager.playerTeleportedSFX);
                 Teleported?.Invoke();
         }
@@ -172,6 +220,11 @@ namespace Player.V2
             if (InAttackRange == inAttackRange) 
                 return;
             InAttackRange = inAttackRange;
+        }
+
+        private void UpdateDirectionToBoss()
+        {
+            m_directionToBoss = (m_bossTransform.position - transform.position).normalized;
         }
 
     }

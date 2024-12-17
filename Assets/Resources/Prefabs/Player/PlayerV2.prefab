@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1712934530187756123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8577626329734675645}
+  - component: {fileID: 7216645940813016762}
+  - component: {fileID: 2554211006831356718}
+  m_Layer: 0
+  m_Name: MashPrompt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8577626329734675645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712934530187756123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9213232745244226069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7216645940813016762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712934530187756123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 31547e2dcf163ba4aa73be62a0049c66, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: a58689e607819028c90908fc0dded42c,
+    type: 3}
+  m_SortingOrder: 0
+--- !u!114 &2554211006831356718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712934530187756123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4346f36cbf7aa2f89abac3e907aa6a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3860457982052518691
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +230,7 @@ Transform:
   - {fileID: 5327299008393260982}
   - {fileID: 3247484792065039392}
   - {fileID: 3941100968172007344}
+  - {fileID: 8577626329734675645}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7416737978971873147
@@ -335,6 +398,34 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 497e07b7-efd7-4570-94f5-ed0814741aac
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4900860332971092804}
+        m_TargetAssemblyTypeName: Player.V2.Teleport, Assembly-CSharp
+        m_MethodName: OnMash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2554211006831356718}
+        m_TargetAssemblyTypeName: Player.V2.MashPrompt.Controller, Assembly-CSharp
+        m_MethodName: OnMash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ff4e5b20-fb80-47c3-99e6-31c65b533e36
+    m_ActionName: Player/Mash[/Keyboard/f,/Keyboard/j]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -408,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movement: {fileID: 1163710539973594832}
+  m_damage: 0.3
 --- !u!114 &3080642756405901970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,11 +787,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Robert
-      objectReference: {fileID: 0}
-    - target: {fileID: 7621523544628797291, guid: 266c26c5b8f5f51468601907054a4de1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

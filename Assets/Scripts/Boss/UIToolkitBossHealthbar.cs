@@ -59,9 +59,8 @@ public class UIToolkitBossHealthbar : MonoBehaviour
 
     private void Update()
     {
-        
         //Access the health of the player from the player script
-        int health = GameObject.Find("Boss").GetComponent<Boss.Controller>().currentHealth;
+        float health = FindObjectOfType<Boss.Controller>().currentHealth;
 
         //adjust the value of the healthbar
         progressbar.value = health;
