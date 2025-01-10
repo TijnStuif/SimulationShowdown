@@ -18,7 +18,7 @@ public class GameControllerScript : MonoBehaviour
     void Start()
     {
         bossController = FindObjectOfType<Boss.Controller>();
-        bossController.ChangedPhase.AddListener(() => UpdateAttacks());
+        bossController.CheckForPhaseChanged.AddListener(() => UpdateAttacks());
         allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         attacks = phaseController.phases[phaseController.currentPhase];
         Teleport.MashSequenceStateChange += OnMashSequenceStateChange;

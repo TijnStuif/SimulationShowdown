@@ -10,6 +10,7 @@ public class PhaseController : MonoBehaviour
     public int currentPhase;
     private GameControllerScript gameControllerScript;
     private int phaseHealthThreshold;
+    public UnityEvent phaseChanged;
     private void Awake()
     {
         bossController = FindObjectOfType<Boss.Controller>();
@@ -20,7 +21,8 @@ public class PhaseController : MonoBehaviour
             {3, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
             {4, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
         };
-        bossController.ChangedPhase.AddListener(() => UpdatePhase());
+        bossController.CheckForPhaseChanged.AddListener(() => UpdatePhase());
+        phaseChanged.AddListener(() => gameControllerScript.UpdateAttacks());
         currentPhase = 1;
     }
     private void Start()
@@ -30,6 +32,7 @@ public class PhaseController : MonoBehaviour
     private void UpdatePhase()
     {
         if (currentPhase >= 4) return;
+        float checkCurrentPhase = currentPhase;
         if (bossController.currentHealth <= phaseHealthThreshold * 3 && bossController.currentHealth > phaseHealthThreshold * 2)
         {
             currentPhase = 2;
@@ -57,8 +60,15 @@ public class PhaseController : MonoBehaviour
                 gameControllerScript.maxAttackInterval = 5f;
                 break;
         }
-        #if DEBUG
-        Debug.Log($"Current phase {currentPhase}");
-        #endif
+        if (checkCurrentPhase != currentPhase)
+        {
+            PhaseChange();
+        }
+    }
+
+    void PhaseChange()
+    {
+        phaseChanged.Invoke();
+        Debug.Log($"Phase changed to {currentPhase}");
     }
 }

@@ -15,7 +15,7 @@ namespace Boss
         private bool playerWon;
         public event Action Death;
         public event Action<float> OnDamaged;
-        public UnityEvent ChangedPhase;
+        public UnityEvent CheckForPhaseChanged;
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 300;
         [SerializeField] GameObject forceField;
@@ -27,7 +27,7 @@ namespace Boss
             currentHealth = maxHealth;
             OnDamaged += TakeDamage;
             forceField.SetActive(false);
-            OnDamaged += (float i) => ChangedPhase.Invoke();
+            OnDamaged += (float i) => CheckForPhaseChanged.Invoke();
         }
 
         private void OnTeleportOnBossAttacked(float damage)
