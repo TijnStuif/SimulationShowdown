@@ -109,13 +109,13 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FlickerStrength: 0.1
-    - _GlitchStrength: 1
+    - _FlickerStrength: 0.5
+    - _GlitchStrength: 10
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseAmount: 12.5
+    - _NoiseAmount: 100
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
