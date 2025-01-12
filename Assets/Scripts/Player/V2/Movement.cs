@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace Player.V2
 {
     /// <summary>
@@ -16,6 +17,7 @@ namespace Player.V2
     public class Movement : MonoBehaviour
     {
         public bool AreControlsInverted;
+        private ParticleSystem m_particleSystem;
         
         private const float GRAVITATIONAL_ACCELERATION_CONSTANT = 9.81f;
         private const float TURN_SMOOTH_TIME = 0.05f;
@@ -123,7 +125,17 @@ namespace Player.V2
                 throw new InvalidOperationException("ERROR: couldn't find main camera");
             else
                 m_mainCameraTarget = cam.transform;
-            
+
+            var particleSystemObject = GameObject.Find("msVFX_Stylized Smoke 4");
+            if (particleSystemObject != null)
+            {
+                m_particleSystem = particleSystemObject.GetComponent<ParticleSystem>();
+            }
+            else
+            {
+                Debug.LogWarning("ParticleSystem 'msVFX_Stylized Smoke 4' not found on the player.");
+            }
+
             Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
         }
         
@@ -302,7 +314,14 @@ namespace Player.V2
         {
             bool isWalking = m_direction2d.magnitude > 0;
             m_animator.SetBool("isIdle", !isWalking);
-            m_animator.SetBool("isWalking", isWalking);      
+            m_animator.SetBool("isWalking", isWalking); 
+
+                 
+            if (m_particleSystem != null)
+            {
+                var emission = m_particleSystem.emission;
+                emission.enabled = isWalking;
+            }
         }
     }
 }
