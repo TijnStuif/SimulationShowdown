@@ -30,7 +30,7 @@ namespace Player.V2
         {
             m_audioManager = FindObjectOfType<AudioManager>();
             DamageAttack.PlayerDamaged += TakeDamage;
-            currentHealth = maxHealth;            
+            CurrentHealth = MaxHealth;            
 
             var vfxInstance = transform.Find("vfx_Electricity_01");
             if (vfxInstance != null)
