@@ -3,6 +3,8 @@ using System.Collections;
 using Boss.Attack;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 // copypasted from V1
@@ -16,6 +18,8 @@ namespace Player.V2
         
     public class Controller : MonoBehaviour
     {
+        private Vignette vignette;
+        private Volume volume;
         
         public int MaxHealth = 100;
         [HideInInspector] public int CurrentHealth;
@@ -28,6 +32,8 @@ namespace Player.V2
             m_audioManager = FindObjectOfType<AudioManager>();
             DamageAttack.PlayerDamaged += TakeDamage;
             CurrentHealth = MaxHealth;
+            volume = FindObjectOfType<Volume>();
+            volume.profile.TryGet(out vignette);
         }
 
         public void TakeDamage(int damage)
@@ -42,6 +48,8 @@ namespace Player.V2
             {
                 StateChange?.Invoke(State.Loss);
             }
+
+            vignette.intensity.value += damage * 0.005f;
         }
 
         public void OnPause(InputAction.CallbackContext c)

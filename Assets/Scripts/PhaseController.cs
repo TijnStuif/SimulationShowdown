@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using Boss.Attack;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 public class PhaseController : MonoBehaviour
 {
+    private ColorAdjustments colorAdjustments;
+    private ChromaticAberration chromaticAberration;
+    private DepthOfField depthOfField;
+    private Volume volume;
     private Boss.Controller bossController;
     public Dictionary<int, List<IAttack>> phases;
     public int currentPhase;
@@ -12,6 +19,11 @@ public class PhaseController : MonoBehaviour
     private int phaseHealthThreshold;
     private void Awake()
     {
+        volume = FindObjectOfType<Volume>();
+        volume.profile.TryGet(out colorAdjustments);
+        volume.profile.TryGet(out chromaticAberration);
+        volume.profile.TryGet(out depthOfField);
+
         bossController = FindObjectOfType<Boss.Controller>();
         gameControllerScript = FindObjectOfType<GameControllerScript>();
         phases = new Dictionary<int, List<IAttack>>{
@@ -29,18 +41,26 @@ public class PhaseController : MonoBehaviour
     }
     private void UpdatePhase()
     {
+        
         if (currentPhase >= 4) return;
         if (bossController.currentHealth <= phaseHealthThreshold * 3 && bossController.currentHealth > phaseHealthThreshold * 2)
         {
             currentPhase = 2;
+            chromaticAberration.intensity.value = 0.33f;
+            depthOfField.focusDistance.value = 7f;
         }
         else if (bossController.currentHealth <= phaseHealthThreshold * 2 && bossController.currentHealth > phaseHealthThreshold)
         {
             currentPhase = 3;
+            chromaticAberration.intensity.value = 0.66f;
+            depthOfField.focusDistance.value = 6f;
+            colorAdjustments.active = true;
         }
         else if (bossController.currentHealth <= phaseHealthThreshold)
         {
             currentPhase = 4;
+            chromaticAberration.intensity.value = 1f;
+            depthOfField.focusDistance.value = 5f;
         }
         switch (currentPhase)
         {
