@@ -5,11 +5,8 @@ namespace Boss.Attack
 {
     public class CloseRange : DamageAttack, IAttack
     { 
-        Player.Controller player;
+        Player.V2.Controller player;
         public Type Type => Type.Direct;
-        
-        [SerializeField] private GameObject CloseRangeAttackIndicatorPrefab;
-        [SerializeField] private GameObject CloseRangeAttackObjectPrefab;
         
         private GameObject CloseRangeAttackIndicator;
         private GameObject CloseRangeAttackObject;
@@ -17,29 +14,32 @@ namespace Boss.Attack
         private Vector3 CloseRangeAttackIndicatorPosition = new Vector3(200, 0, 20);
         private Vector3 CloseRangeAttackPosition;
         private Vector3 CloseRangeAttackOriginalPosition = new Vector3(250, 0, 20);
+        AudioManager audioManager;
 
-        private void Awake()
+        private void Start()
         {
             boss = FindObjectOfType<Boss.Controller>().gameObject;
             CloseRangeAttackPosition = boss.transform.position;
             // instantiate attack objects
-            CloseRangeAttackIndicator = Instantiate(CloseRangeAttackIndicatorPrefab);
-            CloseRangeAttackObject = Instantiate(CloseRangeAttackObjectPrefab);
+            CloseRangeAttackIndicator = GameObject.Find("CloseRangeAttackIndicator");
+            CloseRangeAttackObject = GameObject.Find("CloseRangeAttack");
             // move them far away
             Reset();
+            audioManager = FindObjectOfType<AudioManager>();
         }
 
         public void Execute()
         {
             CloseRangeAttackPosition = boss.transform.position;
             CloseRangeAttackIndicator.transform.position = CloseRangeAttackPosition;
+            audioManager.PlaySFX(audioManager.bossCloseRangeSFX);
             Invoke(nameof(InitiateCloseRangeAttack), 1f);
             Invoke(nameof(Reset), 2f);
         }
         
         public void InitiateCloseRangeAttack()
         {
-            CloseRangeAttackObject.transform.position = CloseRangeAttackPosition; 
+            CloseRangeAttackObject.transform.position = CloseRangeAttackPosition;
         }
 
         private void Reset()

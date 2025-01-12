@@ -65,7 +65,7 @@ public class FallingPlatforms : MonoBehaviour, IAttack
         //Loops through each selected tile in the list
         foreach (var targetedTile in targetedTiles)
         {
-            //changes the color to red to indicate the tile is going to be removed
+            //Changes the color to red to indicate the tile is going to be removed
             targetedTile.GetComponent<MeshRenderer>().material = indicatorMaterial;
 
             //Lets the routine pause for a second to create some sort of animation of different tiles being selected
