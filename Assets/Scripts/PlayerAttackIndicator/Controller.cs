@@ -5,19 +5,14 @@ namespace PlayerAttackIndicator
 {
     public class Controller : AbstractUiController
     {
-        private Transform m_bossTransform;
+        private Vector3 m_bossScreenToWorld;
+        [SerializeField] private Transform m_bossTransform;
         private Camera m_camera;
-        private VisualElement m_indicator;
-        private bool m_shouldUpdate;
-        private Vector3 m_screenPosition;
-        
-        private Vector3 BossPositionToScreenPoint => m_camera.ScreenToWorldPoint(m_bossTransform.position);
+
         private void Awake()
         {
             m_camera = Camera.main;
             Root = GetComponent<UIDocument>().rootVisualElement;
-            m_indicator = Root.Q<VisualElement>("indicator");
-            m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
         }
 
         private void Start() {}
@@ -37,22 +32,21 @@ namespace PlayerAttackIndicator
             if (range == Player.V2.Teleport.BossRange.Inside)
             {
                 Show();
-                m_shouldUpdate = true;
                 return;
             }
             Hide();
-            m_shouldUpdate = false;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            if (m_shouldUpdate == false)
-                return;
-            m_screenPosition = 
-            m_camera.WorldToScreenPoint(m_bossTransform.position);
-            m_screenPosition.y -= Screen.height / 2f;
-            m_screenPosition.z = 0;
-            Root.transform.position = m_screenPosition;
+            var bossScreenPoint = m_camera.WorldToScreenPoint(m_bossTransform.position);
+            m_bossScreenToWorld.Set(
+                newX: bossScreenPoint.x,
+                // un-flip vertical screen position
+                newY: Screen.height - bossScreenPoint.y,
+                newZ: 0);
+            // update UI element position
+            Root.transform.position = m_bossScreenToWorld;
         }
     }
 }
