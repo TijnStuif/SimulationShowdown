@@ -6,14 +6,13 @@ namespace PlayerAttackIndicator
     public class Controller : AbstractUiController
     {
         private Vector3 m_bossScreenToWorld;
-        private Transform m_bossTransform;
+        [SerializeField] private Transform m_bossTransform;
         private Camera m_camera;
 
         private void Awake()
         {
             m_camera = Camera.main;
             Root = GetComponent<UIDocument>().rootVisualElement;
-            m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
         }
 
         private void Start() {}
