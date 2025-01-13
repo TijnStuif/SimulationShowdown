@@ -41,6 +41,10 @@ namespace Boss
             {
                 invincibilityFrames += 1;
             }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                OnTeleportOnBossAttacked(20);
+            }
         }
     
         public void UnlockDamage() => damageLock = false;
