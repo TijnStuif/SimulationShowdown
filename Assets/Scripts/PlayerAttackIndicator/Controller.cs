@@ -8,7 +8,6 @@ namespace PlayerAttackIndicator
         private Vector3 m_bossScreenToWorld;
         private Transform m_bossTransform;
         private Camera m_camera;
-        private bool m_shouldUpdate;
 
         private void Awake()
         {
@@ -47,7 +46,7 @@ namespace PlayerAttackIndicator
                 // un-flip vertical screen position
                 newY: Screen.height - bossScreenPoint.y,
                 newZ: 0);
-            // update UI element to boss screen space
+            // update UI element position
             Root.transform.position = m_bossScreenToWorld;
         }
     }
