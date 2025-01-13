@@ -23,7 +23,16 @@ public class Navigation : MonoBehaviour
         OnBossReachedWayPoint += BossReachedWayPoint;
         StartCoroutine(LoopWayPointMovement());
 
+    }
+
+    private void OnEnable()
+    {
         Player.V2.Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
+    }
+
+    private void OnDisable()
+    {
+        Player.V2.Teleport.MashSequenceStateChange -= OnMashSequenceStateChange;
     }
 
     private void Update()
