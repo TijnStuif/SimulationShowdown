@@ -22,12 +22,21 @@ namespace Boss
         
         void Start()
         {
-            Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
             audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
-            OnDamaged += TakeDamage;
             forceField.SetActive(false);
-            OnDamaged += (float i) => ChangedPhase.Invoke();
+        }
+
+        private void OnEnable()
+        {
+            Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
+            OnDamaged += TakeDamage;
+        }
+
+        private void OnDisable()
+        {
+            Player.V2.Teleport.OnBossAttacked -= OnTeleportOnBossAttacked;
+            OnDamaged -= TakeDamage;
         }
 
         private void OnTeleportOnBossAttacked(float damage)
@@ -48,6 +57,7 @@ namespace Boss
 
         public void TakeDamage(float damage)
         {
+            ChangedPhase.Invoke();
             if (damageLock) return;
             currentHealth -= damage;
             
