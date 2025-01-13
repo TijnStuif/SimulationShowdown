@@ -18,10 +18,19 @@ namespace PlayerAttackIndicator
             Root = GetComponent<UIDocument>().rootVisualElement;
             m_indicator = Root.Q<VisualElement>("indicator");
             m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
-            Player.V2.Teleport.RangeChange += OnPlayerRangeChange;
         }
 
         private void Start() {}
+
+        private void OnEnable()
+        {
+            Player.V2.Teleport.RangeChange += OnPlayerRangeChange;
+        }
+
+        private void OnDisable()
+        {
+            Player.V2.Teleport.RangeChange -= OnPlayerRangeChange;
+        }
 
         private void OnPlayerRangeChange(Player.V2.Teleport.BossRange range)
         {
