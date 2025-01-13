@@ -152,7 +152,7 @@ public class StateController : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        m_cutsceneManager.endCutscene.stopped += OnBossDeath;
+        m_cutsceneManager.winCutscene.stopped += OnBossDeath;
         m_playerController.StateChange += OnPlayerStateChange;
         m_pauseMenuController.StateChange += OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;

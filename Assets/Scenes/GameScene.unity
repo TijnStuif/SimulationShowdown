@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 1851637085}
   - component: {fileID: 1851637086}
   m_Layer: 0
-  m_Name: EndCutscene
+  m_Name: WinCutscene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

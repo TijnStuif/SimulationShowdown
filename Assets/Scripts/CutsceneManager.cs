@@ -4,14 +4,14 @@ using UnityEngine.Playables;
 public class CutsceneManager : MonoBehaviour
 {
     private Boss.Controller bossController;
-    public PlayableDirector endCutscene;
+    public PlayableDirector winCutscene;
     private void Start()
     {
         bossController = FindObjectOfType<Boss.Controller>();
-        bossController.Death += StartEndCutscene;
+        bossController.Death += StartWinCutscene;
     }
-    private void StartEndCutscene()
+    private void StartWinCutscene()
     {
-        endCutscene.Play();
+        winCutscene.Play();
     }
 }
