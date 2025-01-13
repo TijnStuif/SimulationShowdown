@@ -9,8 +9,8 @@ public class MovingWalls : MonoBehaviour
     private GameObject movingWall;
     private Vector3 moveDirectionWall = new Vector3(0, 0, 0.1f);
     private Vector3 moveToOriginalPosition = new Vector3(0, 0, 30);
-    [SerializeField] private Material boxMaterial;
     private List<GameObject> walls = new List<GameObject>();
+    private Outline outline;
 
     
     void Start()
@@ -34,6 +34,7 @@ public class MovingWalls : MonoBehaviour
     {
         foreach (var movingWall in movingWalls)
         {
+            movingWall.GetComponent<Outline>().enabled = true;
             
             if(movingWall.transform.position.z >= -15)
             {
@@ -42,7 +43,7 @@ public class MovingWalls : MonoBehaviour
             else 
             {
                 movingWall.transform.position += moveToOriginalPosition;
-                movingWall.GetComponent<MeshRenderer>().material = boxMaterial;
+                movingWall.GetComponent<Outline>().enabled = false;
                 movingWalls.Remove(movingWall);
                 break;
             }

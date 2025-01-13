@@ -3,6 +3,8 @@ using System.Collections;
 using Boss.Attack;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 // copypasted from V1
@@ -16,6 +18,8 @@ namespace Player.V2
         
     public class Controller : MonoBehaviour
     {
+        private Vignette vignette;
+        private Volume volume;
         
         public int MaxHealth = 100;
         [HideInInspector] public int CurrentHealth;
@@ -42,6 +46,10 @@ namespace Player.V2
             {
                 Debug.LogWarning("vfx_Electricity_01 not found under the player.");
             }
+
+            volume = FindObjectOfType<Volume>();
+            volume.profile.TryGet(out vignette);
+
         }
 
         public void TakeDamage(int damage)
@@ -60,6 +68,8 @@ namespace Player.V2
             {
                 StartCoroutine(PlayVFX());
             }
+
+            vignette.intensity.value += damage * 0.005f;
         }
 
         private IEnumerator PlayVFX()
