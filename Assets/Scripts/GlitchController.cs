@@ -32,9 +32,9 @@ namespace Player.V2
 
         void GlitchOnPhase()
         {
-            noiseAmount += 10;
-            glitchStrength += 1;
-            flickerStrength += 0.05f;
+            noiseAmount += 5;
+            glitchStrength += 0.5f;
+            flickerStrength += 0.02f;
             UpdateAllGlitchValues();
             audioManager.PlaySFX(audioManager.bossGlitchSFX);
         }
