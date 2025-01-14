@@ -17,8 +17,6 @@ public class GameControllerScript : MonoBehaviour
     
     void Start()
     {
-        bossController = FindObjectOfType<Boss.Controller>();
-        bossController.ChangedPhase.AddListener(() => UpdateAttacks());
         allAttacks = FindObjectsOfType<MonoBehaviour>().OfType<IAttack>().ToList();
         attacks = phaseController.phases[phaseController.currentPhase];
 
@@ -27,12 +25,15 @@ public class GameControllerScript : MonoBehaviour
 
     private void OnEnable()
     {
+        bossController = FindObjectOfType<Boss.Controller>();
         Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
+        bossController.HealthUpdated.AddListener(UpdateAttacks);
     }
 
     private void OnDisable()
     {
         Teleport.MashSequenceStateChange -= OnMashSequenceStateChange;
+        bossController.HealthUpdated.RemoveListener(UpdateAttacks);
     }
 
     void Update()
