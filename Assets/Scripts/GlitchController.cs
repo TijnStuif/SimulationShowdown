@@ -19,15 +19,16 @@ namespace Player.V2
         private V2.Controller playerController;
         private PhaseController phaseController;
         private AudioManager audioManager;
+        [SerializeField] private CutsceneActivator cutsceneActivator;
 
-        void OnEnable()
+        void Start()
         {
             playerController = GetComponent<V2.Controller>();
             phaseController = FindObjectOfType<PhaseController>();
             audioManager = FindObjectOfType<AudioManager>();
+            cutsceneActivator.glitchOnCutscene.AddListener(() => CutsceneValues());
             phaseController.phaseChanged.AddListener(() => GlitchOnPhase());
             UpdateAllGlitchValues();
-            Invoke(nameof(StartCutsceneValues), 3f);
         }
 
         void GlitchOnPhase()
@@ -47,11 +48,11 @@ namespace Player.V2
             glitchMaterial.SetFloat("_FlickerStrength", flickerStrength);
         }
 
-        void StartCutsceneValues()
+        void CutsceneValues()
         {
             noiseAmount = 100;
             glitchStrength = 10;
-            flickerStrength = 0.5f;
+            flickerStrength = 1;
             UpdateAllGlitchValues();
             audioManager.PlaySFX(audioManager.bossGlitchSFX);
             Invoke(nameof(NormalValues), 2.5f);
