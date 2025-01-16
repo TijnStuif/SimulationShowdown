@@ -68,16 +68,16 @@ public class PhaseController : MonoBehaviour
         switch (currentPhase)
         {
             case 2:
-                gameControllerScript.minAttackInterval = 2f;
-                gameControllerScript.maxAttackInterval = 4f;
+                gameControllerScript.minAttackInterval = 4f;
+                gameControllerScript.maxAttackInterval = 5f;
                 break;
             case 3:
-                gameControllerScript.minAttackInterval = 2f;
-                gameControllerScript.maxAttackInterval = 3f;
+                gameControllerScript.minAttackInterval = 3.5f;
+                gameControllerScript.maxAttackInterval = 4.5f;
                 break;
             case 4:
-                gameControllerScript.minAttackInterval = 2f;
-                gameControllerScript.maxAttackInterval = 2.5f;
+                gameControllerScript.minAttackInterval = 3f;
+                gameControllerScript.maxAttackInterval = 4f;
                 break;
         }
         #if DEBUG

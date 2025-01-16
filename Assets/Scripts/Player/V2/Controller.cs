@@ -94,10 +94,10 @@ namespace Player.V2
                 switch (other.gameObject.name)
                 {
                     case "CloseRangeAttack":
-                        TakeDamage(50);
+                        TakeDamage(25);
                         break;
                     case "LaserAttack":
-                        TakeDamage(40);
+                        TakeDamage(20);
                         break;
                 }
             }

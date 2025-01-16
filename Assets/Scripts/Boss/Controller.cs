@@ -19,12 +19,16 @@ namespace Boss
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 300;
         [SerializeField] GameObject forceField;
+        private PickUp pickUp;
+        private const float MASH_LENGTH = 3f;
         
         void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             forceField.SetActive(false);
+
+            pickUp = FindObjectOfType<PickUp>();
         }
 
         private void OnEnable()
@@ -52,7 +56,24 @@ namespace Boss
             }
             if (Input.GetKeyDown(KeyCode.I))
             {
+                forceField.SetActive(false);
+                UnlockDamage();
                 OnTeleportOnBossAttacked(20);
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                forceField.SetActive(false);
+                UnlockDamage();
+            }
+            if (pickUp.pickUpsCollected < 5)
+            {
+                LockDamage();
+                forceField.SetActive(true);
+            }
+            if (pickUp.pickUpsCollected >= 5)
+            {
+                UnlockDamage();
+                forceField.SetActive(false);
             }
         }
     
@@ -61,6 +82,7 @@ namespace Boss
 
         public void TakeDamage(float damage)
         {
+            StartCoroutine(ResetPickUpAmount());
             ChangedPhase.Invoke();
             if (damageLock) return;
             currentHealth -= damage;
@@ -82,6 +104,12 @@ namespace Boss
                 forceField.SetActive(false);
                 yield return new WaitForSeconds(0.2f);
             }
+        }
+
+        private IEnumerator ResetPickUpAmount()
+        {
+            yield return new WaitForSeconds(MASH_LENGTH);
+            pickUp.pickUpsCollected = 0;
         }
     }
 }
