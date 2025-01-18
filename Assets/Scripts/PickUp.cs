@@ -9,7 +9,13 @@ public class PickUp : MonoBehaviour
     private int zPosition;
     private float offset = -12.5f;
     private float tileWidth = 5f;
-    public float amountOfPickUpsCollected = 0;
+    private float amountOfPickUpsCollected = 0;
+    public float AmountOfPickupsCollected 
+    {
+        get { return amountOfPickUpsCollected; }
+        set { amountOfPickUpsCollected = value; PickUpCollected?.Invoke(amountOfPickUpsCollected); }
+
+    } 
     
     void Awake()
     {
@@ -25,8 +31,7 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider player)
     {
-        amountOfPickUpsCollected++;
+        AmountOfPickupsCollected++;
         SpawnPickUps();
-        PickUpCollected?.Invoke(amountOfPickUpsCollected);
     }
 }

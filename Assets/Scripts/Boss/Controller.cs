@@ -29,6 +29,7 @@ namespace Boss
             forceField.SetActive(false);
 
             pickUp = FindObjectOfType<PickUp>();
+            OnPickUpCollected(0);
         }
 
         private void OnEnable()
@@ -110,7 +111,7 @@ namespace Boss
         private IEnumerator ResetPickUpAmount()
         {
             yield return new WaitForSeconds(MASH_LENGTH);
-            pickUp.amountOfPickUpsCollected = 0;
+            pickUp.AmountOfPickupsCollected = 0;
         }
     }
 }
