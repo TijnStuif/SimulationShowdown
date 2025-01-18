@@ -87,22 +87,6 @@ namespace Player.V2
             StateChange?.Invoke(State.Pause);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Attack"))
-            {
-                switch (other.gameObject.name)
-                {
-                    case "CloseRangeAttack":
-                        TakeDamage(25);
-                        break;
-                    case "LaserAttack":
-                        TakeDamage(20);
-                        break;
-                }
-            }
-        }
-
         private void FixedUpdate()
         {
             // Check if the player is outside the map

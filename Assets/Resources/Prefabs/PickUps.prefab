@@ -163,6 +163,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d87331dbde8d30438271385595904a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUp: {fileID: 6241542534494903861}
-  player: {fileID: 0}
   pickUpsCollected: 0

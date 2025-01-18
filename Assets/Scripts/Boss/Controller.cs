@@ -70,7 +70,7 @@ namespace Boss
                 LockDamage();
                 forceField.SetActive(true);
             }
-            if (pickUp.pickUpsCollected >= 5)
+            else
             {
                 UnlockDamage();
                 forceField.SetActive(false);
