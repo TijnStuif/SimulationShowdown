@@ -141,14 +141,19 @@ namespace Player.V2
         
         private void OnEnable()
         {
+            m_characterController = GetComponentInChildren<CharacterController>();
             OnGravityChanged();
-            Boss.Attack.LowGravity.GravityChanged+= OnGravityChanged;
+            Boss.Attack.LowGravity.GravityChanged += OnGravityChanged;
+            Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
         }
 
         private void OnDisable()
         {
+            m_characterController = GetComponentInChildren<CharacterController>();
+            m_characterController.enabled = true;
             OnGravityChanged();
-            Boss.Attack.LowGravity.GravityChanged += OnGravityChanged;
+            Boss.Attack.LowGravity.GravityChanged -= OnGravityChanged;
+            Teleport.MashSequenceStateChange -= OnMashSequenceStateChange;
         }
 
         /// <summary>

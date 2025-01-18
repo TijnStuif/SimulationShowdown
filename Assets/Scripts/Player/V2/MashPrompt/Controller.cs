@@ -17,7 +17,16 @@ namespace Player.V2.MashPrompt
             Hide();
             m_f = Root.Q<VisualElement>("F");
             m_j = Root.Q<VisualElement>("J");
+        }
+
+        private void OnEnable()
+        {
             Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
+        }
+
+        private void OnDisable()
+        {
+            Teleport.MashSequenceStateChange -= OnMashSequenceStateChange;
         }
 
         private void OnMashSequenceStateChange(Teleport.MashState state)

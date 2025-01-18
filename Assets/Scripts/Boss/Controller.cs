@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Player.V2;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,19 +14,28 @@ namespace Boss
         private bool playerWon;
         public event Action Death;
         public event Action<float> OnDamaged;
-        public UnityEvent ChangedPhase;
+        public UnityEvent HealthUpdated;
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 300;
         [SerializeField] GameObject forceField;
         
         void Start()
         {
-            Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
             audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
-            OnDamaged += TakeDamage;
             forceField.SetActive(false);
-            OnDamaged += (float i) => ChangedPhase.Invoke();
+        }
+
+        private void OnEnable()
+        {
+            Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
+            OnDamaged += TakeDamage;
+        }
+
+        private void OnDisable()
+        {
+            Player.V2.Teleport.OnBossAttacked -= OnTeleportOnBossAttacked;
+            OnDamaged -= TakeDamage;
         }
 
         private void OnTeleportOnBossAttacked(float damage)
@@ -41,6 +49,10 @@ namespace Boss
             {
                 invincibilityFrames += 1;
             }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                OnTeleportOnBossAttacked(20);
+            }
         }
     
         public void UnlockDamage() => damageLock = false;
@@ -48,6 +60,7 @@ namespace Boss
 
         public void TakeDamage(float damage)
         {
+            HealthUpdated.Invoke();
             if (damageLock) return;
             currentHealth -= damage;
             

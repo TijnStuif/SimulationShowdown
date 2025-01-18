@@ -2670,6 +2670,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 5998823862937573085, guid: cedf3d11e1368672796d4965bcccfc11,
+        type: 3}
+      propertyPath: outlineMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7263931236160855110, guid: cedf3d11e1368672796d4965bcccfc11,
         type: 3}
       propertyPath: m_LocalPosition.x
