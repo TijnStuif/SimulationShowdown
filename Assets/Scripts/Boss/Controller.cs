@@ -34,13 +34,29 @@ namespace Boss
         private void OnEnable()
         {
             Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
+            PickUp.PickUpCollected += OnPickUpCollected;
             OnDamaged += TakeDamage;
         }
 
         private void OnDisable()
         {
             Player.V2.Teleport.OnBossAttacked -= OnTeleportOnBossAttacked;
+            PickUp.PickUpCollected -= OnPickUpCollected;
             OnDamaged -= TakeDamage;
+        }
+
+        private void OnPickUpCollected(float amountOfPickUpsCollected)
+        {
+            if (amountOfPickUpsCollected < 5)
+            {
+                LockDamage();
+                forceField.SetActive(true);
+            }
+            else
+            {
+                UnlockDamage();
+                forceField.SetActive(false);
+            }
         }
 
         private void OnTeleportOnBossAttacked(float damage)
@@ -54,26 +70,11 @@ namespace Boss
             {
                 invincibilityFrames += 1;
             }
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 forceField.SetActive(false);
                 UnlockDamage();
                 OnTeleportOnBossAttacked(20);
-            }
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                forceField.SetActive(false);
-                UnlockDamage();
-            }
-            if (pickUp.pickUpsCollected < 5)
-            {
-                LockDamage();
-                forceField.SetActive(true);
-            }
-            else
-            {
-                UnlockDamage();
-                forceField.SetActive(false);
             }
         }
     
@@ -109,7 +110,7 @@ namespace Boss
         private IEnumerator ResetPickUpAmount()
         {
             yield return new WaitForSeconds(MASH_LENGTH);
-            pickUp.pickUpsCollected = 0;
+            pickUp.amountOfPickUpsCollected = 0;
         }
     }
 }

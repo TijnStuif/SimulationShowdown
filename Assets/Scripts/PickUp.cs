@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 public class PickUp : MonoBehaviour
 {
+    public static event Action<float> PickUpCollected;
     private int xPosition;
     private int zPosition;
     private float offset = -12.5f;
     private float tileWidth = 5f;
-    public float pickUpsCollected = 0;
+    public float amountOfPickUpsCollected = 0;
     
     void Awake()
     {
@@ -25,8 +25,8 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider player)
     {
-        pickUpsCollected++;
+        amountOfPickUpsCollected++;
         SpawnPickUps();
-        Debug.Log(pickUpsCollected);
+        PickUpCollected?.Invoke(amountOfPickUpsCollected);
     }
 }
