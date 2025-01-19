@@ -12,14 +12,15 @@ namespace Player.V2
         private float glitchStrength = 0;
         private float scanLineStrength = 0;
         private float flickerStrength = 0;
-        private float baseNoiseAmount = 30f;
-        private float baseGlitchStrength = 1f;
+        private float baseNoiseAmount = 0f;
+        private float baseGlitchStrength = 0.25f;
         private float baseScanLineStrength = 0;
         private float baseFlickerStrength = 0.05f;
         private V2.Controller playerController;
         private PhaseController phaseController;
         private AudioManager audioManager;
         [SerializeField] private CutsceneActivator cutsceneActivator;
+        [SerializeField] private CutsceneDeactivator cutsceneDeactivator;
 
         void Start()
         {
@@ -27,19 +28,22 @@ namespace Player.V2
             phaseController = FindObjectOfType<PhaseController>();
             audioManager = FindObjectOfType<AudioManager>();
             cutsceneActivator.glitchOnCutscene.AddListener(() => CutsceneValues());
+            cutsceneDeactivator.glitchEnd.AddListener(() => NormalValues());
             phaseController.phaseChanged.AddListener(() => GlitchOnPhase());
             UpdateAllGlitchValues();
         }
 
+        //every phase change increments the glitch shader values by these specific amounts
         void GlitchOnPhase()
         {
-            noiseAmount += 5;
-            glitchStrength += 0.5f;
+            noiseAmount += 20f;
+            glitchStrength += 0.25f;
             flickerStrength += 0.02f;
             UpdateAllGlitchValues();
             audioManager.PlaySFX(audioManager.bossGlitchSFX);
         }
 
+        //updates values in the glitch shader graph
         void UpdateAllGlitchValues()
         {
             glitchMaterial.SetFloat("_NoiseAmount", noiseAmount);
@@ -48,6 +52,7 @@ namespace Player.V2
             glitchMaterial.SetFloat("_FlickerStrength", flickerStrength);
         }
 
+        //these are the glitch shader values used by most cutscenes that transition between gameplay and cutscenes
         void CutsceneValues()
         {
             noiseAmount = 100;
@@ -58,6 +63,7 @@ namespace Player.V2
             Invoke(nameof(NormalValues), 2.5f);
         }
 
+        //these are the glitch shader values used in phase 1
         void NormalValues()
         {
             noiseAmount = baseNoiseAmount;

@@ -29,6 +29,7 @@ namespace Player.V2
 
         [SerializeField] private GameObject vfxElectricityPrefab;
         private ParticleSystem vfxElectricity;
+        private Vector3 startPosition;
 
         void Awake()
         {
@@ -49,6 +50,8 @@ namespace Player.V2
 
             volume = FindObjectOfType<Volume>();
             volume.profile.TryGet(out vignette);
+
+            startPosition = transform.position;
 
         }
 
@@ -87,29 +90,14 @@ namespace Player.V2
             StateChange?.Invoke(State.Pause);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Attack"))
-            {
-                switch (other.gameObject.name)
-                {
-                    case "CloseRangeAttack":
-                        TakeDamage(50);
-                        break;
-                    case "LaserAttack":
-                        TakeDamage(40);
-                        break;
-                }
-            }
-        }
-
         private void FixedUpdate()
         {
             // Check if the player is outside the map
-            // If this is the case the player will die
-            if (transform.position.x <= -15 || transform.position.z <= -15 || transform.position.x >= 15 || transform.position.z >= 15 || transform.position.y <= -3)
+            // If this is the case the player will die, and the player will start glitching in the ground for 1-2 seconds before ending the game
+            if (transform.position.y <= -3)
             {
                 TakeDamage(MaxHealth);
+                transform.position += Vector3.up;
             }
         }
     }
