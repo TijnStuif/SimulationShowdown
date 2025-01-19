@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player.V2
@@ -16,6 +13,12 @@ namespace Player.V2
         private float baseGlitchStrength = 0.25f;
         private float baseScanLineStrength = 0;
         private float baseFlickerStrength = 0.05f;
+        private float noiseAmountIncrement = 20f;
+        private float glitchStrengthIncrement = 0.25f;
+        private float flickerStrengthIncrement = 0.02f;
+        private float noiseAmountMax = 100f;
+        private float glitchStrengthMax = 10f;
+        private float flickerStrengthMax = 1f;
         private V2.Controller playerController;
         private PhaseController phaseController;
         private AudioManager audioManager;
@@ -36,9 +39,9 @@ namespace Player.V2
         //every phase change increments the glitch shader values by these specific amounts
         void GlitchOnPhase()
         {
-            noiseAmount += 20f;
-            glitchStrength += 0.25f;
-            flickerStrength += 0.02f;
+            noiseAmount += noiseAmountIncrement;
+            glitchStrength += glitchStrengthIncrement;
+            flickerStrength += flickerStrengthIncrement;
             UpdateAllGlitchValues();
             audioManager.PlaySFX(audioManager.bossGlitchSFX);
         }
@@ -55,9 +58,9 @@ namespace Player.V2
         //these are the glitch shader values used by most cutscenes that transition between gameplay and cutscenes
         void CutsceneValues()
         {
-            noiseAmount = 100;
-            glitchStrength = 10;
-            flickerStrength = 1;
+            noiseAmount = noiseAmountMax;
+            glitchStrength = glitchStrengthMax;
+            flickerStrength = flickerStrengthMax;
             UpdateAllGlitchValues();
             audioManager.PlaySFX(audioManager.bossGlitchSFX);
             Invoke(nameof(NormalValues), 2.5f);
