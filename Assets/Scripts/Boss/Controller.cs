@@ -18,24 +18,45 @@ namespace Boss
         private int invincibilityFrames = 0;
         private int invincibilityFramesMax = 300;
         [SerializeField] GameObject forceField;
+        private PickUp pickUp;
+        private const float MASH_LENGTH = 3f;
         
         void Start()
         {
             audioManager = FindObjectOfType<AudioManager>();
             currentHealth = maxHealth;
             forceField.SetActive(false);
+
+            pickUp = FindObjectOfType<PickUp>();
+            OnPickUpCollected(0);
         }
 
         private void OnEnable()
         {
             Player.V2.Teleport.OnBossAttacked += OnTeleportOnBossAttacked;
+            PickUp.PickUpCollected += OnPickUpCollected;
             OnDamaged += TakeDamage;
         }
 
         private void OnDisable()
         {
             Player.V2.Teleport.OnBossAttacked -= OnTeleportOnBossAttacked;
+            PickUp.PickUpCollected -= OnPickUpCollected;
             OnDamaged -= TakeDamage;
+        }
+
+        private void OnPickUpCollected(float amountOfPickUpsCollected)
+        {
+            if (amountOfPickUpsCollected < 5)
+            {
+                LockDamage();
+                forceField.SetActive(true);
+            }
+            else
+            {
+                UnlockDamage();
+                forceField.SetActive(false);
+            }
         }
 
         private void OnTeleportOnBossAttacked(float damage)
@@ -49,8 +70,10 @@ namespace Boss
             {
                 invincibilityFrames += 1;
             }
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.P))
             {
+                forceField.SetActive(false);
+                UnlockDamage();
                 OnTeleportOnBossAttacked(20);
             }
         }
@@ -60,6 +83,7 @@ namespace Boss
 
         public void TakeDamage(float damage)
         {
+            StartCoroutine(ResetPickUpAmount());
             HealthUpdated.Invoke();
             if (damageLock) return;
             currentHealth -= damage;
@@ -81,6 +105,12 @@ namespace Boss
                 forceField.SetActive(false);
                 yield return new WaitForSeconds(0.2f);
             }
+        }
+
+        private IEnumerator ResetPickUpAmount()
+        {
+            yield return new WaitForSeconds(MASH_LENGTH);
+            pickUp.AmountOfPickupsCollected = 0;
         }
     }
 }
