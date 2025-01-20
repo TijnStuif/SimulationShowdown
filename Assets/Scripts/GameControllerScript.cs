@@ -12,8 +12,8 @@ public class GameControllerScript : MonoBehaviour
     private List<IAttack> allAttacks;
     [SerializeField] private PhaseController phaseController;
     private float timer;
-    public float minAttackInterval = 6f; 
-    public float maxAttackInterval = 8f;
+    public float minAttackInterval = 5f; 
+    public float maxAttackInterval = 6f;
     
     void Start()
     {
