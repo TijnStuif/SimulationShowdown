@@ -153,6 +153,7 @@ public class StateController : MonoBehaviour
     private void SubscribeToEvents()
     {
         m_cutsceneManager.winCutscene.stopped += OnBossDeath;
+        m_cutsceneManager.loseCutscene.stopped += OnPlayerDeath;
         m_playerController.StateChange += OnPlayerStateChange;
         m_pauseMenuController.StateChange += OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;
@@ -183,12 +184,18 @@ public class StateController : MonoBehaviour
         Win();
     }
 
+    //this is bad code, but since I couldn't get my cutscene to work with the "OnPlayerStateChange" method, I had to make a separate method for the player death cutscene - Tijn Stuifbergen
+    private void OnPlayerDeath(PlayableDirector director)
+    {
+        Lose();
+    }
+
     private void OnPlayerStateChange(State state)
     {
         switch (state)
         {
             case State.Loss:
-                Lose();
+                // Lose();
                 break; 
             case State.Pause:
                 #if DEBUG
