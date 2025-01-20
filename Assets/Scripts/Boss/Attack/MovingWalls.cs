@@ -9,7 +9,9 @@ public class MovingWalls : MonoBehaviour
     private GameObject movingWall;
     private Vector3 moveDirectionWall = new Vector3(0, 0, 0.1f);
     private Vector3 moveToOriginalPosition = new Vector3(0, 0, 30);
+    private PhaseController phaseController;
     private List<GameObject> walls = new List<GameObject>();
+    public float wallMovementSpeed = 0.01f;
     private Outline outline;
 
     
