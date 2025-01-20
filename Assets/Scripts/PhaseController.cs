@@ -16,6 +16,8 @@ public class PhaseController : MonoBehaviour
     public Dictionary<int, List<IAttack>> phases;
     public int currentPhase;
     private GameControllerScript gameControllerScript;
+    private MovingWalls movingWalls;
+    private MovingGround movingGround;
     private int phaseHealthThreshold;
     private void Awake()
     {
@@ -27,8 +29,8 @@ public class PhaseController : MonoBehaviour
         bossController = FindObjectOfType<Boss.Controller>();
         gameControllerScript = FindObjectOfType<GameControllerScript>();
         phases = new Dictionary<int, List<IAttack>>{
-            {1, new List<IAttack>{gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>()}},
-            {2, new List<IAttack>{gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>()}},
+            {1, new List<IAttack>{gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
+            {2, new List<IAttack>{gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
             {3, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
             {4, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
         };
@@ -58,6 +60,7 @@ public class PhaseController : MonoBehaviour
             currentPhase = 2;
             chromaticAberration.intensity.value = 0.33f;
             depthOfField.focusDistance.value = 7f;
+            
         }
         else if (bossController.currentHealth <= phaseHealthThreshold * 2 && bossController.currentHealth > phaseHealthThreshold)
         {
@@ -75,16 +78,16 @@ public class PhaseController : MonoBehaviour
         switch (currentPhase)
         {
             case 2:
-                gameControllerScript.minAttackInterval = 5f;
-                gameControllerScript.maxAttackInterval = 7f;
+                gameControllerScript.minAttackInterval = 4f;
+                gameControllerScript.maxAttackInterval = 5f;
                 break;
             case 3:
-                gameControllerScript.minAttackInterval = 4f;
-                gameControllerScript.maxAttackInterval = 6f;
+                gameControllerScript.minAttackInterval = 3.5f;
+                gameControllerScript.maxAttackInterval = 4.5f;
                 break;
             case 4:
                 gameControllerScript.minAttackInterval = 3f;
-                gameControllerScript.maxAttackInterval = 5f;
+                gameControllerScript.maxAttackInterval = 4f;
                 break;
         }
         #if DEBUG
