@@ -34,13 +34,23 @@ public class PhaseController : MonoBehaviour
             {3, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
             {4, new List<IAttack>{gameObject.AddComponent<SceneFlip>(), gameObject.AddComponent<LowGravity>(), gameObject.AddComponent<InvertedControls>(), gameObject.AddComponent<Laser>(), gameObject.AddComponent<CloseRange>(), gameObject.AddComponent<FallingPlatforms>()}},
         };
-        bossController.ChangedPhase.AddListener(() => UpdatePhase());
         currentPhase = 1;
     }
     private void Start()
     {
         phaseHealthThreshold = bossController.maxHealth / 4;
     }
+
+    private void OnEnable()
+    {
+        bossController.HealthUpdated.AddListener(UpdatePhase);
+    }
+
+    private void OnDisable()
+    {
+        bossController.HealthUpdated.RemoveListener(UpdatePhase);
+    }
+
     private void UpdatePhase()
     {
         
