@@ -39,6 +39,7 @@ namespace Player.V2
         
         [SerializeField] private Movement m_movement;
         [SerializeField] private float m_damage = 0.3f;
+        private ParticleSystem m_teleportParticleSystem;
         
         private AudioManager m_audioManager;
         
@@ -57,6 +58,8 @@ namespace Player.V2
         
         public event Action Teleported;
         
+        
+
         private bool BossAttacked
         {
             get
@@ -117,6 +120,17 @@ namespace Player.V2
             m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
             m_audioManager = FindObjectOfType<AudioManager>();
             m_mainCamera = Camera.main;
+
+            var particleSystemObject = GameObject.Find("vfx_Shield_01");
+            if (particleSystemObject != null)
+            {
+                m_teleportParticleSystem = particleSystemObject.GetComponent<ParticleSystem>();
+                m_teleportParticleSystem.Stop();
+            }
+            else
+            {
+                Debug.LogWarning("ParticleSystem 'vfx_Shield_01' not found on the player.");
+            }
         }
         
         private void Update()
@@ -164,10 +178,8 @@ namespace Player.V2
             if (context.performed)
             {
                 if (!CooldownInactive) return;
-                
-                m_timeSinceLastTeleport = Time.time;
-                // transform.velocity = Vector3.zero;
 
+                m_timeSinceLastTeleport = Time.time;
                 m_direction3d = m_movement.FullMoveDirection3d;
 
                 if (BossAttacked)
@@ -181,12 +193,24 @@ namespace Player.V2
                 #if DEBUG
                 Debug.Log("Teleporting!");
                 #endif
-                
+
+                ShowTeleportEffect();
                 StandardTeleport();
                 Teleported?.Invoke();
             }
         }
-        
+
+        private void ShowTeleportEffect()
+        {
+            if (m_teleportParticleSystem != null)
+            {
+                ParticleSystem particleInstance = Instantiate(m_teleportParticleSystem, transform.position, Quaternion.identity);
+                particleInstance.Play();
+                Destroy(particleInstance.gameObject, particleInstance.main.duration);
+            }
+        }
+
+
         private void StandardTeleport()
         {
                 m_movement.FreezeController();
