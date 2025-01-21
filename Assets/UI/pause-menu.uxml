@@ -3,8 +3,8 @@
     <Style src="project://database/Assets/UI/global.uss?fileID=7433441132597879392&amp;guid=da8a0606667ca8dd990d22d4627269b4&amp;type=3#global" />
     <ui:VisualElement name="pause-menu" style="flex-grow: 1; background-color: rgb(0, 0, 0); width: 75%; height: 75%; align-items: center; justify-content: flex-end; align-self: center; max-height: 75%; max-width: 75%; left: 0; top: 12%; right: 0; bottom: 0;">
         <ui:VisualElement name="buttons" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-wrap: wrap; flex-direction: column; width: 100%; height: 10%; max-height: 10%; min-height: 10%; max-width: 100%; min-width: 100%;">
-            <ui:Button text="Resume" parse-escape-sequences="true" display-tooltip-when-elided="true" name="resume" class="menu-button" />
-            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="menu-button" />
+            <ui:Button text="Resume" parse-escape-sequences="true" display-tooltip-when-elided="true" name="resume" class="menu-button" style="-unity-font-definition: initial; -unity-font: url(&quot;project://database/Assets/Fonts/METAG___.TTF?fileID=12800000&amp;guid=479478526ef2a374c9f05192bdb00264&amp;type=3#METAG___&quot;);" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="menu-button" style="-unity-font-definition: initial; -unity-font: url(&quot;project://database/Assets/Fonts/METAG___.TTF?fileID=12800000&amp;guid=479478526ef2a374c9f05192bdb00264&amp;type=3#METAG___&quot;);" />
         </ui:VisualElement>
         <ui:VisualElement name="body" style="flex-grow: 1; height: 90%; max-height: 90%; width: 100%; justify-content: center; align-self: center; align-items: center; border-left-color: rgb(253, 0, 252); border-right-color: rgb(253, 0, 252); border-top-color: rgb(253, 0, 252); border-bottom-color: rgb(253, 0, 252); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;" />
     </ui:VisualElement>
