@@ -193,6 +193,7 @@ MonoBehaviour:
     type: 3}
   bossSceneFlipSFX: {fileID: 8300000, guid: 905c5e095410f8f4fb5842bf3da0b049, type: 3}
   bossLowGravitySFX: {fileID: 8300000, guid: de0969f7330cfbd4786a721611bbb38b, type: 3}
+  bossGlitchSFX: {fileID: 8300000, guid: dd644c4baab417a4f832d997fb90ca31, type: 3}
 --- !u!1 &4118032768784687544
 GameObject:
   m_ObjectHideFlags: 0

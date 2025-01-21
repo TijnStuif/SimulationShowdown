@@ -135,8 +135,6 @@ namespace Player.V2
             {
                 Debug.LogWarning("ParticleSystem 'msVFX_Stylized Smoke 4' not found on the player.");
             }
-
-            Teleport.MashSequenceStateChange += OnMashSequenceStateChange;
         }
         
         private void OnEnable()

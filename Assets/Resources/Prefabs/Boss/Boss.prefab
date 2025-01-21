@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3285714092334141711}
   - component: {fileID: 3038252847450476451}
   - component: {fileID: -8026926751682821010}
+  - component: {fileID: 5630673767459528476}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -156,6 +157,27 @@ MonoBehaviour:
   movementSpeed: 5
   wayPointsPrefab: {fileID: 4285576737901389598, guid: 785ce6df11c643e4a806d0761b6e005f,
     type: 3}
+--- !u!95 &5630673767459528476
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123481045137763590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2975809486372488202
 PrefabInstance:
   m_ObjectHideFlags: 0
