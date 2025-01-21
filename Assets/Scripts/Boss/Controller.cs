@@ -27,8 +27,9 @@ namespace Boss
             currentHealth = maxHealth;
             forceField.SetActive(false);
 
-            pickUp = FindObjectOfType<PickUp>();
+            
             OnPickUpCollected(0);
+            pickUp = FindObjectOfType<PickUp>(true);
         }
 
         private void OnEnable()
@@ -83,11 +84,11 @@ namespace Boss
 
         public void TakeDamage(float damage)
         {
-            StartCoroutine(ResetPickUpAmount());
-            HealthUpdated.Invoke();
+            
             if (damageLock) return;
             currentHealth -= damage;
-            
+            StartCoroutine(ResetPickUpAmount());
+            HealthUpdated.Invoke();
             StartCoroutine(InvincibilityFrames());
             if (currentHealth <= 0)
             {
