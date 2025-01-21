@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using Player.V2;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using Controller = PlayerAttackIndicator.Controller;
 using Cursor = UnityEngine.Cursor;
 
 /// <summary>
@@ -48,6 +48,7 @@ public class StateController : MonoBehaviour
     private Player.V2.Controller m_playerController;
     private Boss.Controller m_bossController;
     private AudioManager m_audioManager;
+    private CutsceneManager m_cutsceneManager;
     
     // UI controller scripts
     private PauseMenu.Controller m_pauseMenuController;
@@ -106,7 +107,6 @@ public class StateController : MonoBehaviour
         m_pauseMenu = Instantiate(m_pauseMenuPrefab);
         m_gameOverScreen = Instantiate(m_gameOverScreenPrefab);
         m_winScreen = Instantiate(m_winScreenPrefab);
-        m_audioManager = GameObject.FindObjectOfType<AudioManager>();
     }
 
     private void InitControllerScripts()
@@ -119,6 +119,12 @@ public class StateController : MonoBehaviour
 
         if ((m_bossController = FindObjectOfType<Boss.Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_bossController));
+
+        if ((m_audioManager = FindObjectOfType<AudioManager>()) == null)
+            throw new ScriptNotFoundException(nameof(m_audioManager));
+
+        if ((m_cutsceneManager = FindObjectOfType<CutsceneManager>()) == null)
+            throw new ScriptNotFoundException(nameof(m_cutsceneManager));
 
         if ((m_pauseMenuController = m_pauseMenu.GetComponent<PauseMenu.Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_pauseMenuController));
@@ -146,7 +152,8 @@ public class StateController : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        m_bossController.Death += OnBossDeath;
+        m_cutsceneManager.winCutscene.stopped += OnBossDeath;
+        m_cutsceneManager.loseCutscene.stopped += OnPlayerDeath;
         m_playerController.StateChange += OnPlayerStateChange;
         m_pauseMenuController.StateChange += OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;
@@ -155,6 +162,8 @@ public class StateController : MonoBehaviour
     
     private void UnsubscribeFromEvents()
     {
+        m_cutsceneManager.winCutscene.stopped -= OnBossDeath;
+        m_cutsceneManager.loseCutscene.stopped -= OnPlayerDeath;
         m_playerController.StateChange -= OnPlayerStateChange;
         m_pauseMenuController.StateChange -= OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange -= OnGameOverScreenStateChange;
@@ -172,9 +181,15 @@ public class StateController : MonoBehaviour
         ThawState();
     }
 
-    private void OnBossDeath()
+    private void OnBossDeath(PlayableDirector director)
     {
         Win();
+    }
+
+    //this is bad code, but since I couldn't get my cutscene to work with the "OnPlayerStateChange" method, I had to make a separate method for the player death cutscene - Tijn Stuifbergen
+    private void OnPlayerDeath(PlayableDirector director)
+    {
+        Lose();
     }
 
     private void OnPlayerStateChange(State state)
@@ -182,7 +197,7 @@ public class StateController : MonoBehaviour
         switch (state)
         {
             case State.Loss:
-                Lose();
+                // Lose();
                 break; 
             case State.Pause:
                 #if DEBUG

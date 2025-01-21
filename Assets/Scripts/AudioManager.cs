@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip bossInputReverserSFX;
     public AudioClip bossSceneFlipSFX;
     public AudioClip bossLowGravitySFX;
+    public AudioClip bossGlitchSFX;
 
     public void PlayMusic(AudioClip musicFile)
     {

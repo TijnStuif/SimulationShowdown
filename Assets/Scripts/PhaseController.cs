@@ -19,6 +19,7 @@ public class PhaseController : MonoBehaviour
     private MovingWalls movingWalls;
     private MovingGround movingGround;
     private int phaseHealthThreshold;
+    public UnityEvent phaseChanged;
     private void Awake()
     {
         volume = FindObjectOfType<Volume>();
@@ -55,6 +56,7 @@ public class PhaseController : MonoBehaviour
     {
         
         if (currentPhase >= 4) return;
+        float checkCurrentPhase = currentPhase;
         if (bossController.currentHealth <= phaseHealthThreshold * 3 && bossController.currentHealth > phaseHealthThreshold * 2)
         {
             currentPhase = 2;
@@ -90,8 +92,15 @@ public class PhaseController : MonoBehaviour
                 gameControllerScript.maxAttackInterval = 4f;
                 break;
         }
-        #if DEBUG
-        Debug.Log($"Current phase {currentPhase}");
-        #endif
+        if (checkCurrentPhase != currentPhase)
+        {
+            PhaseChange();
+        }
+    }
+
+    void PhaseChange()
+    {
+        phaseChanged.Invoke();
+        Debug.Log($"Phase changed to {currentPhase}");
     }
 }
