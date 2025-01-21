@@ -10,12 +10,18 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector winCutscene;
     public PlayableDirector loseCutscene;
     
-    private void Start()
+    private void OnEnable()
     {
         bossController = FindObjectOfType<Boss.Controller>();
         playerController = FindObjectOfType<Player.V2.Controller>();
         bossController.Death += StartWinCutscene;
         playerController.StateChange += StartLoseCutscene;
+    }
+
+    private void OnDisable()
+    {
+        bossController.Death -= StartWinCutscene;
+        playerController.StateChange -= StartLoseCutscene;
     }
 
     private void StartWinCutscene()
