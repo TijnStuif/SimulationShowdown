@@ -69,8 +69,8 @@ namespace Player.V2.MashPrompt
 
         private void ResetKeyColors()
         {
-            m_f.style.backgroundColor = Color.white;
-            m_j.style.backgroundColor = Color.white;
+            m_f.style.backgroundColor = Color.black;
+            m_j.style.backgroundColor = Color.black;
         }
 
 
