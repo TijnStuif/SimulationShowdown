@@ -7,6 +7,7 @@ namespace PauseMenu
     {
        ResumeGame,
        ReturnToTitleScreen,
+       Settings,
        Exit
     }
     

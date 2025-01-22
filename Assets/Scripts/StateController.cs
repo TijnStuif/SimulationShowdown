@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Player.V2;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -38,17 +37,24 @@ public class StateController : MonoBehaviour
     [SerializeField] private GameObject m_pauseMenuPrefab;
     [SerializeField] private GameObject m_gameOverScreenPrefab;
     [SerializeField] private GameObject m_winScreenPrefab;
+    [SerializeField] private GameObject m_settingsPrefab;
     
     // object instances
     private GameObject m_pauseMenu;
     private GameObject m_gameOverScreen;
     private GameObject m_winScreen;
+    private GameObject m_settings;
     
     // controller scripts
     private Player.V2.Controller m_playerController;
     private Boss.Controller m_bossController;
+    private Settings.UiController m_settingsController;
     private AudioManager m_audioManager;
     private CutsceneManager m_cutsceneManager;
+    
+    // for nesting ui menus
+    private AbstractUiController m_currentUiController;
+    private AbstractUiController m_previousUiController; 
     
     // UI controller scripts
     private PauseMenu.Controller m_pauseMenuController;
@@ -107,6 +113,7 @@ public class StateController : MonoBehaviour
         m_pauseMenu = Instantiate(m_pauseMenuPrefab);
         m_gameOverScreen = Instantiate(m_gameOverScreenPrefab);
         m_winScreen = Instantiate(m_winScreenPrefab);
+        m_settingsPrefab = Instantiate(m_settingsPrefab);
     }
 
     private void InitControllerScripts()
@@ -130,6 +137,11 @@ public class StateController : MonoBehaviour
             throw new ScriptNotFoundException(nameof(m_pauseMenuController));
         else
             UiScripts.Add(m_pauseMenuController);
+        
+        if ((m_settingsController = m_settings.GetComponent<Settings.UiController>()) == null)
+            throw new ScriptNotFoundException(nameof(m_settingsController));
+        else
+            UiScripts.Add(m_settingsController);
 
         if ((m_gameOverScreenController = m_gameOverScreen.GetComponent<GameOverScreen.Controller>()) == null)
             throw new ScriptNotFoundException(nameof(m_gameOverScreenController));
@@ -158,8 +170,17 @@ public class StateController : MonoBehaviour
         m_pauseMenuController.StateChange += OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange += OnGameOverScreenStateChange;
         m_winScreenController.StateChange += OnWinScreenStateChange;
+        m_settingsController.Exit += OnSettingsExit;
     }
-    
+
+    private void OnSettingsExit()
+    {
+        if (m_currentUiController == m_settingsController)
+            m_previousUiController.Show();
+        else
+            Debug.LogError("what?");
+    }
+
     private void UnsubscribeFromEvents()
     {
         m_cutsceneManager.winCutscene.stopped -= OnBossDeath;
@@ -168,6 +189,7 @@ public class StateController : MonoBehaviour
         m_pauseMenuController.StateChange -= OnPauseMenuStateChange;
         m_gameOverScreenController.StateChange -= OnGameOverScreenStateChange;
         m_winScreenController.StateChange -= OnWinScreenStateChange;
+        m_settingsController.Exit -= OnSettingsExit;
     }
 
     private void OnEnable()
@@ -192,14 +214,14 @@ public class StateController : MonoBehaviour
         Lose();
     }
 
-    private void OnPlayerStateChange(State state)
+    private void OnPlayerStateChange(Player.V2.State state)
     {
         switch (state)
         {
-            case State.Loss:
+            case Player.V2.State.Loss:
                 // Lose();
                 break; 
-            case State.Pause:
+            case Player.V2.State.Pause:
                 #if DEBUG
                 Debug.Log("Paused!");
                 #endif
@@ -222,6 +244,12 @@ public class StateController : MonoBehaviour
                 break;
             case PauseMenu.State.Exit:
                 throw new NotImplementedException("ERROR: Still have to implement quitting the game");
+            case PauseMenu.State.Settings:
+                m_previousUiController = m_pauseMenuController;
+                m_previousUiController.Hide();
+                m_currentUiController = m_settingsController;
+                m_currentUiController.Show();
+                break;
             default:
                 throw new StateHandlerNotImplementedException();
         }
