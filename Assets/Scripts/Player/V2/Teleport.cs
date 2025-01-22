@@ -45,6 +45,10 @@ namespace Player.V2
         
         private Transform m_bossTransform;
 
+        private Boss.ForceField.State m_bossForceFieldState;
+
+        private Boss.ForceField.EventPublisher m_bossForceFieldEventPublisher;
+
         private bool m_isInMashSequence;
         private Camera m_mainCamera;
 
@@ -65,7 +69,7 @@ namespace Player.V2
             get
             {
                 UpdateAttackRange();
-                if (!InAttackRange) return false;
+                if (!InAttackRange || m_bossForceFieldState == Boss.ForceField.State.Active) return false;
                     
                 #if DEBUG
                 Debug.Log("Attacking Boss!");
@@ -118,6 +122,8 @@ namespace Player.V2
             // is finding a unique component of the object I need
             // example: Boss.Controller class is only used for the Boss GameObject
             m_bossTransform = FindObjectOfType<Boss.Controller>().transform;
+            m_bossForceFieldEventPublisher = m_bossTransform.gameObject
+                .GetComponentInChildren<Boss.ForceField.EventPublisher>();
             m_audioManager = FindObjectOfType<AudioManager>();
             m_mainCamera = Camera.main;
 
@@ -132,7 +138,17 @@ namespace Player.V2
                 Debug.LogWarning("ParticleSystem 'vfx_Shield_01' not found on the player.");
             }
         }
-        
+
+        private void OnEnable()
+        {
+           m_bossForceFieldEventPublisher.StateChanged += OnBossForceFieldStateChanged;
+        }
+
+        private void OnDisable()
+        {
+           m_bossForceFieldEventPublisher.StateChanged -= OnBossForceFieldStateChanged;
+        }
+
         private void Update()
         {
             UpdateAttackRange();
@@ -165,6 +181,11 @@ namespace Player.V2
             MashSequenceStateChange?.Invoke(MashState.End);
             m_isInMashSequence = false;
             
+        }
+
+        private void OnBossForceFieldStateChanged(Boss.ForceField.State state)
+        {
+            m_bossForceFieldState = state;
         }
         
         public void OnMash(InputAction.CallbackContext context)
