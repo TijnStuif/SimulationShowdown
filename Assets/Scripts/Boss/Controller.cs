@@ -104,6 +104,7 @@ namespace Boss
                 forceField.SetActive(true);
                 yield return new WaitForSeconds(0.2f);
                 forceField.SetActive(false);
+                OnPickUpCollected(pickUp.AmountOfPickupsCollected);
                 yield return new WaitForSeconds(0.2f);
             }
         }
