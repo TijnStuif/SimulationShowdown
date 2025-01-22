@@ -52,25 +52,25 @@ namespace Player.V2.MashPrompt
             if (context.performed)
             {
                 // isn't able to register both when both are pressed ):
-                if (binding.ToString() == "Mash:<Keyboard>/f[Keyboard&Mouse]")
+                if (binding == context.action.bindings[0])
                     m_f.style.backgroundColor = Color.yellow;
-                if (binding.ToString() == "Mash:<Keyboard>/j[Keyboard&Mouse]")
+                if (binding == context.action.bindings[1])
                     m_j.style.backgroundColor = Color.magenta;
             }
 
             if (context.canceled)
             {
-                if (binding.ToString() == "Mash:<Keyboard>/f[Keyboard&Mouse]")
-                    m_f.style.backgroundColor = Color.white;
-                if (binding.ToString() == "Mash:<Keyboard>/j[Keyboard&Mouse]")
-                    m_j.style.backgroundColor = Color.white;
+                if (binding == context.action.bindings[0])
+                    m_f.style.backgroundColor = Color.black;
+                if (binding == context.action.bindings[1])
+                    m_j.style.backgroundColor = Color.black;
             }
         }
 
         private void ResetKeyColors()
         {
-            m_f.style.backgroundColor = Color.white;
-            m_j.style.backgroundColor = Color.white;
+            m_f.style.backgroundColor = Color.black;
+            m_j.style.backgroundColor = Color.black;
         }
 
 
