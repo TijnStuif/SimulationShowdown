@@ -1,11 +1,10 @@
 using Player.V2;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ForceField = Boss.ForceField;
 
-namespace PlayerAttackIndicator
+namespace Boss.PlayerAttackIndicator
 {
-    public class Controller : AbstractUiController
+    public class UiController : AbstractUiController
     {
         private Vector3 m_bossScreenToWorld;
         [SerializeField] private Transform m_bossTransform;
