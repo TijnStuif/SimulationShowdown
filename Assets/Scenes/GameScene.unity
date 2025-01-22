@@ -937,9 +937,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
         type: 3}
+      propertyPath: pickupSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 346b4351263ac684db014dcb4b84afc0, type: 3}
+    - target: {fileID: 8953578170719120249, guid: f63f32222b317b84d93940851c660e1a,
+        type: 3}
       propertyPath: bossGlitchSFX
       value: 
-      objectReference: {fileID: 8300000, guid: dd644c4baab417a4f832d997fb90ca31, type: 3}
+      objectReference: {fileID: 8300000, guid: e5b2cb356ded8a348a7e42eedd5ef3df, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

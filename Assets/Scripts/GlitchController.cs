@@ -10,11 +10,11 @@ namespace Player.V2
         private float scanLineStrength = 0;
         private float flickerStrength = 0;
         private float baseNoiseAmount = 0f;
-        private float baseGlitchStrength = 0.25f;
+        private float baseGlitchStrength = 0;
         private float baseScanLineStrength = 0;
         private float baseFlickerStrength = 0.05f;
         private float noiseAmountIncrement = 20f;
-        private float glitchStrengthIncrement = 0.25f;
+        private float glitchStrengthIncrement = 0.3f;
         private float flickerStrengthIncrement = 0.02f;
         private float noiseAmountMax = 100f;
         private float glitchStrengthMax = 10f;
