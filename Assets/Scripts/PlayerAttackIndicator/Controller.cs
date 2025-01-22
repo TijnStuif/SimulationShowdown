@@ -1,5 +1,7 @@
+using Player.V2;
 using UnityEngine;
 using UnityEngine.UIElements;
+using ForceField = Boss.ForceField;
 
 namespace PlayerAttackIndicator
 {
@@ -8,9 +10,18 @@ namespace PlayerAttackIndicator
         private Vector3 m_bossScreenToWorld;
         [SerializeField] private Transform m_bossTransform;
         private Camera m_camera;
+        private Teleport.BossRange m_bossRange;
+        private ForceField.State m_forceFieldState;
+
+        private ForceField.EventPublisher m_forceFieldEventPublisher;
+
+        private GameObject Boss => m_bossTransform.gameObject;
 
         private void Awake()
         {
+            m_forceFieldEventPublisher = Boss.GetComponentInChildren<ForceField.EventPublisher>();
+            m_forceFieldState = ForceField.State.Active;
+            m_bossRange = Teleport.BossRange.Outside;
             m_camera = Camera.main;
             Root = GetComponent<UIDocument>().rootVisualElement;
         }
@@ -19,22 +30,34 @@ namespace PlayerAttackIndicator
 
         private void OnEnable()
         {
-            Player.V2.Teleport.RangeChange += OnPlayerRangeChange;
+            Teleport.RangeChange += OnPlayerRangeChange;
+            m_forceFieldEventPublisher.StateChanged += OnForceFieldStateChanged;
         }
 
         private void OnDisable()
         {
-            Player.V2.Teleport.RangeChange -= OnPlayerRangeChange;
+            Teleport.RangeChange -= OnPlayerRangeChange;
+            m_forceFieldEventPublisher.StateChanged -= OnForceFieldStateChanged;
         }
 
-        private void OnPlayerRangeChange(Player.V2.Teleport.BossRange range)
+        private void OnForceFieldStateChanged(ForceField.State state)
         {
-            if (range == Player.V2.Teleport.BossRange.Inside)
-            {
+            m_forceFieldState = state;
+            UpdateUI();
+        }
+
+        private void OnPlayerRangeChange(Teleport.BossRange range)
+        {
+            m_bossRange = range;
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if (m_forceFieldState == ForceField.State.Inactive && m_bossRange == Teleport.BossRange.Inside)
                 Show();
-                return;
-            }
-            Hide();
+            else
+                Hide();
         }
 
         private void Update()
