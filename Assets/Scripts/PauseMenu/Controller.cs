@@ -13,6 +13,7 @@ namespace PauseMenu
     public class Controller : AbstractUiController
     {
         private Button m_resumeButton;
+        private Button m_returnToTitleScreenButton;
         public event Action<State> StateChange;
         
         // get necessary UI components
@@ -20,6 +21,7 @@ namespace PauseMenu
         {
             Root = GetComponent<UIDocument>().rootVisualElement;
             m_resumeButton = Root.Q<Button>("resume");
+            m_returnToTitleScreenButton = Root.Q<Button>("return");
         }
         
         // this can be refactored in the future in an AbstractUIController class or smth
@@ -27,6 +29,7 @@ namespace PauseMenu
         private void OnEnable()
         {
             m_resumeButton.RegisterCallback<ClickEvent>(OnResumeClicked);
+            m_returnToTitleScreenButton.RegisterCallback<ClickEvent>(OnReturnToTitleClicked);
         }
         
         private void OnDisable()
@@ -40,7 +43,7 @@ namespace PauseMenu
             StateChange?.Invoke(State.ResumeGame);
         }
 
-        private void OnReturnToTitleClicked()
+        private void OnReturnToTitleClicked(ClickEvent evt)
         {
             PlayButtonSound();
             StateChange?.Invoke(State.ReturnToTitleScreen);
