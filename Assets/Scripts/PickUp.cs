@@ -10,6 +10,7 @@ public class PickUp : MonoBehaviour
     private float offset = -12.5f;
     private float tileWidth = 5f;
     private float amountOfPickUpsCollected = 0;
+    private AudioManager audioManager;
     public float AmountOfPickupsCollected 
     {
         get { return amountOfPickUpsCollected; }
@@ -20,6 +21,7 @@ public class PickUp : MonoBehaviour
     void Awake()
     {
         SpawnPickUps();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void SpawnPickUps()
@@ -31,6 +33,7 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider player)
     {
+        audioManager.PlaySFX(audioManager.pickupSFX);
         AmountOfPickupsCollected++;
         SpawnPickUps();
     }

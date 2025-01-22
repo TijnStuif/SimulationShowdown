@@ -110,7 +110,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _FlickerStrength: 0.05
-    - _GlitchStrength: 0.25
+    - _GlitchStrength: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
